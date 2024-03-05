@@ -1,6 +1,8 @@
 import { CodepenEmbed } from 'embeds/codepen';
+import { TwitterEmbed } from 'embeds/twitter';
 import { EmbedBase } from 'embeds/embedBase';
 import { Plugin } from 'obsidian';
+import { YouTubeEmbed } from 'embeds/youtube';
 
 // Remember to rename these classes and interfaces!
 
@@ -16,24 +18,33 @@ export default class MyPlugin extends Plugin {
 	settings: PluginSettings;
 	embedSources: EmbedBase[] = [
 		new CodepenEmbed(),
+		new TwitterEmbed(),
+		new YouTubeEmbed(),
 	]
 
 	async onload() {
-		console.log('loading plugin!!')
+		console.log('loading plugin');
 		await this.loadSettings();
+
+		this.embedSources.forEach(source => {
+			source.onload?.();
+		});
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			console.log("Registering markdown")
 			const anchors = el.querySelectorAll('a.external-link') as NodeListOf<HTMLAnchorElement>;
 			anchors.forEach((anchor) => {
-				console.log("Testing: " + anchor.text);
 				this.handleAnchor(anchor);
 			})
 		})
 	}
 
 	onunload() {
-		console.log('unloading plugin')
+		console.log('unloading plugin');
+		
+		this.embedSources.forEach(source => {
+			source.onunload?.();
+		});
 	}
 
 	async loadSettings() {
@@ -69,10 +80,8 @@ export default class MyPlugin extends Plugin {
 	}
 
 	private createEmbed(embedSource: EmbedBase, link: string) {
-		const container = createDiv({cls: "embed-container"});
-		const embed = embedSource.createEmbed(link, container, this.settings);
+		const embed = embedSource.createEmbed(link, this.settings);
 		return embed;
-		return container;
 	}
 
 	private insertEmbed(a: HTMLAnchorElement, container: HTMLElement) {

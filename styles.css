@@ -6,19 +6,33 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
-iframe {
-    width: 100%;
-    min-height: 500px;
+iframe.auto-embed {
+    max-width: 100%;
+    /* min-height: 500px; */
 }
 
-iframe.small {
+iframe.small.auto-embed {
     min-height: 300px;
 }
 
-iframe.large {
+iframe.large.auto-embed {
     min-height: 1000px;
 }
 
-iframe.largest {
+iframe.largest.auto-embed {
     min-height: calc(100vh - 100px);
+}
+
+.auto-embed.twitter-embed {
+    width: 600px;
+    height: 350px;
+    min-height: unset;
+}
+
+.auto-embed.youtube-embed {
+    /* width: 560px;
+    height: 315px; */
+
+    width: 100%;
+    aspect-ratio: 1.7777;
 }

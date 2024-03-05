@@ -1,25 +1,23 @@
 import { PluginSettings } from "main";
 import { EmbedBase } from "./embedBase";
 
-export class CodepenEmbed implements EmbedBase {
+export class CodepenEmbed extends EmbedBase {
     name = "CodePen";
-    regex = new RegExp(/https:\/\/codepen\.io\/(\w+)\/(?:pen)\/(\w+)/);
+    regex = new RegExp(/https:\/\/codepen\.io\/(\w+)\/pen\/(\w+)(\?.*)?/);
 
-    createEmbed(link: string, container: HTMLElement, settings: Readonly<PluginSettings>): HTMLElement {
-        const iframe = createEl("iframe", {parent: container});
+    createEmbed(url: string, settings: Readonly<PluginSettings>): HTMLElement {
+        const regexMatch = url.match(this.regex);
+        // Shouldn't happen since got test before. But in case
+        if (regexMatch === null)
+            return this.onErrorCreatingEmbed();
 
-        let url = link;
-        if (link.contains("?"))
-            url = link.substring(0, link.indexOf("?"));
-        if (link.contains("/pen/"))
-            url = url.replace("/pen/", "/embed/");
+        // Creating the iframe
+        const iframe = createEl("iframe");
 
-        iframe.src = url + "?default-tab=result&editable=true";
-        // iframe.href = url + "?default-tab=result&editable=true";
-        iframe.textContent = "Codepen";
-        container.appendChild(iframe);
-        container.classList.add("codepen");
+        iframe.src = `https://codepen.io/${regexMatch[1]}/embed/${regexMatch[2]}?default-tab=result&editable=true`;
+
+        iframe.classList.add("auto-embed", "codepen-embed");
 
         return iframe;
     }
-}
+} 
