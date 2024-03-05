@@ -1,0 +1,24 @@
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+iframe {
+    width: 100%;
+    min-height: 500px;
+}
+
+iframe.small {
+    min-height: 300px;
+}
+
+iframe.large {
+    min-height: 1000px;
+}
+
+iframe.largest {
+    min-height: calc(100vh - 100px);
+}
