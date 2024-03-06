@@ -4,15 +4,18 @@ import { EmbedBase } from 'embeds/embedBase';
 import { Plugin } from 'obsidian';
 import { YouTubeEmbed } from 'embeds/youtube';
 import { SteamEmbed } from 'embeds/steam';
+import { RedditEmbed } from 'embeds/reddit';
 
 // Remember to rename these classes and interfaces!
 
 export interface PluginSettings {
 	mySetting: string;
+	darkMode: boolean;
 }
 
 const DEFAULT_SETTINGS: PluginSettings = {
-	mySetting: 'default'
+	mySetting: 'default',
+	darkMode: true,
 }
 
 export default class MyPlugin extends Plugin {
@@ -20,6 +23,7 @@ export default class MyPlugin extends Plugin {
 	embedSources: EmbedBase[] = [
 		new TwitterEmbed(),
 		new YouTubeEmbed(),
+		new RedditEmbed(),
 		new SteamEmbed(),
 		new CodepenEmbed(),
 	]

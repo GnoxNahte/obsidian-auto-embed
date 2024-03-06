@@ -58,3 +58,8 @@ iframe.largest.auto-embed {
     /* Even if height is set to very big and width is small, it doesn't change the height,
      and height stays at 190px. So set a fixed height.*/
 }
+
+.auto-embed.reddit-embed {
+    width: 100%;
+    height: 500px;
+}
