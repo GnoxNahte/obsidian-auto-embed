@@ -1,4 +1,3 @@
-import { PluginSettings } from "main";
 import { EmbedBase } from "./embedBase";
 
 export class YouTubeEmbed extends EmbedBase {
@@ -10,7 +9,7 @@ export class YouTubeEmbed extends EmbedBase {
     // TODO:
     // - Add support for ignoring si=___id____. Think its for session id, is shown when user clicks the share button and copy the link.
     regex = new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/\S*\b(watch|embed|shorts|v|e|live)\b(?:(?:(?=\/[-a-zA-Z0-9_]{11,}(?!\S))\/)|(?:\S*v=|v\/)))([-a-zA-Z0-9_]{11,})(?:(?:\?|&)t=(\d+)s?)?/);
-    createEmbed(url: string, settings: Readonly<PluginSettings>): HTMLElement {
+    createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
@@ -21,7 +20,7 @@ export class YouTubeEmbed extends EmbedBase {
 
         const videoType = regexMatch[1]; // check if its a shorts
         const videoId = regexMatch[2];
-        console.log(regexMatch);
+        // console.log(regexMatch);
         if (videoId === undefined)
         {
             return this.onErrorCreatingEmbed();

@@ -1,4 +1,3 @@
-import { PluginSettings } from "main";
 import { EmbedBase } from "./embedBase";
 
 export class TwitterEmbed extends EmbedBase {
@@ -9,7 +8,7 @@ export class TwitterEmbed extends EmbedBase {
         window.addEventListener("message", this.listenForTwitterResize);
     }
 
-    createEmbed(url: string, settings: Readonly<PluginSettings>): HTMLElement {
+    createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
@@ -19,11 +18,11 @@ export class TwitterEmbed extends EmbedBase {
         const iframe = createEl("iframe");
         const postId = regexMatch[1];
 
-        url = "https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=dark&id=" + postId;
+        url = `https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=${this.plugin.settings.darkMode ? "dark" : "light"}&id=${postId}`;
         iframe.src = url;
 
         iframe.id += "twitter-" + postId;
-        iframe.classList.add("auto-embed", "twitter-embed");
+        iframe.classList.add(this.autoEmbedCssClass, "twitter-embed");
 
         iframe.sandbox.add("allow-forms", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-modals", "allow-popups");
         iframe.setAttribute("scrolling", "no");

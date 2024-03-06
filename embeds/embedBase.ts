@@ -1,14 +1,18 @@
-import { PluginSettings } from "main";
+import AutoEmbedPlugin from "main";
 
 export abstract class EmbedBase {
     readonly autoEmbedCssClass: string = "auto-embed";
     readonly name: string;
     // To identify if the anchor link matches the embed type
     readonly regex: RegExp; 
+    readonly plugin: AutoEmbedPlugin;
 
+    constructor(plugin: AutoEmbedPlugin) {
+        this.plugin = plugin;
+    }
+    
     abstract createEmbed(
         link: string,
-        settings: Readonly<PluginSettings>,
     ): HTMLElement;
 
     onload?(): void;

@@ -5,27 +5,18 @@ import { Plugin } from 'obsidian';
 import { YouTubeEmbed } from 'embeds/youtube';
 import { SteamEmbed } from 'embeds/steam';
 import { RedditEmbed } from 'embeds/reddit';
+import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'settings-tab';
 
 // Remember to rename these classes and interfaces!
 
-export interface PluginSettings {
-	mySetting: string;
-	darkMode: boolean;
-}
-
-const DEFAULT_SETTINGS: PluginSettings = {
-	mySetting: 'default',
-	darkMode: true,
-}
-
-export default class MyPlugin extends Plugin {
+export default class AutoEmbedPlugin extends Plugin {
 	settings: PluginSettings;
 	embedSources: EmbedBase[] = [
-		new TwitterEmbed(),
-		new YouTubeEmbed(),
-		new RedditEmbed(),
-		new SteamEmbed(),
-		new CodepenEmbed(),
+		new TwitterEmbed(this),
+		new RedditEmbed(this),
+		new YouTubeEmbed(this),
+		new SteamEmbed(this),
+		new CodepenEmbed(this),
 	]
 
 	async onload() {
@@ -35,6 +26,8 @@ export default class MyPlugin extends Plugin {
 		this.embedSources.forEach(source => {
 			source.onload?.();
 		});
+
+		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			console.log("Registering markdown")
@@ -86,7 +79,7 @@ export default class MyPlugin extends Plugin {
 	}
 
 	private createEmbed(embedSource: EmbedBase, link: string) {
-		const embed = embedSource.createEmbed(link, this.settings);
+		const embed = embedSource.createEmbed(link);
 		return embed;
 	}
 
