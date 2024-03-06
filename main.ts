@@ -3,6 +3,7 @@ import { TwitterEmbed } from 'embeds/twitter';
 import { EmbedBase } from 'embeds/embedBase';
 import { Plugin } from 'obsidian';
 import { YouTubeEmbed } from 'embeds/youtube';
+import { SteamEmbed } from 'embeds/steam';
 
 // Remember to rename these classes and interfaces!
 
@@ -17,9 +18,10 @@ const DEFAULT_SETTINGS: PluginSettings = {
 export default class MyPlugin extends Plugin {
 	settings: PluginSettings;
 	embedSources: EmbedBase[] = [
-		new CodepenEmbed(),
 		new TwitterEmbed(),
 		new YouTubeEmbed(),
+		new SteamEmbed(),
+		new CodepenEmbed(),
 	]
 
 	async onload() {
