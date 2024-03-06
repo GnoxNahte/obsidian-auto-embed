@@ -29,10 +29,19 @@ iframe.largest.auto-embed {
     min-height: unset;
 }
 
+.auto-embed.youtube-shorts-embed {
+    height: 560px;
+    aspect-ratio: 9/16;
+}
+
 .auto-embed.youtube-embed {
     /* width: 560px;
     height: 315px; */
 
     width: 100%;
-    aspect-ratio: 1.7777;
+    aspect-ratio: 16 / 9;
+}
+
+.auto-embed.error-embed {
+    color: var(--text-error);
 }

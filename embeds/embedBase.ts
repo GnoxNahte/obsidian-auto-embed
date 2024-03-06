@@ -15,8 +15,8 @@ export abstract class EmbedBase {
     onunload?(): void;
 
     onErrorCreatingEmbed(): HTMLElement {
-      const errorMsg = "Error with codepen url";
-      const error = createEl("p");
+      const errorMsg = `Error with ${this.name} url`;
+      const error = createEl("p", {cls: "auto-embed error-embed"});
       error.setText(errorMsg);
 
       console.log(errorMsg);
