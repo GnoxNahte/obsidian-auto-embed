@@ -3,7 +3,7 @@ import { App, PluginSettingTab, Setting } from "obsidian";
 
 export interface PluginSettings {
 	// General
-	mySetting: string;
+    embedByDefault: boolean;
 	darkMode: boolean;
 	
 	// Twitter
@@ -20,8 +20,8 @@ export interface PluginSettings {
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
-	mySetting: 'default',
 	darkMode: true,
+    embedByDefault: false,
 
 	redditAutoSize: true,
 }
@@ -39,18 +39,39 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
+        // Do this to help updated the setting description after user changes the setting. 
+        // TODO: Find a better way to do it?
+        const embedByDefaultDesc = [
+            "Embeds by default, put \"ae:noembed\" if don't want to embed. E.g. [Title ae:noembed](https:example.com)",
+            "Embeds only its explicity stated by using \"ae:embed\" E.g. [ae:embed](https.example.com)"
+        ];
+        const embedByDefaultSetting = new Setting(containerEl) 
+            .setName("Embed by default")
+            .setDesc(embedByDefaultDesc[this.plugin.settings.embedByDefault ? 0 : 1])
+            .addToggle(toggle => toggle
+                .setValue(this.plugin.settings.embedByDefault)
+                .onChange(async (value) => {
+                    this.plugin.settings.embedByDefault = value;
+                    embedByDefaultSetting.setDesc(embedByDefaultDesc[this.plugin.settings.embedByDefault ? 0 : 1]);
+                    await this.plugin.saveSettings();
+                }))
+
         new Setting(containerEl)
-            .setName("Dark Mode")
+            .setName("Dark mode")
             .setDesc("Sets theme for embeds if the website allows")
             .addToggle(toggle => toggle
                 .setValue(this.plugin.settings.darkMode)
                 .onChange(async (value) => {
                     this.plugin.settings.darkMode = value;
                     await this.plugin.saveSettings();
-                }))
+                }));
 
         new Setting(containerEl)
-            .setName("Reddit Auto Size")
+            .setName("Reddit")
+            .setHeading();
+
+        new Setting(containerEl)
+            .setName("Reddit auto size")
             .setDesc("There's a bug where it incorreclty assigns the wrong height if there's multiple reddit embeds. This toggles if it should auto resize or set a fixed size instead.")
             .setTooltip("If anyone know how to fix it, please help. \nSee GitHub for the source code.")
             .addToggle(toggle => toggle
@@ -58,7 +79,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                 .onChange(async (value) => {
                     this.plugin.settings.darkMode = value;
                     await this.plugin.saveSettings();
-                }))
+                }));
 
         // TODO: Place this properly
         new Setting(containerEl)
