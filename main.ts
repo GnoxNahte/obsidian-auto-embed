@@ -23,10 +23,6 @@ export default class AutoEmbedPlugin extends Plugin {
 		console.log('loading plugin');
 		await this.loadSettings();
 
-		this.embedSources.forEach(source => {
-			source.onload?.();
-		});
-
 		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
@@ -36,14 +32,23 @@ export default class AutoEmbedPlugin extends Plugin {
 				this.handleAnchor(anchor);
 			})
 		})
+
+		this.registerDomEvent(window, "message", (e: MessageEvent) => {
+			// loop through / switch through all embed sources, checking which one sent it
+			for (const source of this.embedSources) {
+				console.log(source.embedOrigin  + " | " + e.origin);
+				if (source.embedOrigin === e.origin && source.onResizeMessage) {
+					console.log("Origin: " + e.origin);
+					console.log("Data: " + e.data);
+					source.onResizeMessage(e);
+					break;
+				}
+			}
+		});
 	}
 
 	onunload() {
 		console.log('unloading plugin');
-		
-		this.embedSources.forEach(source => {
-			source.onunload?.();
-		});
 	}
 
 	async loadSettings() {

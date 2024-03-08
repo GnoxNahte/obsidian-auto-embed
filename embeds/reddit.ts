@@ -3,10 +3,7 @@ import { EmbedBase } from "./embedBase";
 export class RedditEmbed extends EmbedBase {
     name = "Reddit";
     regex = new RegExp(/reddit.com/);
-
-    onload(): void {
-        window.addEventListener("message", this.listenForRedditResize);
-    }
+    embedOrigin: "https://embed.reddit.com";
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
@@ -51,19 +48,12 @@ export class RedditEmbed extends EmbedBase {
         return iframe;
     }
 
-    onunload() : void {
-        window.removeEventListener("message", this.listenForRedditResize);
-    }
-
-    listenForRedditResize(e: MessageEvent) {
-        if (e.origin !== "https://embed.reddit.com")
-            return;
-
+    onResizeMessage(e: MessageEvent) {
         const data = JSON.parse(e.data);
         
         // Only continue if the method is for resizing
         if (data.type !== "resize.embed")
-        return;
+            return;
 
         const iframes = document.getElementsByClassName("reddit-embed") as HTMLCollectionOf<HTMLIFrameElement>;
         if (iframes.length <= 1 || this.plugin.settings.redditAutoSize)

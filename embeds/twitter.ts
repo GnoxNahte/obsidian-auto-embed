@@ -3,10 +3,7 @@ import { EmbedBase } from "./embedBase";
 export class TwitterEmbed extends EmbedBase {
     name = "Twitter";
     regex = new RegExp(/https:\/\/(?:x|twitter)\.com\/\w+\/status\/(\w+)/);
-
-    onload(): void {
-        window.addEventListener("message", this.listenForTwitterResize);
-    }
+    embedOrigin = "https://platform.twitter.com";
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
@@ -31,16 +28,7 @@ export class TwitterEmbed extends EmbedBase {
         return iframe;
     }
 
-    onunload() : void {
-        window.removeEventListener("message", this.listenForTwitterResize);
-    }
-
-    listenForTwitterResize(e: MessageEvent) {
-        console.log("Origin: " + e.origin);
-        console.log("Data: " + e.data);
-        if (e.origin !== "https://platform.twitter.com")
-            return;
-    
+    onResizeMessage(e: MessageEvent): void {
         // Twitter Params format:
         /*
         twttr.embed {
@@ -56,10 +44,7 @@ export class TwitterEmbed extends EmbedBase {
                 };
             }
         }
-        
         */
-        // To visualise the data:
-        // console.log(e.data);
 
        // Only continue if the method is for resizing
         if (e.data["twttr.embed"]["method"] !== "twttr.private.resize")
