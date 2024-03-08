@@ -6,6 +6,7 @@ import { YouTubeEmbed } from 'embeds/youtube';
 import { SteamEmbed } from 'embeds/steam';
 import { RedditEmbed } from 'embeds/reddit';
 import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'settings-tab';
+import { ImgurEmbed } from 'embeds/imgur';
 
 // Remember to rename these classes and interfaces!
 
@@ -17,6 +18,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		new YouTubeEmbed(this),
 		new SteamEmbed(this),
 		new CodepenEmbed(this),
+		new ImgurEmbed(this),
 	]
 
 	async onload() {
