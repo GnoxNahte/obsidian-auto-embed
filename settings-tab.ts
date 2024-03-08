@@ -60,6 +60,11 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 }))
 
+        // TODO: Place this properly
+        new Setting(containerEl)
+            .setName("Spotify")
+            .setDesc("Spotify only allows you to play 30 seconds of a song")
+            .setTooltip("It only allows when the user is logged in the browser, which means it doesn't work in Obsidian");
 	}
     
     // TODO: Reload markdown after closing settings

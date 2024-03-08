@@ -65,6 +65,30 @@ iframe.largest.auto-embed {
     /* height: 500px; */
 }
 
+.auto-embed.spotify-embed-container {
+    left: 0;
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+.auto-embed.spotify-embed-container.spotify-song-large,
+.auto-embed.spotify-embed-container.spotify-playlist-small {
+    height: 152px;
+}
+
+.auto-embed.spotify-playlist-embed {
+    height: 369px;
+}
+
+.auto-embed.spotify-embed {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
 .auto-embed.codepen-embed {
     width: 100%;
     min-height: 300px;
