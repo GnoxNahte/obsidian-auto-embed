@@ -1,7 +1,7 @@
 import { CodepenEmbed } from 'embeds/codepen';
 import { TwitterEmbed } from 'embeds/twitter';
 import { EmbedBase } from 'embeds/embedBase';
-import { Editor, Plugin } from 'obsidian';
+import { Editor, EditorPosition, Plugin } from 'obsidian';
 import { YouTubeEmbed } from 'embeds/youtube';
 import { SteamEmbed } from 'embeds/steam';
 import { RedditEmbed } from 'embeds/reddit';
@@ -21,14 +21,9 @@ class PasteInfo {
 	}
 }
 
-interface EditPosition {
-	line: number; 
-	ch: number;
-}
-
 interface Selection {
-	start: EditPosition
-	end: EditPosition
+	start: EditorPosition
+	end: EditorPosition
 	text: string;
 }
 
@@ -115,14 +110,6 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		this.pasteInfo.trigger = true;
 		this.pasteInfo.text = clipboardData;
-		
-		// TODO: Delete?
-		// Do this to be able to select the url. 
-		// Obsidian pastes after this function, so 
-		// e.preventDefault(); 
-		// editor.replaceRange(clipboardData, editor.getCursor());
-		
-		// this.selectLink(editor);
 	}
 
 	private handleAnchor(a: HTMLAnchorElement) { 
@@ -146,7 +133,10 @@ export default class AutoEmbedPlugin extends Plugin {
 		}
 		console.log("Found! : " + href);
 		const embed = this.createEmbed(embedSource, href);
-		this.insertEmbed(a, embed);
+
+		// Insert embed
+		const parent = a.parentElement;
+		parent?.replaceChild(embed, a);
 	}
 
 	private getSelection(editor: Editor) : Selection | null {
@@ -161,7 +151,7 @@ export default class AutoEmbedPlugin extends Plugin {
 	}
 
 	// Used if there's nothing selected. Mostly when the user pastes a link
-	selectLink(editor: Editor) {
+	getLinkSelection(editor: Editor): Selection | null {
 		const cursor = editor.getCursor();
 		const lineText = editor.getLine(cursor.line); 
 		console.log("line text: "+ lineText)
@@ -175,24 +165,27 @@ export default class AutoEmbedPlugin extends Plugin {
 				match.index + match[0].length >= cursor.ch // Is end of match after cursor
 				) {
 					console.log("Selected: " + match[0]);
-					editor.setSelection(
-						{
+					return {
+						start: {
 							line: cursor.line,
 							ch: match.index
 						},
-						{
+						end: {
 							line: cursor.line,
 							ch: match.index + match[0].length
-						}
-					);
-					break;
+						},
+						text: match[0]
+					}
 				}
 		}
+
+		return null;
 	}
 
 	markToEmbed(selection: Selection, editor: Editor) {
-		// const selection = this.getSelection(editor);
-		editor.replaceRange(`[ae:embed](${selection.text})`, selection.start, selection.end);
+		// TODO: Consider hiding ae:embed? but then will make viewing in [source mode] messy
+		// editor.replaceRange(`[<span style="display:none">ae:embed</span>${selection.text}](${selection.text})`, selection.start, selection.end);
+		editor.replaceRange(`[${selection.text}](${selection.text})`, selection.start, selection.end);
 		
 		console.log(`Replacing: [ae:embed](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
 	}
