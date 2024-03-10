@@ -120,7 +120,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		const innerTextTrim = innerText.replace(/\s/g, "");
 		
 		if (!innerTextTrim.includes("ae:embed")) {
-			return;
+			console.log("Fail check")
 		}	
 
 		const href = a.href;
@@ -190,7 +190,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		// Match "url" or "link", ignoring case
 		const urlRegex = /{{(?:(?:url)|(?:link))}}/i;
 		const optionsRegex = /{{options?}}/i;
-		const format = this.settings.linkTextFormat;
+		const format = this.settings.markdownLinkTextFormat;
 		
 		// If no options, replace {{url}} and cut everything after
 		// Reason:

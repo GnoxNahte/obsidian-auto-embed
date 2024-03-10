@@ -13,14 +13,6 @@ export class PreviewEmbedModal extends Modal {
         this.options = options ?? "";
     }
 
-    // // Recreating how Obsidian does their TextComponent from Setting
-    // // Do this to make sure it looks consistent
-    // createTextInput() : TextInputInfo {
-    //     const urlParent = createDiv({ cls:"setting-item" });
-    //     const urlTitleParent = createDiv({cls: "setting-item-name"});
-    //     const urlTitle = 
-    // }
-
     onOpen(): void {
         const {contentEl} = this;
         this.titleEl.textContent = "Preview Embed";
@@ -61,18 +53,6 @@ export class PreviewEmbedModal extends Modal {
             .setName("Preview option")
             .addText(text => text
                 .setValue(this.options))
-
-        new Setting(contentEl) 
-            .setName("")
-
-        // const textComponent = new TextComponent().
-
-        // const urlParent = createDiv({ cls:"setting-item" });
-        // const urlTitleParent = createDiv({cls: "setting-item-name"});
-        // const urlTitle = 
-        // urlTitleParent.appendChild(createDiv())
-        // urlParent.appendChild()
-        // contentEl.appendChild(urlParent);
 
         contentEl.appendChild(createEl("h3", { text: "Source Mode:" }));
         contentEl.appendChild(sourceMode);
