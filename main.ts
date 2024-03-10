@@ -56,7 +56,7 @@ export default class AutoEmbedPlugin extends Plugin {
 			if (!e.shiftKey)
 				this.isShiftDown = false;
 		})
-
+		
 		this.registerEditorSuggest(new SuggestEmbed(this));
 		
 		this.app.workspace.on("editor-paste", this.onPaste.bind(this));
@@ -112,7 +112,9 @@ export default class AutoEmbedPlugin extends Plugin {
 		this.pasteInfo.text = clipboardData;
 	}
 
-	private handleAnchor(a: HTMLAnchorElement) { 
+	// Creates the embed and replaces the Anchor element with it
+	// Returns null if it's unable to convert it to an embed
+	handleAnchor(a: HTMLAnchorElement): HTMLElement | null { 
 		const innerText = a.innerText;
 		// Removes all spaces
 		const innerTextTrim = innerText.replace(/\s/g, "");
@@ -129,7 +131,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		})
 
 		if (embedSource === undefined) {
-			return;
+			return null;
 		}
 		console.log("Found! : " + href);
 		const embed = this.createEmbed(embedSource, href);
@@ -137,6 +139,8 @@ export default class AutoEmbedPlugin extends Plugin {
 		// Insert embed
 		const parent = a.parentElement;
 		parent?.replaceChild(embed, a);
+
+		return embed;
 	}
 
 	private getSelection(editor: Editor) : Selection | null {
@@ -180,6 +184,29 @@ export default class AutoEmbedPlugin extends Plugin {
 		}
 
 		return null;
+	}
+
+	getLinkText(url: string, options?: string): string {
+		// Match "url" or "link", ignoring case
+		const urlRegex = /{{(?:(?:url)|(?:link))}}/i;
+		const optionsRegex = /{{options?}}/i;
+		const format = this.settings.linkTextFormat;
+		
+		// If no options, replace {{url}} and cut everything after
+		// Reason:
+		// Usually the text after {{url}} is to separate url and options. E.g. "{{url}}|{{options}}" or "{{url}}, {{options}}"
+		// If want to have different options for seperating those 2 examples ^^^, need different formats which just complicates things for the user
+		
+		if (!options) {
+			console.log("b")
+			const urlRegexMatch = format.match(urlRegex);
+			return urlRegexMatch ? 
+			format.substring(0, urlRegexMatch.index) + url :
+			format;
+		}
+		console.log("c")
+		
+		return format.replace(urlRegex, url).replace(optionsRegex, options);
 	}
 
 	markToEmbed(selection: Selection, editor: Editor) {
