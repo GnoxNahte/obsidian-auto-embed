@@ -67,6 +67,14 @@ export default class AutoEmbedPlugin extends Plugin {
 			anchors.forEach((anchor) => {
 				this.handleAnchor(anchor);
 			})
+
+			const images = el.querySelectorAll('img');
+			images.forEach((image) => {
+				if (image.referrerPolicy !== "no-referrer" || !isURL(image.src))
+					return;
+
+				this.handleImage(image);
+			})
 		})
 
 		this.registerDomEvent(window, "message", (e: MessageEvent) => {
@@ -139,6 +147,37 @@ export default class AutoEmbedPlugin extends Plugin {
 		// Insert embed
 		const parent = a.parentElement;
 		parent?.replaceChild(embed, a);
+
+		return embed;
+	}
+	// Creates the embed and replaces the Anchor element with it
+	// Returns null if it's unable to convert it to an embed
+	handleImage(img: HTMLImageElement): HTMLElement | null { 
+		const alt = img.alt;
+		// Removes all spaces
+		const altTrim = alt.replace(/\s/g, "");
+		
+		if (altTrim.includes("noembed")) {
+			img.alt = alt.replace("noembed", "");
+			return null;
+		}	
+
+		const src = img.src;
+
+		console.log("Testing: " + src);
+		const embedSource = this.embedSources.find((source) => {
+			return source.regex.test(src);
+		})
+
+		if (embedSource === undefined) {
+			return null;
+		}
+		console.log("Found! : " + src);
+		const embed = this.createEmbed(embedSource, src);
+
+		// Insert embed
+		const parent = img.parentElement;
+		parent?.replaceChild(embed, img);
 
 		return embed;
 	}
