@@ -1,15 +1,15 @@
-import { CodepenEmbed } from 'embeds/codepen';
-import { TwitterEmbed } from 'embeds/twitter';
-import { EmbedBase } from 'embeds/embedBase';
+import { CodepenEmbed } from 'src/embeds/codepen';
+import { TwitterEmbed } from 'src/embeds/twitter';
+import { EmbedBase } from 'src/embeds/embedBase';
 import { Editor, EditorPosition, Plugin } from 'obsidian';
-import { YouTubeEmbed } from 'embeds/youtube';
-import { SteamEmbed } from 'embeds/steam';
-import { RedditEmbed } from 'embeds/reddit';
-import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'settings-tab';
-import { ImgurEmbed } from 'embeds/imgur';
-import { SpotifyEmbed } from 'embeds/spotify';
-import SuggestEmbed from 'suggestEmbed';
-import { isURL, regexUrl } from 'utility';
+import { YouTubeEmbed } from 'src/embeds/youtube';
+import { SteamEmbed } from 'src/embeds/steam';
+import { RedditEmbed } from 'src/embeds/reddit';
+import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'src/settings-tab';
+import { ImgurEmbed } from 'src/embeds/imgur';
+import { SpotifyEmbed } from 'src/embeds/spotify';
+import SuggestEmbed from 'src/suggestEmbed';
+import { isURL, regexUrl } from 'src/utility';
 
 class PasteInfo {
 	trigger: boolean;

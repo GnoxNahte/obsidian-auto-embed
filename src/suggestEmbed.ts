@@ -1,4 +1,4 @@
-import AutoEmbedPlugin from "main";
+import AutoEmbedPlugin from "src/main";
 import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, TFile } from "obsidian";
 
 class Suggestion {

@@ -1,4 +1,4 @@
-import AutoEmbedPlugin from "main";
+import AutoEmbedPlugin from "src/main";
 
 export abstract class EmbedBase {
     readonly autoEmbedCssClass: string = "auto-embed";

@@ -1,4 +1,4 @@
-import AutoEmbedPlugin from "main";
+import AutoEmbedPlugin from "src/main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import { PreviewEmbedModal } from "preview-embed-modal";
 
