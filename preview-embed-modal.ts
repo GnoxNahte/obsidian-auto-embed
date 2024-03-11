@@ -17,10 +17,8 @@ export class PreviewEmbedModal extends Modal {
         const {contentEl} = this;
         this.titleEl.textContent = "Preview Embed";
 
-        let linkText = this.plugin.getLinkText(this.url, this.options);
+        // let linkText = this.plugin.getLinkText(this.url, this.options);
 
-        const sourceMode = createEl("p", { text: `[${linkText}](${this.url})` });
-        const livePreview = createEl("a", { text: linkText, href: this.url });
         let currEmbed: HTMLElement | null = null;
         
         // ===== NOTE =====
@@ -34,17 +32,11 @@ export class PreviewEmbedModal extends Modal {
                 .setValue(this.url)
                 .onChange((value) => {
                     this.url = value;
-                    linkText = this.plugin.getLinkText(this.url, this.options);
-
-                    sourceMode.setText(`[${linkText}](${this.url})`);
-
-                    livePreview.setText(linkText)
-                    livePreview.href = this.url;
 
                     if (currEmbed)
                         contentEl.removeChild(currEmbed);
                     
-                    const readingViewAnchor = createEl("a", { text: linkText, href: this.url });
+                    const readingViewAnchor = createEl("a", { text: "", href: this.url });
                     contentEl.appendChild(readingViewAnchor);
                     this.plugin.handleAnchor(readingViewAnchor);
                 }));
@@ -54,14 +46,10 @@ export class PreviewEmbedModal extends Modal {
             .addText(text => text
                 .setValue(this.options))
 
-        contentEl.appendChild(createEl("h3", { text: "Source Mode:" }));
-        contentEl.appendChild(sourceMode);
-        
-        contentEl.appendChild(createEl("h3", { text: "Live Preview:" }));
-        contentEl.appendChild(livePreview);
-        
+        // TODO: add invalid url
+
         contentEl.appendChild(createEl("h3", { text: "Reading View:" }));
-        const readingViewAnchor = createEl("a", { text: linkText, href: this.url });
+        const readingViewAnchor = createEl("a", { text: "", href: this.url });
         contentEl.appendChild(readingViewAnchor);
         currEmbed = this.plugin.handleAnchor(readingViewAnchor);
     }

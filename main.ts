@@ -225,29 +225,6 @@ export default class AutoEmbedPlugin extends Plugin {
 		return null;
 	}
 
-	getLinkText(url: string, options?: string): string {
-		// Match "url" or "link", ignoring case
-		const urlRegex = /{{(?:(?:url)|(?:link))}}/i;
-		const optionsRegex = /{{options?}}/i;
-		const format = this.settings.markdownLinkTextFormat;
-		
-		// If no options, replace {{url}} and cut everything after
-		// Reason:
-		// Usually the text after {{url}} is to separate url and options. E.g. "{{url}}|{{options}}" or "{{url}}, {{options}}"
-		// If want to have different options for seperating those 2 examples ^^^, need different formats which just complicates things for the user
-		
-		if (!options) {
-			console.log("b")
-			const urlRegexMatch = format.match(urlRegex);
-			return urlRegexMatch ? 
-			format.substring(0, urlRegexMatch.index) + url :
-			format;
-		}
-		console.log("c")
-		
-		return format.replace(urlRegex, url).replace(optionsRegex, options);
-	}
-
 	markToEmbed(selection: Selection, editor: Editor) {
 		// TODO: Consider hiding ae:embed? but then will make viewing in [source mode] messy
 		// editor.replaceRange(`[<span style="display:none">ae:embed</span>${selection.text}](${selection.text})`, selection.start, selection.end);
