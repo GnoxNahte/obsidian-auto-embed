@@ -63,10 +63,6 @@ export default class AutoEmbedPlugin extends Plugin {
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			console.log("Registering markdown")
-			const anchors = el.querySelectorAll('a.external-link') as NodeListOf<HTMLAnchorElement>;
-			anchors.forEach((anchor) => {
-				this.handleAnchor(anchor);
-			})
 
 			const images = el.querySelectorAll('img');
 			images.forEach((image) => {
@@ -122,45 +118,16 @@ export default class AutoEmbedPlugin extends Plugin {
 
 	// Creates the embed and replaces the Anchor element with it
 	// Returns null if it's unable to convert it to an embed
-	handleAnchor(a: HTMLAnchorElement): HTMLElement | null { 
-		const innerText = a.innerText;
-		// Removes all spaces
-		const innerTextTrim = innerText.replace(/\s/g, "");
-		
-		if (!innerTextTrim.includes("ae:embed")) {
-			console.log("Fail check")
-		}	
-
-		const href = a.href;
-		
-		console.log("Testing: " + href);
-		const embedSource = this.embedSources.find((source) => {
-			return source.regex.test(href);
-		})
-
-		if (embedSource === undefined) {
-			return null;
-		}
-		console.log("Found! : " + href);
-		const embed = this.createEmbed(embedSource, href);
-
-		// Insert embed
-		const parent = a.parentElement;
-		parent?.replaceChild(embed, a);
-
-		return embed;
-	}
-	// Creates the embed and replaces the Anchor element with it
-	// Returns null if it's unable to convert it to an embed
 	handleImage(img: HTMLImageElement): HTMLElement | null { 
 		const alt = img.alt;
 		// Removes all spaces
 		const altTrim = alt.replace(/\s/g, "");
 		
-		if (altTrim.includes("noembed")) {
-			img.alt = alt.replace("noembed", "");
+		const noEmbedRegex = /noembed/i;
+		if (noEmbedRegex.test(alt)) {
+			img.alt = alt.replace(noEmbedRegex, "");
 			return null;
-		}	
+		}
 
 		const src = img.src;
 
@@ -226,21 +193,13 @@ export default class AutoEmbedPlugin extends Plugin {
 	}
 
 	markToEmbed(selection: Selection, editor: Editor) {
-		// TODO: Consider hiding ae:embed? but then will make viewing in [source mode] messy
-		// editor.replaceRange(`[<span style="display:none">ae:embed</span>${selection.text}](${selection.text})`, selection.start, selection.end);
-		editor.replaceRange(`[${selection.text}](${selection.text})`, selection.start, selection.end);
+		editor.replaceRange(`![](${selection.text})`, selection.start, selection.end);
 		
-		console.log(`Replacing: [ae:embed](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
+		// console.log(`Replacing to ![](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
 	}
 
 	private createEmbed(embedSource: EmbedBase, link: string) {
 		const embed = embedSource.createEmbed(link);
 		return embed; 
 	}
-
-	private insertEmbed(a: HTMLAnchorElement, container: HTMLElement) {
-		const parent = a.parentElement;
-		parent?.replaceChild(container, a);
-	}
 }
-

@@ -36,9 +36,9 @@ export class PreviewEmbedModal extends Modal {
                     if (currEmbed)
                         contentEl.removeChild(currEmbed);
                     
-                    const readingViewAnchor = createEl("a", { text: "", href: this.url });
-                    contentEl.appendChild(readingViewAnchor);
-                    this.plugin.handleAnchor(readingViewAnchor);
+                    const readingViewImg = createEl("img", { text: "", href: this.url });
+                    contentEl.appendChild(readingViewImg);
+                    this.plugin.handleImage(readingViewImg);
                 }));
 
         new Setting(contentEl)
@@ -49,8 +49,8 @@ export class PreviewEmbedModal extends Modal {
         // TODO: add invalid url
 
         contentEl.appendChild(createEl("h3", { text: "Reading View:" }));
-        const readingViewAnchor = createEl("a", { text: "", href: this.url });
-        contentEl.appendChild(readingViewAnchor);
-        currEmbed = this.plugin.handleAnchor(readingViewAnchor);
+        const readingViewImg = createEl("img", { text: "", href: this.url });
+        contentEl.appendChild(readingViewImg);
+        currEmbed = this.plugin.handleImage(readingViewImg);
     }
 }
