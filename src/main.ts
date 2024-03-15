@@ -10,6 +10,7 @@ import { ImgurEmbed } from 'src/embeds/imgur';
 import { SpotifyEmbed } from 'src/embeds/spotify';
 import SuggestEmbed from 'src/suggestEmbed';
 import { isURL, regexUrl } from 'src/utility';
+import { embedField } from './embed-state-field';
 
 class PasteInfo {
 	trigger: boolean;
@@ -45,8 +46,13 @@ export default class AutoEmbedPlugin extends Plugin {
 		console.log('loading plugin');
 		await this.loadSettings();
 
+		this.registerEditorExtension(embedField);
+		console.log("A      ")
 		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
-
+		
+		// Remove while testing editor extension
+		return;
+		console.log("B")
 		this.registerDomEvent(document, "keydown", (e) => {
 			if (e.shiftKey)
 				this.isShiftDown = true;
@@ -201,5 +207,15 @@ export default class AutoEmbedPlugin extends Plugin {
 	private createEmbed(embedSource: EmbedBase, link: string) {
 		const embed = embedSource.createEmbed(link);
 		return embed; 
+	}
+	
+	isLiveViewSupported() {
+		if ((this.app.vault as any).config?.livePreview) {
+			// todo
+			console.log("Live view is supported");
+		}
+		else {
+			console.log("Live view is not supported");
+		}
 	}
 }
