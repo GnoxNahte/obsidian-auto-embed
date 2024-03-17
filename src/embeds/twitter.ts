@@ -2,7 +2,8 @@ import { EmbedBase } from "./embedBase";
 
 export class TwitterEmbed extends EmbedBase {
     name = "Twitter";
-    regex = new RegExp(/https:\/\/(?:x|twitter)\.com\/\w+\/status\/(\w+)/);
+    // Don't parse twitter since Obsidian already handles that.
+    regex = new RegExp(/https:\/\/(?:x)\.com\/\w+\/status\/(\w+)/);
     embedOrigin = "https://platform.twitter.com";
 
     createEmbed(url: string): HTMLElement {

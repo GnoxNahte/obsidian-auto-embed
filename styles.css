@@ -1,14 +1,17 @@
-/*
-
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
-
-If your plugin does not need CSS, delete this file.
-
+/* If this doesn't work, try this. Found when selecting 
+    .markdown-source-view.mod-cm6 .cm-content > [contenteditable=false]
 */
+/* Select the placeholder image and alt that appears when Obsidian doesn't render the link. */
+img[src^="https:"][contenteditable=false]:not(.ignore-auto-embed), 
+img[src^="http:"][contenteditable=false]:not(.ignore-auto-embed) {
+    display: none !important;
+}
+
 iframe.auto-embed {
     max-width: 100%;
     /* min-height: 500px; */
+
+    display: block;
 }
 
 iframe.small.auto-embed {

@@ -11,6 +11,7 @@ import { SpotifyEmbed } from 'src/embeds/spotify';
 import SuggestEmbed from 'src/suggestEmbed';
 import { isURL, regexUrl } from 'src/utility';
 import { embedField } from './embed-state-field';
+import { EmbedManager } from './embeds/embedManager';
 
 class PasteInfo {
 	trigger: boolean;
@@ -46,13 +47,17 @@ export default class AutoEmbedPlugin extends Plugin {
 		console.log('loading plugin');
 		await this.loadSettings();
 
+		console.log("A")
+		
+		const embedManager = EmbedManager.Instance;
+		console.log("C")
+		embedManager.init(this);
+		console.log("B")
+
 		this.registerEditorExtension(embedField);
-		console.log("A      ")
 		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
 		
 		// Remove while testing editor extension
-		return;
-		console.log("B")
 		this.registerDomEvent(document, "keydown", (e) => {
 			if (e.shiftKey)
 				this.isShiftDown = true;
@@ -126,8 +131,6 @@ export default class AutoEmbedPlugin extends Plugin {
 	// Returns null if it's unable to convert it to an embed
 	handleImage(img: HTMLImageElement): HTMLElement | null { 
 		const alt = img.alt;
-		// Removes all spaces
-		const altTrim = alt.replace(/\s/g, "");
 		
 		const noEmbedRegex = /noembed/i;
 		if (noEmbedRegex.test(alt)) {
@@ -208,7 +211,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		const embed = embedSource.createEmbed(link);
 		return embed; 
 	}
-	
+
 	isLiveViewSupported() {
 		if ((this.app.vault as any).config?.livePreview) {
 			// todo

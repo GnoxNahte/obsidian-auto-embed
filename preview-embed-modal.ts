@@ -1,4 +1,4 @@
-import AutoEmbedPlugin from "main";
+import AutoEmbedPlugin from "src/main";
 import { Modal, Setting } from "obsidian";
 
 export class PreviewEmbedModal extends Modal {
