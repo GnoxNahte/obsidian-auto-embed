@@ -16,8 +16,7 @@ export class RedditEmbed extends EmbedBase {
         // Creating the iframe
         const iframe = createEl("iframe");
         
-        iframe.classList.add(this.autoEmbedCssClass, "reddit-embed");
-        iframe.id += "reddit-" + postId[1];
+        iframe.classList.add(this.autoEmbedCssClass, "reddit-embed", "reddit-" + postId[1]);
 
         url = url.replace("www.reddit.com", "reddit.com"); // Remove "www"
         url = url.replace("reddit.com", "embed.reddit.com"); // Add embed subdomain

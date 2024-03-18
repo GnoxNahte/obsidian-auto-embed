@@ -19,8 +19,7 @@ export class TwitterEmbed extends EmbedBase {
         url = `https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=${this.plugin.settings.darkMode ? "dark" : "light"}&id=${postId}`;
         iframe.src = url;
 
-        iframe.id += "twitter-" + postId;
-        iframe.classList.add(this.autoEmbedCssClass, "twitter-embed");
+        iframe.classList.add(this.autoEmbedCssClass, "twitter-embed", "twitter-" + postId);
 
         iframe.sandbox.add("allow-forms", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-modals", "allow-popups");
         iframe.setAttribute("scrolling", "no");
@@ -53,12 +52,20 @@ export class TwitterEmbed extends EmbedBase {
         
         const params = e.data["twttr.embed"]["params"][0];
 
-        const iframe = document.getElementById("twitter-" + params["data"]["tweet_id"]) as HTMLIFrameElement;
+        // Why use class instead of id for getting the reference:
+        // There might be multiple iframes, some in Reading mode and Live preview.
+        // Some might even duplicates if they user has duplicates
+        const iframes = document.getElementsByClassName("twitter-" + params["data"]["tweet_id"]);
         console.log("Tweet-id: " + params["data"]["tweet_id"]);
-        if (iframe === null)
+
+        if (iframes.length === 0)
             return;
         
-        iframe.style.height = params["height"] + "px";
-        iframe.style.width = params["width"] + "px";
+        for (let i = 0; i < iframes.length; ++i) {
+            const iframe = iframes[i] as HTMLIFrameElement;
+            
+            iframe.style.height = params["height"] + "px";
+            iframe.style.width = params["width"] + "px";
+        }
     }
 } 

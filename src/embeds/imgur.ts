@@ -1,7 +1,7 @@
 import { EmbedBase } from "./embedBase";
 
 export class ImgurEmbed extends EmbedBase {
-    name = "Steam";
+    name = "Imgur";
     regex = new RegExp(/https:\/\/imgur\.com\/gallery\/(\w+)/);
     embedOrigin = "https://imgur.com";
 
@@ -18,8 +18,7 @@ export class ImgurEmbed extends EmbedBase {
 
         iframe.src = `https://imgur.com/a/${imgurId}/embed?pub=true`;
 
-        iframe.classList.add(this.autoEmbedCssClass, "imgur-embed");
-        iframe.id = "imgur-" + imgurId;
+        iframe.classList.add(this.autoEmbedCssClass, "imgur-embed", "imgur-" + imgurId);
         
         iframe.setAttribute("scrolling", "no");
         
@@ -37,11 +36,20 @@ export class ImgurEmbed extends EmbedBase {
             return;
     
         const imgurId = regexMatch[1];
-        const iframe = document.getElementById("imgur-" + imgurId) as HTMLIFrameElement;
-        if (iframe === null)
+        // Why use class instead of id for getting the reference:
+        // There might be multiple iframes, some in Reading mode and Live preview.
+        // Some might even duplicates if they user has duplicates
+        const iframes = document.getElementsByClassName("imgur-" + imgurId);
+
+        if (iframes.length === 0)
             return;
         
-        iframe.style.height = data.height + "px";
-        iframe.style.width = data.width + "px";
+        for (let i = 0; i < iframes.length; ++i) {
+            const iframe = iframes[i] as HTMLIFrameElement;
+            
+            iframe.height = data.height + "px";
+            iframe.width = data.width + "px";
+        }
+        
     }
 } 
