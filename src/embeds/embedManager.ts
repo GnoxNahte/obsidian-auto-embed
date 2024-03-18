@@ -7,6 +7,7 @@ import { SteamEmbed } from "./steam";
 import { CodepenEmbed } from "./codepen";
 import { SpotifyEmbed } from "./spotify";
 import { ImgurEmbed } from "./imgur";
+import { DefaultFallbackEmbed } from "./defaultFallbackEmbed";
 
 export class EmbedManager {
     // Singleton
@@ -21,6 +22,7 @@ export class EmbedManager {
 
     plugin: AutoEmbedPlugin;
     embedSources: EmbedBase[];
+    defaultFallbackEmbed: DefaultFallbackEmbed;
 
     init(plugin: AutoEmbedPlugin) {
         this.plugin = plugin;
@@ -35,6 +37,8 @@ export class EmbedManager {
             new SpotifyEmbed(plugin),
             new ImgurEmbed(plugin),
         ];
+
+        this.defaultFallbackEmbed = new DefaultFallbackEmbed(plugin);
     }
 
     // Gets the embed source for the url

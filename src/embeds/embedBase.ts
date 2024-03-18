@@ -22,8 +22,8 @@ export abstract class EmbedBase {
     // - Set body of resize method here (onResizeMessage)
     onResizeMessage?(e: MessageEvent):void;
 
-    onErrorCreatingEmbed(): HTMLElement {
-        const errorMsg = `Error with ${this.name} url`;
+    onErrorCreatingEmbed(msg?: string): HTMLElement {
+        const errorMsg = msg ?? `Error with ${this.name} url`;
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
         error.setText(errorMsg);
 
