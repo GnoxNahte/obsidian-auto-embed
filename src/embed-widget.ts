@@ -15,7 +15,6 @@ export class EmbedWidget extends WidgetType {
 
     toDOM(view: EditorView): HTMLElement {
         const embed = this.embedSource.createEmbed(this.url);
-        MarkdownView
         return embed;
 
         // const div = createDiv({text: "Embed Widget Text"});

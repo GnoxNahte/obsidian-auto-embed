@@ -23,19 +23,18 @@ export class EmbedManager {
     embedSources: EmbedBase[];
 
     init(plugin: AutoEmbedPlugin) {
-        console.log("D")
         this.plugin = plugin;
-        console.log("E")
         this.embedSources = [
+            // Having some trouble replacing the embedded web pages from Obsidian. 
+            // So remove YouTube and Twitter (Keep x.com though, since Obsidian doesn't embed those)
+            // new YouTubeEmbed(plugin),
             new TwitterEmbed(plugin),
             new RedditEmbed(plugin),
-            new YouTubeEmbed(plugin),
             new SteamEmbed(plugin),
             new CodepenEmbed(plugin),
             new SpotifyEmbed(plugin),
             new ImgurEmbed(plugin),
         ];
-        console.log("F")
     }
 
     // Gets the embed source for the url
@@ -49,7 +48,6 @@ export class EmbedManager {
         const embedSource = this._instance.embedSources.find((source) => {
             return source.regex.test(url);
         });
-
-        return embedSource ?? null;
+        return embedSource ?? this._instance.defaultFallbackEmbed;
     }
 }

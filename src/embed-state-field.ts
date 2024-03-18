@@ -7,7 +7,6 @@ import { editorLivePreviewField } from "obsidian";
 
 export const embedField = StateField.define<DecorationSet>({
     create(state): DecorationSet {
-        console.log("C")
         return Decoration.none;
     },
     update(oldState: DecorationSet, transaction: Transaction): DecorationSet {
@@ -23,19 +22,18 @@ export const embedField = StateField.define<DecorationSet>({
                 // console.log("Type: " + node.type.name)
                 if (node.type.name.startsWith("string_url")) {
                     // Don't render when the cursor is on the line.
-                    const overlaps = selections.filter(([from, to]) => (to >= node.from - 1 && from <= node.to + 1));
-                    if (overlaps.length > 0) {
-                        console.log("Return")
-                        return;
-                    }
-                    console.log("word at: " + transaction.state.wordAt(node.from)?.toJSON());
+                    // const overlaps = selections.filter(([from, to]) => (to >= node.from - 1 && from <= node.to + 1));
+                    // if (overlaps.length > 0) {
+                    //     console.log("Return")
+                    //     return;
+                    // }
+                    
                     if (transaction.state.sliceDoc(node.from - 4, node.from - 3) !== "!")
                         return;
 
                     const url = transaction.state.sliceDoc(node.from, node.to);
                     const alt = ""; // TODO
                     const embedSource = EmbedManager.getEmbedSource(url, alt);
-                    console.log("Source: " + embedSource)
 
                     if (embedSource === null)
                         return;

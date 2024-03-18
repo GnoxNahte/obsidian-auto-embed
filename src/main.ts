@@ -31,15 +31,6 @@ interface Selection {
 
 export default class AutoEmbedPlugin extends Plugin {
 	settings: PluginSettings;
-	embedSources: EmbedBase[] = [
-		new TwitterEmbed(this),
-		new RedditEmbed(this),
-		new YouTubeEmbed(this),
-		new SteamEmbed(this),
-		new CodepenEmbed(this),
-		new SpotifyEmbed(this),
-		new ImgurEmbed(this),
-	];
 	isShiftDown = false;
 	pasteInfo: PasteInfo = new PasteInfo(false, "");
 
@@ -47,12 +38,8 @@ export default class AutoEmbedPlugin extends Plugin {
 		console.log('loading plugin');
 		await this.loadSettings();
 
-		console.log("A")
-		
 		const embedManager = EmbedManager.Instance;
-		console.log("C")
 		embedManager.init(this);
-		console.log("B")
 
 		this.registerEditorExtension(embedField);
 		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
@@ -86,7 +73,7 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		this.registerDomEvent(window, "message", (e: MessageEvent) => {
 			// loop through / switch through all embed sources, checking which one sent it
-			for (const source of this.embedSources) {
+			for (const source of EmbedManager.Instance.embedSources) {
 				console.log(source.embedOrigin  + " | " + e.origin);
 				if (source.embedOrigin === e.origin && source.onResizeMessage) {
 					console.log("Origin: " + e.origin);
@@ -130,8 +117,9 @@ export default class AutoEmbedPlugin extends Plugin {
 	// Creates the embed and replaces the Anchor element with it
 	// Returns null if it's unable to convert it to an embed
 	handleImage(img: HTMLImageElement): HTMLElement | null { 
+		// TODO: Replace with EmbedManager
 		const alt = img.alt;
-		
+	
 		const noEmbedRegex = /noembed/i;
 		if (noEmbedRegex.test(alt)) {
 			img.alt = alt.replace(noEmbedRegex, "");
@@ -140,16 +128,13 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		const src = img.src;
 
-		console.log("Testing: " + src);
-		const embedSource = this.embedSources.find((source) => {
-			return source.regex.test(src);
-		})
+		const embedSource = EmbedManager.getEmbedSource(src, alt);
 
-		if (embedSource === undefined) {
+		if (embedSource === null) {
 			return null;
 		}
 		console.log("Found! : " + src);
-		const embed = this.createEmbed(embedSource, src);
+		const embed = embedSource.createEmbed(src);
 
 		// Insert embed
 		const parent = img.parentElement;
@@ -205,11 +190,6 @@ export default class AutoEmbedPlugin extends Plugin {
 		editor.replaceRange(`![](${selection.text})`, selection.start, selection.end);
 		
 		// console.log(`Replacing to ![](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
-	}
-
-	private createEmbed(embedSource: EmbedBase, link: string) {
-		const embed = embedSource.createEmbed(link);
-		return embed; 
 	}
 
 	isLiveViewSupported() {

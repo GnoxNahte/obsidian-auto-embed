@@ -7,6 +7,17 @@ img[src^="http:"][contenteditable=false]:not(.ignore-auto-embed) {
     display: none !important;
 }
 
+/* iframe[src^="https://platform.twitter.com/embed"].external-embed,
+iframe[src^="https://www.youtube.com/embed"].external-embed 
+{
+    display: none !important;
+} */
+
+/* TODO: Somehow find a way to remove widget buffer. It makes a weird spacing between the embeds */
+.cm-widgetBuffer:has(+ iframe.auto-embed) {
+    display: none !important;
+}
+
 iframe.auto-embed {
     max-width: 100%;
     /* min-height: 500px; */
