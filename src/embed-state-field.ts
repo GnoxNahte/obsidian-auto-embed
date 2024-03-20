@@ -4,6 +4,7 @@ import { Decoration, DecorationSet, EditorView } from "@codemirror/view"
 import { EmbedWidget } from "./embed-widget";
 import { EmbedManager } from "./embeds/embedManager";
 import { editorLivePreviewField } from "obsidian";
+import { isURL } from "./utility";
 
 export const embedField = StateField.define<DecorationSet>({
     create(state): DecorationSet {
@@ -15,27 +16,33 @@ export const embedField = StateField.define<DecorationSet>({
         if (!transaction.state.field(editorLivePreviewField))
             return builder.finish();
         
-        const selections = transaction.selection?.ranges.map(range => [range.from, range.to]) ?? [];
+        // const selections = transaction.selection?.ranges.map(range => [range.from, range.to]) ?? [];
+        let altTextStartPos: number | null = null;
         syntaxTree(transaction.state).iterate({
-            
             enter(node) {
                 // console.log("Type: " + node.type.name)
-                if (node.type.name.startsWith("string_url")) {
+                if (node.type.name === "formatting_formatting-image_image_image-marker") {
+                    altTextStartPos = node.to + 1;
+                }
+                else if (node.type.name === "string_url") {
                     // Don't render when the cursor is on the line.
                     // const overlaps = selections.filter(([from, to]) => (to >= node.from - 1 && from <= node.to + 1));
                     // if (overlaps.length > 0) {
                     //     console.log("Return")
                     //     return;
                     // }
-                    
-                    if (transaction.state.sliceDoc(node.from - 4, node.from - 3) !== "!")
-                        return;
 
                     const url = transaction.state.sliceDoc(node.from, node.to);
-                    const alt = ""; // TODO
-                    const embedSource = EmbedManager.getEmbedSource(url, alt);
+                    const alt = altTextStartPos ? transaction.state.sliceDoc(altTextStartPos, node.from - 2) : ""; // TODO
+                    
+                    altTextStartPos = null; // Reset it
 
-                    if (embedSource === null)
+                    if (!isURL(url))
+                        return;
+
+                    const embedData = EmbedManager.getEmbedData(url, alt);
+
+                    if (embedData === null)
                         return;
 
                     const replaceFrom = node.to + 1;
@@ -44,7 +51,7 @@ export const embedField = StateField.define<DecorationSet>({
                         replaceFrom,
                         replaceFrom + 1,
                         Decoration.replace({
-                            widget: new EmbedWidget(embedSource, url, alt),
+                            widget: new EmbedWidget(embedData, url, alt),
                         })
                     );
                 }

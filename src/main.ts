@@ -139,13 +139,14 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		const src = img.src;
 
-		const embedSource = EmbedManager.getEmbedSource(src, alt);
+		const embedData = EmbedManager.getEmbedData(src, alt);
 
-		if (embedSource === null) {
+		console.log(embedData);
+		if (embedData === null) {
 			return null;
 		}
-		console.log("Found! : " + src);
-		const embed = embedSource.createEmbed(src);
+		const embed = embedData.embedSource.createEmbed(src);
+		embedData.embedSource.applyOptions(embed, embedData);
 
 		// Insert embed
 		const parent = img.parentElement;
@@ -154,25 +155,25 @@ export default class AutoEmbedPlugin extends Plugin {
 		return embed;
 	}
 
-	// Replaces Obsidian's iframes for YouTube and Twitter. Makes it so the user can apply the same options
-	// TODO: Consider deleting if not replacing YouTube and Twitter
-	private handleIFrame(iframe: HTMLIFrameElement): HTMLElement | null { 
-		const src = iframe.src;
+	// // Replaces Obsidian's iframes for YouTube and Twitter. Makes it so the user can apply the same options
+	// // TODO: Consider deleting if not replacing YouTube and Twitter
+	// private handleIFrame(iframe: HTMLIFrameElement): HTMLElement | null { 
+	// 	const src = iframe.src;
 
-		const embedSource = EmbedManager.getEmbedSource(src, "");
+	// 	const embedSource = EmbedManager.getEmbedData(src, "");
 
-		if (embedSource === null) {
-			return null;
-		}
-		console.log("Found! : " + src);
-		const embed = embedSource.createEmbed(src);
+	// 	if (embedSource === null) {
+	// 		return null;
+	// 	}
+	// 	console.log("Found! : " + src);
+	// 	const embed = embedSource.createEmbed(src);
 
-		// Insert embed
-		const parent = iframe.parentElement;
-		parent?.replaceChild(embed, iframe);
+	// 	// Insert embed
+	// 	const parent = iframe.parentElement;
+	// 	parent?.replaceChild(embed, iframe);
 
-		return embed;
-	}
+	// 	return embed;
+	// }
 
 	private getSelection(editor: Editor) : Selection | null {
 		if (!editor.somethingSelected())

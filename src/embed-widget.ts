@@ -1,20 +1,21 @@
 import { EditorView, WidgetType } from "@codemirror/view"
-import { EmbedBase } from "./embeds/embedBase";
+import { BaseEmbedData, EmbedBase } from "./embeds/embedBase";
 import { MarkdownView } from "obsidian";
 
 export class EmbedWidget extends WidgetType {
-    embedSource: EmbedBase;
+    embedData: BaseEmbedData;
     url: string;
     alt: string;
-    constructor(embedSource: EmbedBase, url: string, alt: string) {
+    constructor(embedData: BaseEmbedData, url: string, alt: string) {
         super();
-        this.embedSource = embedSource;
+        this.embedData = embedData;
         this.url = url;
         this.alt = alt;
     }
 
     toDOM(view: EditorView): HTMLElement {
-        const embed = this.embedSource.createEmbed(this.url);
+        const embed = this.embedData.embedSource.createEmbed(this.url);
+        this.embedData.embedSource.applyOptions(embed, this.embedData);
         return embed;
 
         // const div = createDiv({text: "Embed Widget Text"});
@@ -29,6 +30,10 @@ export class EmbedWidget extends WidgetType {
     }
     
     eq(other: EmbedWidget) {
-        return other.url === this.url;
+        return this.url === other.url && 
+        (
+            this.embedData.width === other.embedData.width &&
+            this.embedData.height === other.embedData.height
+        );
     }
 }

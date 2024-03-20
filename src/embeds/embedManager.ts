@@ -1,5 +1,5 @@
 import AutoEmbedPlugin from "src/main";
-import { EmbedBase } from "./embedBase";
+import { BaseEmbedData, EmbedBase } from "./embedBase";
 import { TwitterEmbed } from "./twitter";
 import { RedditEmbed } from "./reddit";
 import { YouTubeEmbed } from "./youtube";
@@ -50,16 +50,11 @@ export class EmbedManager {
 
     // Gets the embed source for the url
     // Returns null if it can't / shouldn't be embedded.
-    static getEmbedSource(url: string, alt: string): EmbedBase | null{
-		const noEmbedRegex = /noembed/i;
-		if (noEmbedRegex.test(alt)) {
-			return null;
-		}
-
+    static getEmbedData(url: string, alt: string): BaseEmbedData | null{
         const domain = this._instance.ignoredDomains.find(domain => {
             return domain.test(url);
         });
-
+        // If found a domain in the ignored domains, return
         if (domain) {
             return null;
         }
@@ -68,6 +63,15 @@ export class EmbedManager {
             return source.regex.test(url);
         });
 
-        return embedSource ?? this._instance.defaultFallbackEmbed;
+        // return fallback if can't find any sources
+        if (!embedSource)
+            return new BaseEmbedData(this._instance.defaultFallbackEmbed, "");
+
+        const options = embedSource.getOptions(alt);
+
+        if (!options.shouldEmbed)
+            return null;
+
+        return options;
     }
 }

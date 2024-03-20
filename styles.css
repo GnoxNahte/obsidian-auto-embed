@@ -109,5 +109,6 @@ iframe.largest.auto-embed {
 
 .auto-embed.codepen-embed {
     width: 100%;
-    min-height: 300px;
+    height: 300px;
+    /* min-height: 300px; */
 }
