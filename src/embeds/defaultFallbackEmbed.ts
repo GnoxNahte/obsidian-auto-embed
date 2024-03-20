@@ -6,9 +6,14 @@ export class DefaultFallbackEmbed extends EmbedBase {
     regex = new RegExp(/ /); // Not using regex for this
 
     createEmbed(url: string): HTMLElement {
+        const youtubeMatch = url.match(/https:\/\/www.youtube.com\/embed\/(\w+)/);
+        console.log("Match : " + youtubeMatch)
+        if (youtubeMatch)
+            return this.onErrorCreatingEmbed(`Unable to parse YouTube ${youtubeMatch[1]} urls. Try deleting "/${youtubeMatch[1]}"`);
+
         switch (this.plugin.settings.fallbackOptions) {
             case FallbackOptions.ShowErrorMessage:
-                return this.onErrorCreatingEmbed();
+                return this.onErrorCreatingEmbed("Unable to parse: " + url);
             case FallbackOptions.EmbedLink:
             {        
                 // Creating the iframe

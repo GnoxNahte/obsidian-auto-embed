@@ -58,7 +58,11 @@ iframe.largest.auto-embed {
 }
 
 .auto-embed.error-embed {
+    border: 3px solid #555;
+    border-radius: 15px;
+    padding: 10px;
     color: var(--text-error);
+    margin: 0;
 }
 
 .auto-embed.steam-embed {

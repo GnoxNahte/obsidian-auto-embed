@@ -22,13 +22,14 @@ export class EmbedManager {
 
     plugin: AutoEmbedPlugin;
     embedSources: EmbedBase[];
+    ignoredDomains: RegExp[];
     defaultFallbackEmbed: DefaultFallbackEmbed;
 
     init(plugin: AutoEmbedPlugin) {
         this.plugin = plugin;
         this.embedSources = [
             // Having some trouble replacing the embedded web pages from Obsidian. 
-            // So remove YouTube and Twitter (Keep x.com though, since Obsidian doesn't embed those)
+            // So remove YouTube and Twitter (Keep "TwitterEmbed" for x.com though, since Obsidian doesn't embed those)
             // new YouTubeEmbed(plugin),
             new TwitterEmbed(plugin),
             new RedditEmbed(plugin),
@@ -36,6 +37,12 @@ export class EmbedManager {
             new CodepenEmbed(plugin),
             new SpotifyEmbed(plugin),
             new ImgurEmbed(plugin),
+        ];
+
+        this.ignoredDomains = [
+            // Ignore embeds for youtube and twtiter
+            new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/)/),
+            new RegExp(/https:\/\/(?:twitter)\.com/),
         ];
 
         this.defaultFallbackEmbed = new DefaultFallbackEmbed(plugin);
@@ -49,9 +56,18 @@ export class EmbedManager {
 			return null;
 		}
 
+        const domain = this._instance.ignoredDomains.find(domain => {
+            return domain.test(url);
+        });
+
+        if (domain) {
+            return null;
+        }
+
         const embedSource = this._instance.embedSources.find((source) => {
             return source.regex.test(url);
         });
+
         return embedSource ?? this._instance.defaultFallbackEmbed;
     }
 }
