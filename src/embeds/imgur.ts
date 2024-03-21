@@ -2,7 +2,7 @@ import { EmbedBase } from "./embedBase";
 
 export class ImgurEmbed extends EmbedBase {
     name = "Imgur";
-    regex = new RegExp(/https:\/\/imgur\.com\/(?:gallery|(?:t\/\w+))\/(\w+)/);
+    regex = new RegExp(/https:\/\/imgur\.com\/(?:(?:gallery|(?:t\/\w+))\/)?(\w+)/);
     embedOrigin = "https://imgur.com";
 
     createEmbed(url: string): HTMLElement {

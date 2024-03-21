@@ -53,6 +53,10 @@ export abstract class EmbedBase {
             options.shouldEmbed = true;
         }
 
+        // TODO Options: 
+        // - Size: Set both height and width at the same time. [ae.size:100x200]
+
+        // TODO: Optimise this? If there are alot of options, it might be slow.
         const widthMatch = alt.match(/(?:w|width)\s*(?::|=)\s*(\d+(?:\%|\w+))/);
         if (widthMatch)
             options.width = widthMatch[1];
@@ -64,10 +68,19 @@ export abstract class EmbedBase {
         return options;
     }
 
-    applyOptions(el: HTMLElement, data: BaseEmbedData) {
+    applyModifications(el: HTMLElement, data: BaseEmbedData) {
+        // Applying attributes. Do here to avoid repeating this code
+        console.log("Tagname: " + el.tagName)
+        if (el instanceof HTMLIFrameElement) {
+            el.setAttribute("loading", "lazy");
+            el.setAttribute("allowfullscreen", "true");
+            el.setAttribute("allowtransparency", "true");
+        }
+
+        // Applying optionsa
         if (data.width)
             el.style.width = data.width;
-
+        
         if (data.height)
             el.style.height = data.height;
     }

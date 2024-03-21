@@ -3,7 +3,7 @@ import { EmbedBase } from "./embedBase";
 export class RedditEmbed extends EmbedBase {
     name = "Reddit";
     regex = new RegExp(/reddit.com/);
-    embedOrigin: "https://embed.reddit.com";
+    embedOrigin = "https://embed.reddit.com";
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
@@ -17,12 +17,13 @@ export class RedditEmbed extends EmbedBase {
         const iframe = createEl("iframe");
         
         iframe.classList.add(this.autoEmbedCssClass, "reddit-embed", "reddit-" + postId[1]);
-
+        
         url = url.replace("www.reddit.com", "reddit.com"); // Remove "www"
         url = url.replace("reddit.com", "embed.reddit.com"); // Add embed subdomain
         
         if (this.plugin.settings.darkMode)
         {
+             // If it already has the query marker "?", add to the query with the theme, else just add the query
             url += (url.contains('?') ? "&" : "?") + "theme=dark";
         }
 
@@ -48,8 +49,9 @@ export class RedditEmbed extends EmbedBase {
     }
 
     onResizeMessage(e: MessageEvent) {
+
         const data = JSON.parse(e.data);
-        
+        console.log("data: " + e.data)
         // Only continue if the method is for resizing
         if (data.type !== "resize.embed")
             return;

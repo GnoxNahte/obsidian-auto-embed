@@ -69,17 +69,6 @@ export default class AutoEmbedPlugin extends Plugin {
 
 				this.handleImage(image);
 			})
-
-			// const iframes = el.querySelectorAll('iframe');
-			// iframes.forEach((iframe) => {
-			// 	if (!isURL(iframe.src))
-			// 		return;
-
-			// 	const embed = this.handleIFrame(iframe);
-			// 	if (embed) {
-			// 		// iframe.style.display = "none !important;";
-			// 	}
-			// })
 		})
 
 		this.registerDomEvent(window, "message", (e: MessageEvent) => {
@@ -87,8 +76,8 @@ export default class AutoEmbedPlugin extends Plugin {
 			for (const source of EmbedManager.Instance.embedSources) {
 				console.log(source.embedOrigin  + " | " + e.origin);
 				if (source.embedOrigin === e.origin && source.onResizeMessage) {
-					console.log("Origin: " + e.origin);
-					console.log("Data: " + e.data);
+					// console.log("Origin: " + e.origin);
+					// console.log("Data: " + e.data);
 					source.onResizeMessage(e);
 					break;
 				}
@@ -146,7 +135,7 @@ export default class AutoEmbedPlugin extends Plugin {
 			return null;
 		}
 		const embed = embedData.embedSource.createEmbed(src);
-		embedData.embedSource.applyOptions(embed, embedData);
+		embedData.embedSource.applyModifications(embed, embedData);
 
 		// Insert embed
 		const parent = img.parentElement;

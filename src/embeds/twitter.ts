@@ -23,7 +23,7 @@ export class TwitterEmbed extends EmbedBase {
 
         iframe.sandbox.add("allow-forms", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-modals", "allow-popups");
         iframe.setAttribute("scrolling", "no");
-        iframe.setAttribute("allowfullscreen", "");
+        // iframe.setAttribute("allowfullscreen", "");
 
         return iframe;
     }

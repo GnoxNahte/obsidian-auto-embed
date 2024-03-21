@@ -15,18 +15,8 @@ export class EmbedWidget extends WidgetType {
 
     toDOM(view: EditorView): HTMLElement {
         const embed = this.embedData.embedSource.createEmbed(this.url);
-        this.embedData.embedSource.applyOptions(embed, this.embedData);
+        this.embedData.embedSource.applyModifications(embed, this.embedData);
         return embed;
-
-        // const div = createDiv({text: "Embed Widget Text"});
-        
-        // return div;
-
-        // const div = document.createElement("span");
-
-        // div.innerText = "👉";
-
-        // return div;
     }
     
     eq(other: EmbedWidget) {

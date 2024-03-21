@@ -14,9 +14,6 @@ export class CodepenEmbed extends EmbedBase {
         const iframe = createEl("iframe");
 
         iframe.src = `https://codepen.io/${regexMatch[1]}/embed/${regexMatch[2]}?default-tab=result&editable=true`;
-        iframe.setAttribute("loading", "lazy");
-        iframe.setAttribute("allowfullscreen", "true");
-        iframe.setAttribute("allowtransparency", "true");
 
         iframe.classList.add(this.autoEmbedCssClass, "codepen-embed");
 
