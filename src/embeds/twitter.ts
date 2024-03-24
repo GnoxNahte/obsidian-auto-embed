@@ -64,8 +64,8 @@ export class TwitterEmbed extends EmbedBase {
         for (let i = 0; i < iframes.length; ++i) {
             const iframe = iframes[i] as HTMLIFrameElement;
             
-            iframe.style.height = params["height"] + "px";
-            iframe.style.width = params["width"] + "px";
+            iframe.style.height = ((params["height"] as number) + 1) + "px";
+            // iframe.style.width = ((params["width"] as number) + 1) + "px";
         }
     }
 } 
