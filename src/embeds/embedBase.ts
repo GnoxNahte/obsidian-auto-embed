@@ -64,7 +64,7 @@ export abstract class EmbedBase {
 
     applyModifications(el: HTMLElement, data: BaseEmbedData) {
         // Applying attributes. Do here to avoid repeating this code
-        console.log("Tagname: " + el.tagName)
+        // console.log("Tagname: " + el.tagName)
         if (el instanceof HTMLIFrameElement) {
             el.setAttribute("loading", "lazy");
             el.setAttribute("allowfullscreen", "true");

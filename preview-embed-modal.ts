@@ -13,6 +13,16 @@ export class PreviewEmbedModal extends Modal {
         this.options = options ?? "";
     }
 
+    createEmbed (contentEl: HTMLElement) {
+        console.log("A")
+        // Imitate when it's in Reading Mode, replacing the img tag with the embed
+        const readingViewImg = createEl("img");
+        readingViewImg.src = this.url;
+        readingViewImg.alt = this.options;
+        contentEl.appendChild(readingViewImg);
+        return this.plugin.handleImage(readingViewImg);
+    }
+
     onOpen(): void {
         const {contentEl} = this;
         this.titleEl.textContent = "Preview Embed";
@@ -20,7 +30,7 @@ export class PreviewEmbedModal extends Modal {
         // let linkText = this.plugin.getLinkText(this.url, this.options);
 
         let currEmbed: HTMLElement | null = null;
-        
+
         // ===== NOTE =====
         // Setting is probably not meant to be used like this.
         // But to make the user experience consistent, Use Setting inside this modal
@@ -36,21 +46,26 @@ export class PreviewEmbedModal extends Modal {
                     if (currEmbed)
                         contentEl.removeChild(currEmbed);
                     
-                    const readingViewImg = createEl("img", { text: "", href: this.url });
-                    contentEl.appendChild(readingViewImg);
-                    this.plugin.handleImage(readingViewImg);
+                    currEmbed = this.createEmbed(contentEl);
                 }));
 
         new Setting(contentEl)
             .setName("Preview option")
             .addText(text => text
-                .setValue(this.options))
+                .setValue(this.options)
+                .onChange((value) => {
+                    this.options = value;
+
+                    if (currEmbed)
+                        contentEl.removeChild(currEmbed);
+
+                    currEmbed = this.createEmbed(contentEl);
+                }))
 
         // TODO: add invalid url
 
-        contentEl.appendChild(createEl("h3", { text: "Reading View:" }));
-        const readingViewImg = createEl("img", { text: "", href: this.url });
-        contentEl.appendChild(readingViewImg);
-        currEmbed = this.plugin.handleImage(readingViewImg);
+        contentEl.appendChild(createEl("h3", { text: "Embed" }));
+        
+        currEmbed = this.createEmbed(contentEl);
     }
 }

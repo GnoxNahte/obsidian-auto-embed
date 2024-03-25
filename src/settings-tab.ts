@@ -67,7 +67,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                 .setButtonText("Preview")
                 .setTooltip(previewTooltip)
                 .onClick(() => {
-                    const modal = new PreviewEmbedModal(plugin, "https://www.youtube.com/watch?v=DbsAQSIKQXk&t=468s");
+                    const modal = new PreviewEmbedModal(plugin, "https://x.com/obsdmd/status/1739667211462316449");
                     modal.open();
                 }))
 
