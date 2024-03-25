@@ -2,7 +2,7 @@
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
 
 ## Supported website list
-This is a list of supported websites with some examples.Websites with a `*` means it has some limitation. See [Current Limitations & Known Bugs](README.md/#current-limitations--known-bugs) for more info
+This is a list of supported websites with some examples. Websites with a `*` means it has some sort of limitation. See [Current Limitations & Known Bugs](README.md/#current-limitations--known-bugs) for more info
 
 | Website | Example | Markdown |
 |---|---|---|
