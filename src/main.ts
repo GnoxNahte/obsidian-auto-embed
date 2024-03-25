@@ -35,7 +35,7 @@ export default class AutoEmbedPlugin extends Plugin {
 	pasteInfo: PasteInfo = new PasteInfo(false, "");
 
 	async onload() {
-		console.log('loading plugin');
+		// console.log('loading plugin');
 		await this.loadSettings();
 
 		const embedManager = EmbedManager.Instance;
@@ -60,7 +60,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		this.app.workspace.on("editor-paste", this.onPaste.bind(this));
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
-			console.log("Registering markdown")
+			// console.log("Registering markdown")
 
 			const images = el.querySelectorAll('img');
 			images.forEach((image) => {
@@ -86,7 +86,7 @@ export default class AutoEmbedPlugin extends Plugin {
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		// console.log('unloading plugin');
 	}
 
 	async loadSettings() {
@@ -129,7 +129,7 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		const embedData = EmbedManager.getEmbedData(src, alt);
 
-		console.log(embedData);
+		// console.log(embedData);
 		if (embedData === null) {
 			return null;
 		}
@@ -178,17 +178,17 @@ export default class AutoEmbedPlugin extends Plugin {
 	getLinkSelection(editor: Editor): Selection | null {
 		const cursor = editor.getCursor();
 		const lineText = editor.getLine(cursor.line); 
-		console.log("line text: "+ lineText)
+		// console.log("line text: "+ lineText)
 		const matchedLinks = lineText.matchAll(regexUrl);
 		for (const match of matchedLinks) {
-			console.log("match: " + match[0])
+			// console.log("match: " + match[0])
 			// Check if the cursor is within the match
-			console.log("start: " + match.index + "|end: " + (match.index??0 + match[0].length) + "|cursor: "+ cursor.ch);
+			// console.log("start: " + match.index + "|end: " + (match.index??0 + match[0].length) + "|cursor: "+ cursor.ch);
 			if (match.index && 
 				match.index <= cursor.ch && // Is start of match before cursor
 				match.index + match[0].length >= cursor.ch // Is end of match after cursor
 				) {
-					console.log("Selected: " + match[0]);
+					// console.log("Selected: " + match[0]);
 					return {
 						start: {
 							line: cursor.line,

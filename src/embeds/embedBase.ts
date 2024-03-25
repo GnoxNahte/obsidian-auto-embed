@@ -89,7 +89,7 @@ export abstract class EmbedBase {
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
         error.setText(errorMsg);
 
-        console.log(errorMsg);
+        console.log("auto-embed/error: " + errorMsg);
         return error;
     }
 }

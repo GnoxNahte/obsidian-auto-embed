@@ -14,7 +14,6 @@ export class PreviewEmbedModal extends Modal {
     }
 
     createEmbed (contentEl: HTMLElement) {
-        console.log("A")
         // Imitate when it's in Reading Mode, replacing the img tag with the embed
         const readingViewImg = createEl("img");
         readingViewImg.src = this.url;

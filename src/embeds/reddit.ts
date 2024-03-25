@@ -51,7 +51,7 @@ export class RedditEmbed extends EmbedBase {
     onResizeMessage(e: MessageEvent) {
 
         const data = JSON.parse(e.data);
-        console.log("data: " + e.data)
+        // console.log("data: " + e.data)
         // Only continue if the method is for resizing
         if (data.type !== "resize.embed")
             return;

@@ -56,7 +56,7 @@ export class TwitterEmbed extends EmbedBase {
         // There might be multiple iframes, some in Reading mode and Live preview.
         // Some might even duplicates if they user has duplicates
         const iframes = document.getElementsByClassName("twitter-" + params["data"]["tweet_id"]);
-        console.log("Tweet-id: " + params["data"]["tweet_id"]);
+        // console.log("Tweet-id: " + params["data"]["tweet_id"]);
 
         if (iframes.length === 0)
             return;
