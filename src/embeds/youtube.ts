@@ -1,5 +1,6 @@
 import { EmbedBase } from "./embedBase";
 
+// NOTE: Not maintained since using Obsidian's embeds
 export class YouTubeEmbed extends EmbedBase {
     name = "YouTube";
     // Base from: https://stackoverflow.com/a/61033353/21099543

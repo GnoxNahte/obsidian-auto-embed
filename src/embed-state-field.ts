@@ -33,7 +33,7 @@ export const embedField = StateField.define<DecorationSet>({
                     // }
 
                     const url = transaction.state.sliceDoc(node.from, node.to);
-                    const alt = altTextStartPos ? transaction.state.sliceDoc(altTextStartPos, node.from - 2) : ""; // TODO
+                    const alt = altTextStartPos ? transaction.state.sliceDoc(altTextStartPos, node.from - 2) : "";
                     
                     altTextStartPos = null; // Reset it
 

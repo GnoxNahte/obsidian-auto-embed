@@ -117,7 +117,6 @@ export default class AutoEmbedPlugin extends Plugin {
 	// Creates the embed and replaces the Anchor element with it
 	// Returns null if it's unable to convert it to an embed
 	handleImage(img: HTMLImageElement): HTMLElement | null { 
-		// TODO: Replace with EmbedManager
 		const alt = img.alt;
 	
 		const noEmbedRegex = /noembed/i;
@@ -215,7 +214,6 @@ export default class AutoEmbedPlugin extends Plugin {
 
 	isLiveViewSupported() {
 		if ((this.app.vault as any).config?.livePreview) {
-			// todo
 			console.log("Live view is supported");
 		}
 		else {

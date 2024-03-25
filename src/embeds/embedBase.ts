@@ -38,12 +38,6 @@ export abstract class EmbedBase {
         if (!alt)
             return options;
 
-        // Check if the user specified that the match is inside the brackets
-        // TODO: Add this feature to README.md
-        const specifiedMatch = alt.match(/{(\w+)}/);
-        if (specifiedMatch)
-            alt = specifiedMatch[1];
-
         // Don't need to check the rest since not embedding.
         if (alt.match(/noembed/)) {
             options.shouldEmbed = false;
