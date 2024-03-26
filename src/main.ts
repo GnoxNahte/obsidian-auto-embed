@@ -1,13 +1,5 @@
-import { CodepenEmbed } from 'src/embeds/codepen';
-import { TwitterEmbed } from 'src/embeds/twitter';
-import { EmbedBase } from 'src/embeds/embedBase';
 import { Editor, EditorPosition, Plugin } from 'obsidian';
-import { YouTubeEmbed } from 'src/embeds/youtube';
-import { SteamEmbed } from 'src/embeds/steam';
-import { RedditEmbed } from 'src/embeds/reddit';
 import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'src/settings-tab';
-import { ImgurEmbed } from 'src/embeds/imgur';
-import { SpotifyEmbed } from 'src/embeds/spotify';
 import SuggestEmbed from 'src/suggestEmbed';
 import { isURL, regexUrl } from 'src/utility';
 import { embedField } from './embed-state-field';
@@ -210,14 +202,5 @@ export default class AutoEmbedPlugin extends Plugin {
 		editor.replaceRange(`![](${selection.text})`, selection.start, selection.end);
 		
 		// console.log(`Replacing to ![](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
-	}
-
-	isLiveViewSupported() {
-		if ((this.app.vault as any).config?.livePreview) {
-			console.log("Live view is supported");
-		}
-		else {
-			console.log("Live view is not supported");
-		}
 	}
 }

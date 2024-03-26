@@ -2,7 +2,7 @@ import { EmbedBase } from "./embedBase";
 
 export class CodepenEmbed extends EmbedBase {
     name = "CodePen";
-    regex = new RegExp(/https:\/\/codepen\.io\/(\w+)\/pen\/(\w+)(\?.*)?/);
+    regex = new RegExp(/https:\/\/codepen\.io\/([\w-]+)\/pen\/(\w+)(\?.*)?/);
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);

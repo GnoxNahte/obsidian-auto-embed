@@ -13,7 +13,8 @@ export class SpotifyEmbed extends EmbedBase {
         // Not sure why there's empty space below inside the iframe. Use this to remove the space.
         const iframeContainer = createDiv();
         iframeContainer.classList.add(this.autoEmbedCssClass, "spotify-embed-container");
-        if (regexMatch[1] === "playlist" || regexMatch[1] === "album")
+        //  TODO: Set 'playlist' as default, only specify 'track' (individual song) 
+        if (regexMatch[1] === "playlist" || regexMatch[1] === "album" || regexMatch[1] === "artist")
             iframeContainer.classList.add("spotify-playlist-embed");
 
         // Creating the iframe
@@ -29,7 +30,6 @@ export class SpotifyEmbed extends EmbedBase {
         // iframe.setAttribute("allow", "clipboard-write; encrypted-media; fullscreen; picture-in-picture;");
         iframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
         // iframe.setAttribute("sandbox", "allow-forms allow-presentation allow-same-origin allow-scripts allow-modals");
-
         return iframeContainer;
     }
 } 
