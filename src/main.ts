@@ -49,7 +49,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		
 		this.registerEditorSuggest(new SuggestEmbed(this));
 		
-		this.app.workspace.on("editor-paste", this.onPaste.bind(this));
+		this.registerEvent(this.app.workspace.on("editor-paste", this.onPaste.bind(this)));
 		
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			// console.log("Registering markdown")
