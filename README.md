@@ -2,8 +2,6 @@
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
  
 ## Getting Started
-### Downloading the plugin
-TODO - Submitting to Obsidian's plugin directory
 
 ### Embedding links
 1. Paste a link
@@ -28,7 +26,7 @@ Auto embeds websites like: [Imgur](https://imgur.com/), [CodePen](https://codepe
 - [Spotify](https://open.spotify.com/) *
 
 > [!WARNING]
-> Those websites that have `*` means that it has some sort of limitation. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
+> Those websites have `*` means that it has some sort of limitation. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
 
 For a list with examples of how the websites look like [Supported Websites List](SupportedWebsiteList.md)
 
@@ -40,7 +38,7 @@ How to add options:
 ### All options:
 | Option | Description | Example Markdown |
 |---|---|---|
-|noembed|Disables embedding for this link. If possible, try to use `[](link)` instead. Same syntax, just without '!'|`![noembed](https://example.com)`
+|noembed|Disables embedding for this link. If possible, try using `[](link)` instead. Same syntax, just without '!'|`![noembed](https://example.com)`
 |w:`value` / width:`value`|Sets embed's width|`![w:100%](https://example.com)`
 |h:`value` / height:`value`|Sets embed's height |`![h:500px](https://example.com)`
 <!--- 
@@ -73,7 +71,7 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 	- [ ] Other websites. [Iframely](https://iframely.com/domains) has a list of websites that can be embedded.
 - [ ] Add tests
 - [ ] Updated README.md
-	- [ ] Improve readability. Open to suggestions, especially if something isn't clear!
+	- [ ] Improve readability. Open to suggestions, especially if something isn't clear.
 	- [ ]  Add images/gifs to show examples
  	- [ ]  Add installation instructions
 - [ ]  Submit to Obsidian plugin directory?
@@ -86,8 +84,8 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 	- **Reddit**: Incorrect resizing of Reddit embeds when multiple Reddit embeds appear in the same view.  <br><u>Temporary fix methods:</u>
 		- Space out Reddit embeds such that there aren't multiple embeds in your view
 		- Manually set the height by using options: `![h:240px](Reddit link)`
-	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which is not possible in Obsidian. 
-	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means that [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but it'll only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me.
+	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which isn't possible in Obsidian. 
+	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but it'll only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me / create a pull request.
 	- **Twitter / X**: Obsidian supports https://twitter.com but not https://x.com. This plugin just helps to embed X. If you replace Twitter with x, or vice versa, it'll lead to the same tweet/post. Usually when copying from the mobile app, it's X. When copying from the web, it's Twitter.
 
 Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues) you found!
