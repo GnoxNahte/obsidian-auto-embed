@@ -3,6 +3,8 @@
  
 ## Getting Started
 
+Obsidian plugin link: https://obsidian.md/plugins?id=auto-embed
+
 ### Embedding links
 1. Paste a link
 2. Select "Create Embed"
