@@ -28,9 +28,12 @@ export const embedField = StateField.define<DecorationSet>({
                     // Don't render when the cursor is on the line.
                     // const overlaps = selections.filter(([from, to]) => (to >= node.from - 1 && from <= node.to + 1));
                     // if (overlaps.length > 0) {
-                    //     console.log("Return")
-                    //     return;
-                    // }
+                        //     console.log("Return")
+                        //     return;
+                        // }
+
+                    if (altTextStartPos === null)
+                        return;
 
                     const url = transaction.state.sliceDoc(node.from, node.to);
                     const alt = altTextStartPos ? transaction.state.sliceDoc(altTextStartPos, node.from - 2) : "";
