@@ -40,7 +40,7 @@ export default class SuggestEmbed extends EditorSuggest<Suggestion> {
     }
 
     getSuggestions(context: EditorSuggestContext): Suggestion[] | Promise<Suggestion[]> {
-        return [new Suggestion("Embed Link"), new Suggestion("Cancel")];
+        return [new Suggestion(Suggestion.embedLinkChoice), new Suggestion(Suggestion.cancelChoice)];
     }
 
     renderSuggestion(suggestion: Suggestion, el: HTMLElement): void {

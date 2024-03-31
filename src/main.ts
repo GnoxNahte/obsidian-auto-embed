@@ -93,6 +93,11 @@ export default class AutoEmbedPlugin extends Plugin {
 		if (e.defaultPrevented)
 			return;
 
+		// TODO: Check if need this. Sometimes I'll paste a link and Obsidian will automatically insert a markdown link, messing up the plugin's formatting.
+		// Usually results in: ![[Link Title](link)](link). Usually pastes in this plugin's square brackets
+		// This hopefully prevents it? Doesn't happen very often so need to test more.
+		// e.preventDefault();
+		
 		// Usually "Ctrl-Shift-V" means paste text without formatting. So don't embed
 		if (this.isShiftDown) 
 			return;
