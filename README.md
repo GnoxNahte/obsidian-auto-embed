@@ -2,8 +2,8 @@
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
  
 ## Getting Started
-
-Obsidian plugin link: https://obsidian.md/plugins?id=auto-embed
+Assuming you have [Obsidian](https://obsidian.md/) downloaded, 
+Download the plugin: https://obsidian.md/plugins?id=auto-embed
 
 ### Embedding links
 1. Paste a link
@@ -14,7 +14,6 @@ Obsidian plugin link: https://obsidian.md/plugins?id=auto-embed
 ![GIF showing example on how to embed links](readme-assets/Auto-Embed%20Getting%20Started.gif)
 
 Uses the same syntax as Obsidian - [Embed Web pages](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages). Syntax: `![options](link)`
-
 
 ## Features
 Auto embeds websites like: [Imgur](https://imgur.com/), [CodePen](https://codepen.io/), [Steam](https://store.steampowered.com/). Full list of [supported websites](#supported-websites)
@@ -34,7 +33,7 @@ For a list with examples of how the websites look like [Supported Websites List]
 
 ## Custom Options
 How to add options: 
-- In between the square brackets `[add options here]`, add your options. 
+- In between the square brackets - `![add options here](https://example.com)`
 - If you aren't sure which options are available, refer to the table below
 
 ### All options:
@@ -51,6 +50,10 @@ TODO: Find out how to format size. the separator between width and height is "x"
 --->
 
 Uses [CSS Units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#lengths) where applicable.
+
+## Custom styles
+TODO: Add a table that lists all the CSS classes users can override.
+
 
 ## How the plugin works
 A brief overview with some steps on how the plugin works. *Not required to use the plugin*, just for those who are curious. Certain steps vary depending on whether you're in **Reading View** or **Live Preview**. However, the plugin doesn't have any impact when you're in source mode.
@@ -87,7 +90,7 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 		- Space out Reddit embeds such that there aren't multiple embeds in your view
 		- Manually set the height by using options: `![h:240px](Reddit link)`
 	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which isn't possible in Obsidian. 
-	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but it'll only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me / create a pull request.
+	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but [options](#custom-options) will only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me / create a pull request.
 	- **Twitter / X**: Obsidian supports https://twitter.com but not https://x.com. This plugin just helps to embed X. If you replace Twitter with x, or vice versa, it'll lead to the same tweet/post. Usually when copying from the mobile app, it's X. When copying from the web, it's Twitter.
 
 Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues) you found!
@@ -96,7 +99,8 @@ Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues
 ### The embed isn't appearing
 1. Have you [enabled the plugin](https://help.obsidian.md/Extending+Obsidian/Community+plugins#Enable+a+community+plugin)?
 2. Are you following this syntax? `![](link)`<br>
-	For example: `![]()`
+	For example: `![](https://example.com)`
+3. If it still doesn't work, try contacting me or create an issue.
 
 ## Contact Me
 I've just started Obsidian and this is my first plugin.<br>

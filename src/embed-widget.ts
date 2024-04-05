@@ -1,7 +1,7 @@
 import { EditorView, WidgetType } from "@codemirror/view"
 import { BaseEmbedData, EmbedBase } from "./embeds/embedBase";
-import { MarkdownView } from "obsidian";
 
+// For Live Preview
 export class EmbedWidget extends WidgetType {
     embedData: BaseEmbedData;
     url: string;

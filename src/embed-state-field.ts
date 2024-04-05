@@ -6,6 +6,7 @@ import { EmbedManager } from "./embeds/embedManager";
 import { editorLivePreviewField } from "obsidian";
 import { isURL } from "./utility";
 
+// For Live Preview
 export const embedField = StateField.define<DecorationSet>({
     create(state): DecorationSet {
         return Decoration.none;
