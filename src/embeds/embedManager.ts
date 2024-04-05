@@ -61,11 +61,7 @@ export class EmbedManager {
 
         const embedSource = this._instance.embedSources.find((source) => {
             return source.regex.test(url);
-        });
-
-        // return fallback if can't find any sources
-        if (!embedSource)
-            return new BaseEmbedData(this._instance.defaultFallbackEmbed, "");
+        }) ?? this._instance.defaultFallbackEmbed;
 
         const options = embedSource.getOptions(alt);
 
