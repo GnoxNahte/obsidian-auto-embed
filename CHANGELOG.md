@@ -4,7 +4,7 @@
 
 **New Features & Improvements:**
 - Add [CHANGELOG](https://github.com/GnoxNahte/obsidian-auto-embed/blob/main/CHANGELOG.md)
-- Add "Auto Embed: Convert to Embed" command. 
+- Add "Auto Embed: Add embed" and "Auto Embed: Mark to Embed" command. 
 
 ## [1.0.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.3) (2024-04-05)
 
