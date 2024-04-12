@@ -1,4 +1,4 @@
-import { Editor, EditorPosition, Plugin } from 'obsidian';
+import { Editor, EditorPosition, MarkdownFileInfo, MarkdownView, Plugin } from 'obsidian';
 import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'src/settings-tab';
 import SuggestEmbed from 'src/suggestEmbed';
 import { isURL, regexUrl } from 'src/utility';
@@ -74,6 +74,47 @@ export default class AutoEmbedPlugin extends Plugin {
 					break;
 				}
 			}
+		});
+
+		// Inserts the the markdown "![]()" and put the cursor in between the brackets "()".
+		this.addCommand({
+			id: "auto-embed-add-embed",
+			name: "Add embed",
+			editorCallback: (editor: Editor, ctx: MarkdownView | MarkdownFileInfo) => {
+				const cursorPos = editor.getCursor()
+				editor.replaceRange("![]()", cursorPos, cursorPos);
+				cursorPos.ch += 4;
+				editor.setCursor(cursorPos);
+				return true;
+			},
+		});
+		 
+		// Marks the link the cursor is on to the markdown - ![](link). 
+		// The command only available when the cursor is on a link.
+		this.addCommand({
+			id: "auto-embed-mark-to-embed",
+			name: "Mark to embed",
+			editorCheckCallback: (checking: boolean, editor: Editor, ctx: MarkdownView | MarkdownFileInfo) => {
+				const selection = this.getLinkSelection(editor);
+				if (checking)
+					return selection !== null;
+				
+				if (selection) {
+					editor.replaceRange(`![](${selection.text})`, selection.start, selection.end)
+					
+					// Set the cursor at the end of the link. This is to help the user edit the link if needed. 
+					// However, it is one character before the last ')', which means the user needs to go to the end of the string to add anything else.
+					// But any content they want to add will be after the embed.
+					const newCursorPos = selection.end;
+					newCursorPos.ch += 4;
+					editor.setCursor(newCursorPos);
+				}
+				else {
+					console.error(`Command "Auto Embed: Mark to embed" is available even when there isn't any selection`);
+				}
+
+				return true;
+			},
 		});
 	}
 
@@ -178,9 +219,10 @@ export default class AutoEmbedPlugin extends Plugin {
 		// console.log("line text: "+ lineText)
 		const matchedLinks = lineText.matchAll(regexUrl);
 		for (const match of matchedLinks) {
-			// console.log("match: " + match[0])
+			// console.log("match: " + match[0] + " | Len: " + match[0].length)
+			// console.log("start: " + match.index + "|end: " + (match.index + match[0].length) + "|cursor: "+ cursor.ch);
+			
 			// Check if the cursor is within the match
-			// console.log("start: " + match.index + "|end: " + (match.index??0 + match[0].length) + "|cursor: "+ cursor.ch);
 			if (match.index && 
 				match.index <= cursor.ch && // Is start of match before cursor
 				match.index + match[0].length >= cursor.ch // Is end of match after cursor
