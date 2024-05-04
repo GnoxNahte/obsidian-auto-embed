@@ -25,6 +25,8 @@ export interface PluginSettings {
 
     // Fallback - Shows this when the link isn't supported
     fallbackOptions: FallbackOptions;
+    fallbackWidth: string;
+    fallbackHeight: string;
 
     // Advanced settings
     showAdvancedSettings: boolean;
@@ -37,6 +39,8 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	redditAutoSize: true,
 
     fallbackOptions: FallbackOptions.ShowErrorMessage,
+    fallbackWidth: "100%",
+    fallbackHeight: "",
 
     showAdvancedSettings: false,
     debug: false,
@@ -107,12 +111,16 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             const displayText = option.replace(/([a-z0-9])([A-Z])/g, (match: string, p1: string, p2: string) => `${p1} ${p2.toLowerCase()}`);
             allFallbackOptions[option] = displayText;
         }
+        
+        new Setting(containerEl)
+            .setName("Fallback link")
+            .setHeading()
+            // TODO: Change description, showing the current option description
+            // TODO: Add warning / error message when choosing Hide. Not recommended as only can see the link in source mode
+            .setDesc("Choose what the plugin does when the link isn't supported");
 
         new Setting(containerEl)
             .setName("Fallback options")
-            // TODO: Change description, showing the current option description
-            // TODO: Add warning / error message when choosing Hide. Not recommended as only can see the link in source mode
-            .setDesc("Choose what to show when the link isn't supported")
             .addDropdown(dropdown => dropdown
                 .addOptions(allFallbackOptions)
                 .setValue(FallbackOptions[settings.fallbackOptions])
@@ -120,6 +128,38 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     settings.fallbackOptions = FallbackOptions[value as keyof typeof FallbackOptions];
                     await this.plugin.saveSettings();
                 }))
+
+        new Setting(containerEl)
+            .setName("Default width")
+            .setDesc("Default is 100%, filling the width of the viewport")
+            .addText(text => text
+                .setValue(settings.fallbackWidth)
+                .setPlaceholder("100%")
+                .onChange(async (value) => {
+                    settings.fallbackWidth = value;
+                    await this.plugin.saveSettings();
+                })
+            )
+
+        new Setting(containerEl)
+            .setName("Default height")
+            .addText(text => text
+                .setValue(settings.fallbackHeight)
+                .setPlaceholder("500px")
+                .onChange(async (value) => {
+                    settings.fallbackHeight = value;
+                    await this.plugin.saveSettings();
+                })
+            )
+
+        const additionalInfo = new DocumentFragment();
+        additionalInfo.appendText("All values and units use ");
+        additionalInfo.appendChild(createEl("a", {text: "CSS Units", href: "https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#numbers_lengths_and_percentages"}))
+        additionalInfo.appendChild(createEl("br"))
+        additionalInfo.appendText("Reload any opened note to apply changes");
+
+        new Setting(containerEl)
+            .setDesc(additionalInfo)
 	}
     
     // TODO: Reload markdown after closing settings

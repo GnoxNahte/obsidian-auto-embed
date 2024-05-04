@@ -71,7 +71,7 @@ export abstract class EmbedBase {
             el.setAttribute("allowtransparency", "true");
         }
 
-        // Applying optionsa
+        // Applying options
         if (data.width)
             el.style.width = data.width;
         

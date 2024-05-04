@@ -23,6 +23,16 @@ export class DefaultFallbackEmbed extends EmbedBase {
                 
                 iframe.classList.add(this.autoEmbedCssClass, "default-fallback-embed");
 
+                const width = this.plugin.settings.fallbackWidth;
+                if (width) {
+                    iframe.style.width = width;
+                }
+                
+                const height = this.plugin.settings.fallbackHeight;
+                if (height) {
+                    iframe.style.height = height;
+                }
+
                 return iframe;
             }
             case FallbackOptions.Hide:
