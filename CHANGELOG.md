@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.5](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.5) (2024-05-04)
+
+**New Features & Improvements:**
+- Add size options for fallback embed (for unsupported links that are marked to embed)
+
 ## [1.0.4](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.4) (2024-04-12)
 
 **New Features & Improvements:**
