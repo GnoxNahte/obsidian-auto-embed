@@ -81,6 +81,8 @@ A brief overview with some steps on how the plugin works. *Not required to use t
  	- [ ]  Add installation instructions
 - [ ]  Submit to Obsidian plugin directory?
 
+Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
+
 ### Current Limitations & Known Bugs 
 - General
 	- **Live Preview**: It's still experimental which means it might have bugs. 
@@ -104,7 +106,7 @@ Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues
 
 ## Contact Me
 I've just started Obsidian and this is my first plugin.<br>
-If you have any questions, feature requests or issues feel free to [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues/new) or contact me!<br>
+If you have any questions, feature requests or issues feel free to [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues/new), [submit a feature request](https://forms.gle/xtuv4FVCKZ2tg9zK9) or contact me!<br>
 
 Email - gnoxnahte@gmail.com<br>
 Discord DM - https://discordapp.com/users/222261096738717696 <br>
