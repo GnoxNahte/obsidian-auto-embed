@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.5](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.5) (2024-06-08)
+
+**New Features & Improvements:**
+- Add support for embedding Google Docs.
+
+**Bugs Fixed:**
+- Fix a bug when the plugin overrides Obsidian whenever there is an image url (urls ending with image extensions like .png or .jpg) which results in the image not being sized correctly. Now it should behave like the [docs](https://help.obsidian.md/Linking+notes+and+files/Embed+files#Embed+an+image+in+a+note).
+
 ## [1.0.5](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.5) (2024-05-04)
 
 **New Features & Improvements:**
