@@ -1,7 +1,7 @@
 {
 	"id": "auto-embed",
 	"name": "Auto Embed",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"minAppVersion": "1.5.11",
 	"description": "Helps to embed links using markdown instead of iframe",
 	"author": "GnoxNahte",

@@ -1,6 +1,11 @@
 # Changelog
 
-## [1.0.5](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.5) (2024-06-08)
+## [1.0.7](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.7) (2024-06-08)
+
+**New Features & Improvements:**
+- Add an option to have a link below the default fallback embed. Helps with easily opening the link in the browser for further and more in depth viewing.
+
+## [1.0.6](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.6) (2024-06-08)
 
 **New Features & Improvements:**
 - Add support for embedding Google Docs.
