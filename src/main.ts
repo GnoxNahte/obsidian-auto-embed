@@ -1,7 +1,7 @@
 import { Editor, EditorPosition, MarkdownFileInfo, MarkdownView, Plugin } from 'obsidian';
 import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'src/settings-tab';
 import SuggestEmbed from 'src/suggestEmbed';
-import { isURL, regexUrl } from 'src/utility';
+import { isLinkToImage, isURL, regexUrl } from 'src/utility';
 import { embedField } from './embed-state-field';
 import { EmbedManager } from './embeds/embedManager';
 
@@ -34,6 +34,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		embedManager.init(this);
 
 		this.registerEditorExtension(embedField);
+
 		this.addSettingTab(new AutoEmbedSettingTab(this.app, this));
 		
 		// Remove while testing editor extension
@@ -56,7 +57,7 @@ export default class AutoEmbedPlugin extends Plugin {
 
 			const images = el.querySelectorAll('img');
 			images.forEach((image) => {
-				if (image.referrerPolicy !== "no-referrer" || !isURL(image.src))
+				if (image.referrerPolicy !== "no-referrer" || !isURL(image.src) || isLinkToImage(image.src))
 					return;
 
 				this.handleImage(image);
@@ -88,7 +89,7 @@ export default class AutoEmbedPlugin extends Plugin {
 				return true;
 			},
 		});
-		 
+		
 		// Marks the link the cursor is on to the markdown - ![](link). 
 		// The command only available when the cursor is on a link.
 		this.addCommand({

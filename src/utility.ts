@@ -8,3 +8,7 @@ export function isURL(str: string) : boolean {
         return false;
     }
 }
+
+export function isLinkToImage(url: string) : boolean {
+    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
+}

@@ -4,7 +4,7 @@ import { Decoration, DecorationSet, EditorView } from "@codemirror/view"
 import { EmbedWidget } from "./embed-widget";
 import { EmbedManager } from "./embeds/embedManager";
 import { editorLivePreviewField } from "obsidian";
-import { isURL } from "./utility";
+import { isLinkToImage, isURL } from "./utility";
 
 // For Live Preview
 export const embedField = StateField.define<DecorationSet>({
@@ -41,7 +41,7 @@ export const embedField = StateField.define<DecorationSet>({
                     
                     altTextStartPos = null; // Reset it
 
-                    if (!isURL(url))
+                    if (!isURL(url) || isLinkToImage(url))
                         return;
 
                     const embedData = EmbedManager.getEmbedData(url, alt);

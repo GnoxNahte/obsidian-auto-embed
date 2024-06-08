@@ -2,8 +2,8 @@
     .markdown-source-view.mod-cm6 .cm-content > [contenteditable=false]
 */
 /* Select the placeholder image and alt that appears when Obsidian doesn't render the link. */
-img[src^="https:"][contenteditable=false]:not(.ignore-auto-embed), 
-img[src^="http:"][contenteditable=false]:not(.ignore-auto-embed) {
+img[src^="https:"][contenteditable=false]:has(+ div iframe), 
+img[src^="http:"][contenteditable=false]:has(+ div iframe) {
     display: none !important;
 }
 
