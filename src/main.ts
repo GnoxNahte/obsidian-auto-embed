@@ -174,11 +174,11 @@ export default class AutoEmbedPlugin extends Plugin {
 		}
 		const embed = embedData.embedSource.createEmbed(src);
 		embedData.embedSource.applyModifications(embed, embedData);
-
+		
 		// Insert embed
 		const parent = img.parentElement;
 		parent?.replaceChild(embed, img);
-
+		
 		return embed;
 	}
 

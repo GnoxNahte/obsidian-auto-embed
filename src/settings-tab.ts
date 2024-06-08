@@ -28,6 +28,7 @@ export interface PluginSettings {
     fallbackOptions: FallbackOptions;
     fallbackWidth: string;
     fallbackHeight: string;
+    fallbackAddLink: boolean;
 
     // Advanced settings
     showAdvancedSettings: boolean;
@@ -44,6 +45,7 @@ export const DEFAULT_SETTINGS: PluginSettings = {
     fallbackOptions: FallbackOptions.ShowErrorMessage,
     fallbackWidth: "100%",
     fallbackHeight: "",
+    fallbackAddLink: true,
 
     showAdvancedSettings: false,
     debug: false,
@@ -81,6 +83,15 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             return recordOutput;
         }
 
+        // Not perfect but just a tmp solution for adding bottom border.
+        // Maybe create a new function just for adding a bottom border for the last element 
+        function AddPadding(setting: Setting, addBottomBorder = false) {
+            setting.settingEl.style.paddingLeft = "2em";
+            setting.settingEl.style.borderLeft = "1px solid var(--background-modifier-border)";
+            if (addBottomBorder)
+                setting.settingEl.style.borderBottom = "1px solid var(--background-modifier-border)";
+        }
+
         const previewTooltip = "Opens a modal (small window) to test with links with your settings";
         new Setting(containerEl)
             .setName("Preview Embed")
@@ -108,7 +119,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             .setName("Reddit")
             .setHeading();
 
-        new Setting(containerEl)
+        const redditAutoSizeOption = new Setting(containerEl)
             .setName("Reddit auto size")
             .setDesc("There's a bug where it incorreclty assigns the wrong height if there's multiple reddit embeds. This toggles if it should auto resize or set a fixed size instead.")
             .setTooltip("If anyone know how to fix it, please help. \nSee GitHub for the source code.")
@@ -119,6 +130,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
             );
+        AddPadding(redditAutoSizeOption, true);
 
         new Setting(containerEl)
             .setName("Google Docs")
@@ -131,8 +143,8 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         googleDocsViewOptionDesc.appendText("Edit minimal - Editable but don't show the header and toolbar");
         googleDocsViewOptionDesc.appendChild(createEl("br"))
         googleDocsViewOptionDesc.appendText("Edit default - Editable and shows the header and toolbar");
-
-        new Setting(containerEl)
+        
+        const googleDocsOption = new Setting(containerEl)
             .setName("Google Docs view options")
             .setDesc(googleDocsViewOptionDesc)
             .addDropdown(dropdown => dropdown
@@ -142,6 +154,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     settings.googleDocsViewOption = GoogleDocsViewOptions[value as keyof typeof GoogleDocsViewOptions];
                     await this.plugin.saveSettings();
                 }))
+        AddPadding(googleDocsOption, true);
         
         new Setting(containerEl)
             .setName("Fallback link")
@@ -149,18 +162,23 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             // TODO: Change description, showing the current option description
             // TODO: Add warning / error message when choosing Hide. Not recommended as only can see the link in source mode
             .setDesc("Choose what the plugin does when the link isn't supported");
+        
+        const fallbackSettings: Setting[] = [];
+        let fallbackAddLinkSetting: Setting | null = null;
 
-        new Setting(containerEl)
+        fallbackSettings.push(new Setting(containerEl)
             .setName("Fallback options")
             .addDropdown(dropdown => dropdown
                 .addOptions(EnumToRecord(FallbackOptions))
                 .setValue(FallbackOptions[settings.fallbackOptions])
                 .onChange(async (value) => {
                     settings.fallbackOptions = FallbackOptions[value as keyof typeof FallbackOptions];
+                    if (fallbackAddLinkSetting)
+                        fallbackAddLinkSetting.settingEl.style.display = settings.fallbackOptions === FallbackOptions.EmbedLink ? "flex" : "none";
                     await this.plugin.saveSettings();
-                }))
+                })))
 
-        new Setting(containerEl)
+        fallbackSettings.push(new Setting(containerEl)
             .setName("Default width")
             .setDesc("Default is 100%, filling the width of the viewport")
             .addText(text => text
@@ -170,9 +188,9 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     settings.fallbackWidth = value;
                     await this.plugin.saveSettings();
                 })
-            )
+            ))
 
-        new Setting(containerEl)
+        fallbackSettings.push(new Setting(containerEl)
             .setName("Default height")
             .addText(text => text
                 .setValue(settings.fallbackHeight)
@@ -181,7 +199,25 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     settings.fallbackHeight = value;
                     await this.plugin.saveSettings();
                 })
+            ))
+        
+        fallbackAddLinkSetting = new Setting(containerEl)
+            .setName("Add link to the bottom")
+            .setDesc("Add a link below the embed to easily open the link on a browser")
+            .addToggle(toggle => toggle
+                .setValue(settings.fallbackAddLink)
+                .onChange(async (value) => {
+                    settings.fallbackAddLink = value;
+                    await this.plugin.saveSettings();
+                })
             )
+        // Same as when changing embed options
+        fallbackAddLinkSetting.settingEl.style.display = settings.fallbackOptions === FallbackOptions.EmbedLink ? "flex" : "none";
+        fallbackSettings.push(fallbackAddLinkSetting);
+
+        fallbackSettings.forEach(setting => {
+            AddPadding(setting);
+        });
 
         const additionalInfo = new DocumentFragment();
         additionalInfo.appendText("All values and units use ");

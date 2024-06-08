@@ -15,7 +15,10 @@ export class DefaultFallbackEmbed extends EmbedBase {
             case FallbackOptions.ShowErrorMessage:
                 return this.onErrorCreatingEmbed("Unable to embed: " + url);
             case FallbackOptions.EmbedLink:
-            {        
+            { 
+                const embedContainer = createSpan();
+                embedContainer.setCssStyles({display: "inline-block", width: "100%", textAlign: "center"});
+
                 // Creating the iframe
                 const iframe = createEl("iframe");
                 
@@ -33,7 +36,14 @@ export class DefaultFallbackEmbed extends EmbedBase {
                     iframe.style.height = height;
                 }
 
-                return iframe;
+                embedContainer.appendChild(iframe);
+
+                if (this.plugin.settings.fallbackAddLink) {
+                    const link = createEl("a", {href: iframe.src, text: "Link"});
+                    embedContainer.appendChild(link);
+                }
+
+                return embedContainer;
             }
             case FallbackOptions.Hide:
                 return createEl("span", {cls: "auto-embed-hide"});
