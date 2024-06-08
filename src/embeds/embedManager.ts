@@ -2,7 +2,6 @@ import AutoEmbedPlugin from "src/main";
 import { BaseEmbedData, EmbedBase } from "./embedBase";
 import { TwitterEmbed } from "./twitter";
 import { RedditEmbed } from "./reddit";
-import { YouTubeEmbed } from "./youtube";
 import { SteamEmbed } from "./steam";
 import { CodepenEmbed } from "./codepen";
 import { SpotifyEmbed } from "./spotify";

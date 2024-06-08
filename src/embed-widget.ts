@@ -1,5 +1,5 @@
 import { EditorView, WidgetType } from "@codemirror/view"
-import { BaseEmbedData, EmbedBase } from "./embeds/embedBase";
+import { BaseEmbedData } from "./embeds/embedBase";
 
 // For Live Preview
 export class EmbedWidget extends WidgetType {

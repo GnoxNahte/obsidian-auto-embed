@@ -1,5 +1,5 @@
 import AutoEmbedPlugin from "src/main";
-import { App, PluginSettingTab, Setting, Vault } from "obsidian";
+import { App, PluginSettingTab, Setting } from "obsidian";
 import { PreviewEmbedModal } from "src/preview-embed-modal";
 
 export enum FallbackOptions {

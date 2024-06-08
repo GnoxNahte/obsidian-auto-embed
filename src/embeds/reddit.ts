@@ -12,6 +12,10 @@ export class RedditEmbed extends EmbedBase {
             return this.onErrorCreatingEmbed();
 
         const postId = url.match(/(?:\/comments\/)(\w+)/) as RegExpMatchArray;
+        if (!postId)
+        {
+            return this.onErrorCreatingEmbed();
+        }
 
         // Creating the iframe
         const iframe = createEl("iframe");

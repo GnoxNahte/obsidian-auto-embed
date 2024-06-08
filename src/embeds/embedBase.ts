@@ -48,14 +48,14 @@ export abstract class EmbedBase {
         }
 
         // TODO Options: 
-        // - Size: Set both height and width at the same time. [ae.size:100x200]
+        // - Size: Set both height and width at the same time. [size:100x200]
 
         // TODO: Optimise this? If there are alot of options, it might be slow.
-        const widthMatch = alt.match(/(?:w|width)\s*(?::|=)\s*(\d+(?:\%|\w+))/);
+        const widthMatch = alt.match(/(?:w|width)\s*(?::|=)\s*(\d+(?:%|\w+))/);
         if (widthMatch)
             options.width = widthMatch[1];
 
-        const heightMatch = alt.match(/(?:h|height)\s*(?::|=)\s*(\d+(?:\%|\w+))/);
+        const heightMatch = alt.match(/(?:h|height)\s*(?::|=)\s*(\d+(?:%|\w+))/);
         if (heightMatch)
             options.height = heightMatch[1];
 
