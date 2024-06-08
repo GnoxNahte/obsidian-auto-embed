@@ -68,7 +68,7 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 4. Some websites like Twitter, Reddit or Imgur, will send a resize message. The plugin uses the info to resize the embed.
 
 ## Roadmap
-- [ ] Add support for other websites (If you want other websites, create an issue or message me)
+- [ ] Add support for other websites (If you want other websites, create an issue or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9))
 	- [ ] Google Maps
 	- [ ] Google Docs
 	- [ ] Google Calendar
@@ -85,10 +85,9 @@ Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
 
 ### Current Limitations & Known Bugs 
 - General
-	- **Live Preview**: It's still experimental which means it might have bugs. 
-	- **Mobile**: Not tested yet
+	- **Live Preview**: It's still experimental which means it might have bugs. Sometimes it glitches out and doesn't let you edit. When it does that, either restart the app or switch to [Source mode](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown#Source+mode)
 - Website specific
-	- **Reddit**: Incorrect resizing of Reddit embeds when multiple Reddit embeds appear in the same view.  <br><u>Temporary fix methods:</u>
+	- **Reddit**: Incorrect resizing of Reddit embeds when multiple Reddit embeds appear in the same view.  <br><u>Temporary solutions:</u>
 		- Space out Reddit embeds such that there aren't multiple embeds in your view
 		- Manually set the height by using options: `![h:240px](Reddit link)`
 	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which isn't possible in Obsidian. 
