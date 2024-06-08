@@ -7,6 +7,7 @@ import { CodepenEmbed } from "./codepen";
 import { SpotifyEmbed } from "./spotify";
 import { ImgurEmbed } from "./imgur";
 import { DefaultFallbackEmbed } from "./defaultFallbackEmbed";
+import { GoogleDocsEmbed } from "./googleDocs";
 
 export class EmbedManager {
     // Singleton
@@ -26,18 +27,19 @@ export class EmbedManager {
 
     init(plugin: AutoEmbedPlugin) {
         this.plugin = plugin;
+        // Add any new embeds here
         this.embedSources = [
-            // Having some trouble replacing the embedded web pages from Obsidian. 
-            // So remove YouTube and Twitter (Keep "TwitterEmbed" for x.com though, since Obsidian doesn't embed those)
-            // new YouTubeEmbed(plugin),
             new TwitterEmbed(plugin),
             new RedditEmbed(plugin),
             new SteamEmbed(plugin),
             new CodepenEmbed(plugin),
             new SpotifyEmbed(plugin),
             new ImgurEmbed(plugin),
+            new GoogleDocsEmbed(plugin),
         ];
 
+        // Having some trouble replacing the embedded web pages from Obsidian. 
+        // So remove YouTube and Twitter (Keep "TwitterEmbed" for x.com though, since Obsidian doesn't embed those)
         this.ignoredDomains = [
             // Ignore embeds for youtube and twtiter
             new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/)/),

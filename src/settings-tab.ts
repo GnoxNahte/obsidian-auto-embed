@@ -8,20 +8,21 @@ export enum FallbackOptions {
     Hide,
 }
 
+export enum GoogleDocsViewOptions {
+    Preview,
+    EditMinimal,
+    EditDefault,
+}
+
 export interface PluginSettings {
 	// General
 	darkMode: boolean;
 	
-	// Twitter
-	
 	// Reddit
 	redditAutoSize: boolean; // Has some problems resizing when there are multiple reddit embeds
 	
-	// YouTube
-
-	// Steam
-
-	// Codepen
+    // Google Docs
+    googleDocsViewOption: GoogleDocsViewOptions;
 
     // Fallback - Shows this when the link isn't supported
     fallbackOptions: FallbackOptions;
@@ -37,6 +38,8 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	darkMode: true,
 
 	redditAutoSize: true,
+
+    googleDocsViewOption: GoogleDocsViewOptions.Preview,
 
     fallbackOptions: FallbackOptions.ShowErrorMessage,
     fallbackWidth: "100%",
@@ -62,6 +65,21 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         const settings = this.plugin.settings;
 
 		containerEl.empty();
+
+        // Takes in a enum and converts it to a record with the key and value
+        function EnumToRecord<T extends {[key: number]: string | number}>(e: T): Record<string, string>  {
+            const recordOutput: Record<string, string> = {};
+            for (const option in e) {
+                // Don't add if its a key (number)
+                if (!isNaN(Number(option)))
+                    continue;
+                
+                const displayText = option.replace(/([a-z0-9])([A-Z])/g, (match: string, p1: string, p2: string) => `${p1} ${p2.toLowerCase()}`);
+                recordOutput[option] = displayText;
+            }
+
+            return recordOutput;
+        }
 
         const previewTooltip = "Opens a modal (small window) to test with links with your settings";
         new Setting(containerEl)
@@ -102,15 +120,28 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                 })
             );
 
-        const allFallbackOptions: Record<string, string> = {};
-        for (const option in FallbackOptions) {
-            // Don't add if its a key (number)
-            if (!isNaN(Number(option)))
-                continue;
-            
-            const displayText = option.replace(/([a-z0-9])([A-Z])/g, (match: string, p1: string, p2: string) => `${p1} ${p2.toLowerCase()}`);
-            allFallbackOptions[option] = displayText;
-        }
+        new Setting(containerEl)
+            .setName("Google Docs")
+            .setHeading()
+            .setDesc("Note that when the view options is editable, the default page width is too small. Try to use \"Preview\" where possible");
+
+        const googleDocsViewOptionDesc = new DocumentFragment();
+        googleDocsViewOptionDesc.appendText("Preview - Uneditable, only embed the content");
+        googleDocsViewOptionDesc.appendChild(createEl("br"))
+        googleDocsViewOptionDesc.appendText("Edit minimal - Editable but don't show the header and toolbar");
+        googleDocsViewOptionDesc.appendChild(createEl("br"))
+        googleDocsViewOptionDesc.appendText("Edit default - Editable and shows the header and toolbar");
+
+        new Setting(containerEl)
+            .setName("Google Docs view options")
+            .setDesc(googleDocsViewOptionDesc)
+            .addDropdown(dropdown => dropdown
+                .addOptions(EnumToRecord(GoogleDocsViewOptions))
+                .setValue(GoogleDocsViewOptions[settings.googleDocsViewOption])
+                .onChange(async (value) => {
+                    settings.googleDocsViewOption = GoogleDocsViewOptions[value as keyof typeof GoogleDocsViewOptions];
+                    await this.plugin.saveSettings();
+                }))
         
         new Setting(containerEl)
             .setName("Fallback link")
@@ -122,7 +153,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Fallback options")
             .addDropdown(dropdown => dropdown
-                .addOptions(allFallbackOptions)
+                .addOptions(EnumToRecord(FallbackOptions))
                 .setValue(FallbackOptions[settings.fallbackOptions])
                 .onChange(async (value) => {
                     settings.fallbackOptions = FallbackOptions[value as keyof typeof FallbackOptions];
