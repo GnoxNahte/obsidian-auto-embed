@@ -5,6 +5,7 @@ export class BaseEmbedData {
     // TODO: Add url
     originalString?: string;
     shouldEmbed: boolean;
+    alt?: string;
     width?: string;
     height?: string;
 
@@ -30,7 +31,7 @@ export abstract class EmbedBase {
         this.plugin = plugin;
     }
     
-    abstract createEmbed(link: string): HTMLElement;
+    abstract createEmbed(link: string, embedData?: BaseEmbedData): HTMLElement;
 
     getOptions(alt: string): BaseEmbedData {
         const options: BaseEmbedData = new BaseEmbedData(this, alt);
@@ -47,17 +48,23 @@ export abstract class EmbedBase {
             options.shouldEmbed = true;
         }
 
+        options.alt = alt;
+
         // TODO Options: 
         // - Size: Set both height and width at the same time. [size:100x200]
 
         // TODO: Optimise this? If there are alot of options, it might be slow.
         const widthMatch = alt.match(/(?:w|width)\s*(?::|=)\s*(\d+(?:%|\w+))/);
-        if (widthMatch)
+        if (widthMatch) {
             options.width = widthMatch[1];
+            options.alt = options.alt.replace(widthMatch[0], "");
+        }
 
         const heightMatch = alt.match(/(?:h|height)\s*(?::|=)\s*(\d+(?:%|\w+))/);
-        if (heightMatch)
+        if (heightMatch) {
             options.height = heightMatch[1];
+            options.alt = options.alt.replace(heightMatch[0], "");
+        }
 
         return options;
     }

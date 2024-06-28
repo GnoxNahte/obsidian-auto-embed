@@ -44,7 +44,7 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 
     fallbackOptions: FallbackOptions.ShowErrorMessage,
     fallbackWidth: "100%",
-    fallbackHeight: "",
+    fallbackHeight: "500px",
     fallbackAddLink: true,
 
     showAdvancedSettings: false,

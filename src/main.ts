@@ -172,7 +172,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		if (embedData === null) {
 			return null;
 		}
-		const embed = embedData.embedSource.createEmbed(src);
+		const embed = embedData.embedSource.createEmbed(src, embedData);
 		embedData.embedSource.applyModifications(embed, embedData);
 		
 		// Insert embed

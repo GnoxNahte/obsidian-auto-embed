@@ -14,7 +14,7 @@ export class EmbedWidget extends WidgetType {
     }
 
     toDOM(view: EditorView): HTMLElement {
-        const embed = this.embedData.embedSource.createEmbed(this.url);
+        const embed = this.embedData.embedSource.createEmbed(this.url, this.embedData);
         this.embedData.embedSource.applyModifications(embed, this.embedData);
         return embed;
     }

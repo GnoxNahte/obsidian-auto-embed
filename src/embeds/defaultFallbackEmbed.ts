@@ -1,11 +1,11 @@
 import { FallbackOptions } from "src/settings-tab";
-import { EmbedBase } from "./embedBase";
+import { BaseEmbedData, EmbedBase } from "./embedBase";
 
 export class DefaultFallbackEmbed extends EmbedBase {
     name = "Fallback Embed";
     regex = new RegExp(/ /); // Not using regex for this
 
-    createEmbed(url: string): HTMLElement {
+    createEmbed(url: string, embedOptions: BaseEmbedData): HTMLElement {
         // const youtubeMatch = url.match(/https:\/\/www.youtube.com\/embed\/(\w+)/);
         // console.log("Match : " + youtubeMatch)
         // if (youtubeMatch)
@@ -40,7 +40,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
                 embedContainer.appendChild(iframe);
 
                 if (this.plugin.settings.fallbackAddLink) {
-                    const link = createEl("a", {href: iframe.src, text: "Link"});
+                    const link = createEl("a", {href: iframe.src, text: embedOptions.alt});
                     embedContainer.appendChild(link);
                 }
 
