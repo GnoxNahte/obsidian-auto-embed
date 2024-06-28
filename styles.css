@@ -21,6 +21,11 @@ iframe.auto-embed {
     display: inline-block;
 }
 
+.auto-embed iframe.default-fallback-embed {
+    width: 100%;
+    height: 100%;
+}
+
 .auto-embed.twitter-embed {
     width: 600px;
     height: 350px;

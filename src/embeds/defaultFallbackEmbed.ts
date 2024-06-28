@@ -17,6 +17,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
             case FallbackOptions.EmbedLink:
             { 
                 const embedContainer = createSpan();
+                embedContainer.addClass(this.autoEmbedCssClass, "default-fallback-embed");
                 embedContainer.setCssStyles({display: "inline-block", width: "100%", textAlign: "center"});
 
                 // Creating the iframe
@@ -28,12 +29,12 @@ export class DefaultFallbackEmbed extends EmbedBase {
 
                 const width = this.plugin.settings.fallbackWidth;
                 if (width) {
-                    iframe.style.width = width;
+                    embedContainer.style.width = width;
                 }
                 
                 const height = this.plugin.settings.fallbackHeight;
                 if (height) {
-                    iframe.style.height = height;
+                    embedContainer.style.height = height;
                 }
 
                 embedContainer.appendChild(iframe);
