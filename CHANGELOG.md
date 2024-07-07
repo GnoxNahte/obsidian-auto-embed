@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.0) (2024-07-07)
+
+Increment minor version because the features for the fallback (unsupported websites) embed is mostly done.
+
+**New Features & Improvements:**
+- Add support to set the fallback embed link text from the previous update. Set it by using the alt text or in the settings.
+
+**Bugs Fixed:**
+- Fix fallback embed not resizing correctly when there is [custom sizes](https://github.com/GnoxNahte/obsidian-auto-embed/tree/main#all-options).
+
 ## [1.0.7](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.0.7) (2024-06-08)
 
 **New Features & Improvements:**
