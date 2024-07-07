@@ -12,3 +12,4 @@ This is a list of supported websites with some examples. Websites with a `*` mea
 |[CodePen](https://codepen.io/)|<img src="readme-assets/examples/CodePen-Example.gif" width="400px"/>|`![h:500px](https://codepen.io/jh3y/pen/LYNZwGm)`|
 |[Steam](https://store.steampowered.com/)|<img src="readme-assets/examples/Steam-Example.png" width="400px"/>|`![](https://store.steampowered.com/app/367520/Hollow_Knight/)`|
 |[Spotify](https://open.spotify.com/) *|<img src="readme-assets/examples/Spotify-Example.png" width="400px"/>|`![](https://open.spotify.com/album/06mXfvDsRZNfnsGZvX2zpb)`|
+|Unsupported Website|<img src="readme-assets/examples/UnsupportedEmbed-Example.png" width="400px"/>|`![Obsidian Website](https://obsidian.md/)`<br>**NOTE**: Text inside `[]` shows up below the embed as a clickable link which bring you to the website.

@@ -29,7 +29,9 @@ Auto embeds websites like: [Imgur](https://imgur.com/), [CodePen](https://codepe
 > [!WARNING]
 > Those websites have `*` means that it has some sort of limitation. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
 
-For a list with examples of how the websites look like [Supported Websites List](SupportedWebsiteList.md)
+For unsupported websites, the plugin will embed the whole website and not modify it.
+
+For a list with examples of how the websites look like [Supported Websites List](SupportedWebsiteList.md). 
 
 ## Custom Options
 How to add options: 
@@ -70,7 +72,6 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 ## Roadmap
 - [ ] Add support for other websites (If you want other websites, create an issue or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9))
 	- [ ] Google Maps
-	- [ ] Google Docs
 	- [ ] Google Calendar
 	- [ ] Notion 
 	- [ ] Other websites. [Iframely](https://iframely.com/domains) has a list of websites that can be embedded.
@@ -79,7 +80,6 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 	- [ ] Improve readability. Open to suggestions, especially if something isn't clear.
 	- [ ]  Add images/gifs to show examples
  	- [ ]  Add installation instructions
-- [ ]  Submit to Obsidian plugin directory?
 
 Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
 
