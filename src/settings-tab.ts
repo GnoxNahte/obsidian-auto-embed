@@ -28,7 +28,7 @@ export interface PluginSettings {
     fallbackOptions: FallbackOptions;
     fallbackWidth: string;
     fallbackHeight: string;
-    fallbackAddLink: boolean;
+    fallbackDefaultLink: string;
 
     // Advanced settings
     showAdvancedSettings: boolean;
@@ -42,10 +42,10 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 
     googleDocsViewOption: GoogleDocsViewOptions.Preview,
 
-    fallbackOptions: FallbackOptions.ShowErrorMessage,
+    fallbackOptions: FallbackOptions.EmbedLink,
     fallbackWidth: "100%",
     fallbackHeight: "500px",
-    fallbackAddLink: true,
+    fallbackDefaultLink: "Link",
 
     showAdvancedSettings: false,
     debug: false,
@@ -135,7 +135,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Google Docs")
             .setHeading()
-            .setDesc("Note that when the view options is editable, the default page width is too small. Try to use \"Preview\" where possible");
+            .setDesc("Note that when the view options is set to editable, the default page width is too small. Try to use \"Preview\" where possible");
 
         const googleDocsViewOptionDesc = new DocumentFragment();
         googleDocsViewOptionDesc.appendText("Preview - Uneditable, only embed the content");
@@ -192,6 +192,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
 
         fallbackSettings.push(new Setting(containerEl)
             .setName("Default height")
+            .setDesc("Default is 500px. Set to 100vh if u want it to be the height of the viewport")
             .addText(text => text
                 .setValue(settings.fallbackHeight)
                 .setPlaceholder("500px")
@@ -202,12 +203,13 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             ))
         
         fallbackAddLinkSetting = new Setting(containerEl)
-            .setName("Add link to the bottom")
+            .setName("Sets the default text for a link below the embed")
             .setDesc("Add a link below the embed to easily open the link on a browser")
-            .addToggle(toggle => toggle
-                .setValue(settings.fallbackAddLink)
+            .addText(text => text
+                .setValue(settings.fallbackDefaultLink)
+                .setPlaceholder("Link")
                 .onChange(async (value) => {
-                    settings.fallbackAddLink = value;
+                    settings.fallbackDefaultLink = value;
                     await this.plugin.saveSettings();
                 })
             )

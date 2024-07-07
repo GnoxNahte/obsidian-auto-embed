@@ -39,8 +39,9 @@ export class DefaultFallbackEmbed extends EmbedBase {
 
                 embedContainer.appendChild(iframe);
 
-                if (this.plugin.settings.fallbackAddLink) {
-                    const link = createEl("a", {href: iframe.src, text: embedOptions.alt});
+                if (this.plugin.settings.fallbackDefaultLink || embedOptions.alt) {
+                    const linkText = embedOptions.alt ? embedOptions.alt : this.plugin.settings.fallbackDefaultLink;
+                    const link = createEl("a", {href: iframe.src, text: linkText.trim()});
                     embedContainer.appendChild(link);
                 }
 

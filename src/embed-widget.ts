@@ -24,6 +24,7 @@ export class EmbedWidget extends WidgetType {
         (
             this.embedData.width === other.embedData.width &&
             this.embedData.height === other.embedData.height
-        );
+        ) && 
+        this.alt === other.alt;
     }
 }
