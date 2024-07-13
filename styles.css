@@ -125,7 +125,15 @@ iframe.auto-embed {
     height: 70rem;
 }
 
+/* TikTok */
 .auto-embed.tiktok-embed {
     max-width: 605px;
     min-width: 325px;
+    border-radius: 7px;
+}
+
+/* SoundCloud */
+.auto-embed.soundcloud-embed {
+    width: 100%;
+    height: 166px;
 }
