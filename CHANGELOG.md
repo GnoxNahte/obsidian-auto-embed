@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.1) (2024-07-13)
+
+**New Features & Improvements:**
+- Add SoundCloud embed support from [feature request](https://github.com/GnoxNahte/obsidian-auto-embed/issues/3)
+- Add TikTok embed support from [feature request](https://github.com/GnoxNahte/obsidian-auto-embed/issues/4)
+
+**Bugs Fixed:**
+- Fix reddit embeds not resizing correctly when there are multiple reddit embeds appearing on the same page.
+
 ## [1.1.0](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.0) (2024-07-07)
 
 Increment minor version because the features for the fallback (unsupported websites) embed is mostly done.
