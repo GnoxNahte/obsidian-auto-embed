@@ -8,6 +8,7 @@ import { SpotifyEmbed } from "./spotify";
 import { ImgurEmbed } from "./imgur";
 import { DefaultFallbackEmbed } from "./defaultFallbackEmbed";
 import { GoogleDocsEmbed } from "./googleDocs";
+import { TikTokEmbed } from "./tiktok";
 
 export class EmbedManager {
     // Singleton
@@ -36,6 +37,7 @@ export class EmbedManager {
             new SpotifyEmbed(plugin),
             new ImgurEmbed(plugin),
             new GoogleDocsEmbed(plugin),
+            new TikTokEmbed(plugin),
         ];
 
         // Having some trouble replacing the embedded web pages from Obsidian. 

@@ -66,8 +66,9 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		this.registerDomEvent(window, "message", (e: MessageEvent) => {
 			// loop through / switch through all embed sources, checking which one sent it
+			// console.log("Message: " + e.data);
 			for (const source of EmbedManager.Instance.embedSources) {
-				console.log(source.embedOrigin  + " | " + e.origin);
+				// console.log(source.embedOrigin  + " | " + e.origin);
 				if (source.embedOrigin === e.origin && source.onResizeMessage) {
 					// console.log("Origin: " + e.origin);
 					// console.log("Data: " + e.data);
