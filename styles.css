@@ -21,22 +21,26 @@ iframe.auto-embed {
     display: inline-block;
 }
 
+/* Default fallback */
 .auto-embed iframe.default-fallback-embed {
     width: 100%;
     height: 100%;
 }
 
+/* Twitter */
 .auto-embed.twitter-embed {
     width: 600px;
     height: 350px;
     min-height: unset;
 }
 
+/* YouTube Shorts */
 .auto-embed.youtube-shorts-embed {
     height: 560px;
     aspect-ratio: 9/16;
 }
 
+/* YouTube */
 .auto-embed.youtube-embed {
     /* Default size of YouTube videos when using Share > Embed option on YoutTube's website */
     /* width: 560px;
@@ -46,6 +50,7 @@ iframe.auto-embed {
     aspect-ratio: 16 / 9;
 }
 
+/* Error */
 .auto-embed.error-embed {
     border: 3px solid #555;
     border-radius: 15px;
@@ -54,6 +59,7 @@ iframe.auto-embed {
     margin: 0;
 }
 
+/* Steam */
 .auto-embed.steam-embed {
     /* Default size of Steam previews when using Embed option on Steam's website */
     /* width: 646px;
@@ -66,12 +72,14 @@ iframe.auto-embed {
      and height stays at 190px. So set a fixed height.*/
 }
 
+/* Reddit */
 .auto-embed.reddit-embed {
     height: 240px;
     width: 100%;
     /* height: 500px; */
 }
 
+/* Spotify */
 .auto-embed.spotify-embed-container {
     left: 0;
     width: 100%;
@@ -96,12 +104,14 @@ iframe.auto-embed {
     position: absolute;
 }
 
+/* CodePen */
 .auto-embed.codepen-embed {
     width: 100%;
     height: 300px;
     /* min-height: 300px; */
 }
 
+/* Google Docs */
 .auto-embed.google-docs-embed-edit-default {
     height: 76.5rem;
     width: 100%;
@@ -113,4 +123,9 @@ iframe.auto-embed {
 .auto-embed.google-docs-embed-edit-minimal {
     width: 100%;
     height: 70rem;
+}
+
+.auto-embed.tiktok-embed {
+    max-width: 605px;
+    min-width: 325px;
 }

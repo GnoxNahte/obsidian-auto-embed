@@ -52,18 +52,16 @@ export class TikTokEmbed extends EmbedBase {
             return;
 
         const iframes = document.getElementsByClassName("tiktok-embed") as HTMLCollectionOf<HTMLIFrameElement>;
-        if (iframes.length >= 0)
-        {
-            for (let i = 0; i < iframes.length; i++) {
-                const iframe = iframes[i];
-                if (iframe.contentWindow == e.source)
-                {
-                    iframe.style.height = data.height + "px";
-                    break;
-                }
-
-                // console.log("Height: " + iframe.style.height);
+        for (let i = 0; i < iframes.length; i++) {
+            const iframe = iframes[i];
+            // Check where the message came from
+            if (iframe.contentWindow == e.source)
+            {
+                iframe.style.height = data.height + "px";
+                break;
             }
+
+            // console.log("Height: " + iframe.style.height);
         }
     }
 } 

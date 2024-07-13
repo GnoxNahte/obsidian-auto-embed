@@ -20,14 +20,14 @@ Auto embeds websites like: [Imgur](https://imgur.com/), [CodePen](https://codepe
 
 ### Supported websites:
 - [X](https://x.com) *
-- [Reddit](https://www.reddit.com/) *
+- [Reddit](https://www.reddit.com/)
 - [Imgur](https://imgur.com/)
 - [CodePen](https://codepen.io/)
 - [Steam](https://store.steampowered.com/)
 - [Spotify](https://open.spotify.com/) *
 
 > [!WARNING]
-> Those websites have `*` means that it has some sort of limitation. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
+> Those websites have `*` means that it has some sort of limitation/note. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
 
 For unsupported websites, the plugin will embed the whole website and not modify it.
 
@@ -70,7 +70,7 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 4. Some websites like Twitter, Reddit or Imgur, will send a resize message. The plugin uses the info to resize the embed.
 
 ## Roadmap
-- [ ] Add support for other websites (If you want other websites, create an issue or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9))
+- [ ] Add support for other websites (If you want other websites, [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues) or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9) if u aren't comfortable with GitHub)
 	- [ ] Google Maps
 	- [ ] Google Calendar
 	- [ ] Notion 
@@ -85,11 +85,10 @@ Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
 
 ### Current Limitations & Known Bugs 
 - General
-	- **Live Preview**: It's still experimental which means it might have bugs. Sometimes it glitches out and doesn't let you edit. When it does that, either restart the app or switch to [Source mode](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown#Source+mode)
+	- **Live Preview**: 
+		- The cursor location doesn't match with Obsidian's [Embed Web pages](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages). Still trying to fix it.
+		- Rarely happens but sometimes it glitches out and doesn't let you edit. When it does that, either restart the app or switch to [Source mode](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown#Source+mode).
 - Website specific
-	- **Reddit**: Incorrect resizing of Reddit embeds when multiple Reddit embeds appear in the same view.  <br><u>Temporary solutions:</u>
-		- Space out Reddit embeds such that there aren't multiple embeds in your view
-		- Manually set the height by using options: `![h:240px](Reddit link)`
 	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which isn't possible in Obsidian. 
 	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but [options](#custom-options) will only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me / create a pull request.
 	- **Twitter / X**: Obsidian supports https://twitter.com but not https://x.com. This plugin just helps to embed X. If you replace Twitter with x, or vice versa, it'll lead to the same tweet/post. Usually when copying from the mobile app, it's X. When copying from the web, it's Twitter.
@@ -105,12 +104,11 @@ Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues
 
 ## Contact Me
 I've just started Obsidian and this is my first plugin.<br>
-If you have any questions, feature requests or issues feel free to [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues/new), [submit a feature request](https://forms.gle/xtuv4FVCKZ2tg9zK9) or contact me!<br>
+If you have any questions, feature requests, bugs or anything related to the plugin, feel free to [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues/new) or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9). 
 
-Email - gnoxnahte@gmail.com<br>
-Discord DM - https://discordapp.com/users/222261096738717696 <br>
+Alternatively, you can [email](mailto:gnoxnahte.dev@gmail.com) me too.
 
-If this plugin helped you and want to support its development, consider supporting me at [Ko-fi](https://ko-fi.com/gnoxnahtedev)
+If this plugin helped you and want to support its development, please consider supporting me at [Ko-fi](https://ko-fi.com/gnoxnahtedev)
 
 ## Credits
-- Inspired by Sam Warnick's [Simple Embed](https://github.com/samwarnick/obsidian-simple-embeds). Changed a lot of things from it though.
+- Inspired by Sam Warnick's [Simple Embed](https://github.com/samwarnick/obsidian-simple-embeds). It was archived so I made my own plugin. Changed a lot of things from it though.

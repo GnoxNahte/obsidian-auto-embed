@@ -18,9 +18,6 @@ export interface PluginSettings {
 	// General
 	darkMode: boolean;
 	
-	// Reddit
-	redditAutoSize: boolean; // Has some problems resizing when there are multiple reddit embeds
-	
     // Google Docs
     googleDocsViewOption: GoogleDocsViewOptions;
 
@@ -37,8 +34,6 @@ export interface PluginSettings {
 
 export const DEFAULT_SETTINGS: PluginSettings = {
 	darkMode: true,
-
-	redditAutoSize: true,
 
     googleDocsViewOption: GoogleDocsViewOptions.Preview,
 
@@ -83,7 +78,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             return recordOutput;
         }
 
-        // Not perfect but just a tmp solution for adding bottom border.
+        // Not perfect but just a tmp solution for adding bottom border and indenting the setting.
         // Maybe create a new function just for adding a bottom border for the last element 
         function AddPadding(setting: Setting, addBottomBorder = false) {
             setting.settingEl.style.paddingLeft = "2em";
@@ -114,23 +109,6 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
             );
-
-        new Setting(containerEl)
-            .setName("Reddit")
-            .setHeading();
-
-        const redditAutoSizeOption = new Setting(containerEl)
-            .setName("Reddit auto size")
-            .setDesc("There's a bug where it incorreclty assigns the wrong height if there's multiple reddit embeds. This toggles if it should auto resize or set a fixed size instead.")
-            .setTooltip("If anyone know how to fix it, please help. \nSee GitHub for the source code.")
-            .addToggle(toggle => toggle
-                .setValue(settings.darkMode)
-                .onChange(async (value) => {
-                    settings.darkMode = value;
-                    await this.plugin.saveSettings();
-                })
-            );
-        AddPadding(redditAutoSizeOption, true);
 
         new Setting(containerEl)
             .setName("Google Docs")
