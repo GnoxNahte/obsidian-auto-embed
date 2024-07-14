@@ -18,7 +18,15 @@ export class ImgurEmbed extends EmbedBase {
 
         iframe.src = `https://imgur.com/a/${imgurId}/embed?pub=true`;
 
-        iframe.classList.add(this.autoEmbedCssClass, "imgur-embed", "imgur-" + imgurId);
+        iframe.classList.add(this.autoEmbedCssClass, "imgur-embed");
+        iframe.dataset.imgurId = imgurId;
+        if (this.sizeCache[imgurId] && this.sizeCache[imgurId].height) {
+            iframe.style.height = this.sizeCache[imgurId].height + "px";
+            
+            // Optional
+            if (this.sizeCache[imgurId].width)
+                iframe.style.width = this.sizeCache[imgurId].width + "px";
+        }
         
         iframe.setAttribute("scrolling", "no");
         
@@ -34,10 +42,10 @@ export class ImgurEmbed extends EmbedBase {
             return;
         
         const imgurId = regexMatch[1];
-        // Why use class instead of id for getting the reference:
+        // Why use querySelectorAll instead of querySelector for getting the reference:
         // There might be multiple iframes, some in Reading mode and Live preview.
         // Some might even duplicates if they user has duplicates
-        const iframes = document.getElementsByClassName("imgur-" + imgurId);
+        const iframes = document.querySelectorAll(`.imgur-embed[data-imgur-id="${imgurId}"`);
         
         if (iframes.length === 0)
             return;
@@ -48,6 +56,8 @@ export class ImgurEmbed extends EmbedBase {
             if (data.message === "resize_imgur") {
                 iframe.height = data.height + "px";
                 iframe.width = data.width + "px";
+
+                this.sizeCache[imgurId] = { width: data.width, height: data.height };
             } 
             // ===== NOTE =====
             // Imgur has different embed urls for "albums" and "posts"

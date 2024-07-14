@@ -1,4 +1,5 @@
 import AutoEmbedPlugin from "src/main";
+import { Dictionary, Size } from "src/utility";
 
 export class BaseEmbedData {
     embedSource: EmbedBase;
@@ -26,9 +27,14 @@ export abstract class EmbedBase {
     // If the website doesn't need / doesn't send the message, it'll be undefined.
     readonly embedOrigin?: string;
     readonly plugin: AutoEmbedPlugin;
+    // Cache the height of the embed. 
+    // Correctly sizes the embeds that it has seen before as soon as the embed is loaded. Reducing Cumulative Layout Shift.
+    // Helps also when some websites don't send the resize message for some reason.
+    sizeCache: Dictionary<Size>; 
     
     constructor(plugin: AutoEmbedPlugin) {
         this.plugin = plugin;
+        this.sizeCache = {};
     }
     
     abstract createEmbed(link: string, embedData?: BaseEmbedData): HTMLElement;
@@ -88,7 +94,7 @@ export abstract class EmbedBase {
     
     // To have a embed source respond to the resize event:
     // - Set EmbedBase.embedOrigin (e.g. embedOrigin = "https://platform.twitter.com")
-    // - Set body of resize method here (onResizeMessage)
+    // - Implement body of resize method here (onResizeMessage)
     onResizeMessage?(e: MessageEvent):void;
 
     onErrorCreatingEmbed(msg?: string): HTMLElement {

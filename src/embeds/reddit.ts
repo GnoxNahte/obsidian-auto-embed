@@ -11,19 +11,19 @@ export class RedditEmbed extends EmbedBase {
         if (regexMatch === null)
             return this.onErrorCreatingEmbed();
 
-        const postId = url.match(/(?:\/comments\/)(\w+)/) as RegExpMatchArray;
-        if (!postId)
+        const postIdRegexResult = url.match(/(?:\/comments\/)(\w+)/) as RegExpMatchArray;
+        if (!postIdRegexResult)
         {
             return this.onErrorCreatingEmbed();
         }
+        const postId = postIdRegexResult[1];
 
         // Creating the iframe
         const iframe = createEl("iframe");
         
         iframe.classList.add(this.autoEmbedCssClass, "reddit-embed", "reddit-" + postId[1]);
         
-        url = url.replace("www.reddit.com", "reddit.com"); // Remove "www"
-        url = url.replace("reddit.com", "embed.reddit.com"); // Add embed subdomain
+        url = url.replace("www.reddit.com", "embed.reddit.com"); // Remove "www"
         
         if (this.plugin.settings.darkMode)
         {
@@ -32,20 +32,14 @@ export class RedditEmbed extends EmbedBase {
         }
 
         iframe.src = url;
+        iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("allowfullscreen", "");
         
-        // TODO: Dynamically set iframe height:
-        // Methods:
-        //      - Listen to reddit's postmessage, reddit sends out a postmessage containing:
-        //          {
-        //              type: "resize.embed"
-        //              data: [height value]
-        //          }
-        //          But it doesn't send the post id, so I'm not sure which iframe to set it to. 
-        //      - Get height from reddit api? Not sure how to do
-        //      - Get content type from reddit api? Main heights are: 
-        //          - short text: 240px 
-        //          - long text (has a show more dropdown): 316px 
-        //          - picture / video: 739px 
+        // console.log("Cache: " + JSON.stringify(this.sizeCache))
+        iframe.dataset.redditPostId = postId;
+        if (this.sizeCache[postId] && this.sizeCache[postId].height) {
+            iframe.style.height = this.sizeCache[postId].height + "px";
+        }
 
         // iframe.style.height="unset";
 
@@ -72,7 +66,13 @@ export class RedditEmbed extends EmbedBase {
             // Check where the message came from
             if (iframe.contentWindow == e.source)
             {
-                iframe.style.height = data.data + "px";
+                const height = data.data;
+                iframe.style.height = height + "px";
+                
+                const postId = iframe.dataset.redditPostId;
+                if (postId) 
+                    this.sizeCache[postId] = { width: 0, height: height};
+
                 break;
             }
             // console.log("Height: " + iframe.style.height);

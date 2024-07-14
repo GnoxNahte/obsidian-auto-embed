@@ -12,3 +12,12 @@ export function isURL(str: string) : boolean {
 export function isLinkToImage(url: string) : boolean {
     return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
 }
+
+export interface Dictionary<T> {
+    [key: string]: T;
+}
+
+export interface Size {
+    width: number;
+    height: number;
+}

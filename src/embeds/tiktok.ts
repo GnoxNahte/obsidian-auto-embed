@@ -3,7 +3,7 @@ import { EmbedBase } from "./embedBase";
 export class TikTokEmbed extends EmbedBase {
     name = "TikTok";
     embedOrigin = "https://www.tiktok.com"
-    regex = new RegExp(/https:\/\/www\.tiktok\.com\/\@([\w\.]+)\/video\/(\d+)/);
+    regex = new RegExp(/https:\/\/www\.tiktok\.com\/@([\w.]+)\/video\/(\d+)/);
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
@@ -19,8 +19,13 @@ export class TikTokEmbed extends EmbedBase {
         iframe.src = `https://www.tiktok.com/embed/v2/${tiktokId}/`;
 
         iframe.classList.add(this.autoEmbedCssClass, "tiktok-embed");
-        // iframe.dataset.tiktokId = tiktokId;
         iframe.setAttribute("allowfullscreen", "");
+        
+        // console.log("Cache: " + JSON.stringify(this.sizeCache))
+        iframe.dataset.tiktokId = tiktokId;
+        if (this.sizeCache[tiktokId] && this.sizeCache[tiktokId].height) {
+            iframe.style.height = this.sizeCache[tiktokId].height + "px";
+        }
 
         return iframe;
     }
@@ -58,6 +63,11 @@ export class TikTokEmbed extends EmbedBase {
             if (iframe.contentWindow == e.source)
             {
                 iframe.style.height = data.height + "px";
+
+                const tiktokId = iframe.dataset.tiktokId;
+                if (tiktokId) 
+                    this.sizeCache[tiktokId] = { width: 0, height: height};
+
                 break;
             }
 
