@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.2) (2024-07-13)
+
+**New Features & Improvements:**
+- Notion websites is supported! Though I just realised that it was supported all along. Notion doesn't have any special things to do when it's embedded so the notion website is just embedded by itself without any modifications. Never really used Notion so I didn't realise it. The website still needs to be public as you can't sign in Obsidian though.
+- Cache the size for websites that are dynamically sized like Reddit, Imgur, Twitter/X, TikTok. It should set the  [Cumulative Layout Shift](https://web.dev/articles/cls) after the first time you open note. Also fixes [this issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues/5)
+
 ## [1.1.1](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.1) (2024-07-13)
 
 **New Features & Improvements:**
