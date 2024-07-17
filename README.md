@@ -11,7 +11,7 @@ Download the plugin: https://obsidian.md/plugins?id=auto-embed
 3. (Optional) Add [Options](#custom-options)
 4. Done! Wait for the embed to load
 
-![GIF showing example on how to embed links](readme-assets/Auto-Embed%20Getting%20Started.gif)
+<img src="readme-assets/Auto-Embed%20Getting%20Started.gif" height="750px" alt="GIF showing example on how to embed links"/>
 
 Uses the same syntax as Obsidian - [Embed Web pages](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages). Syntax: `![options](link)`
 
@@ -35,7 +35,7 @@ Auto embeds websites like: [Imgur](https://imgur.com/), [CodePen](https://codepe
 - [Notion](https://www.notion.so/) *
 
 > [!WARNING]
-> Those websites have `*` means that it has some sort of limitation/note. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
+> Websites with `*` means that it has some sort of limitation/note. See [Current Limitations & Known Bugs](#current-limitations--known-bugs) for more info
 
 For unsupported websites, the plugin will embed the whole website and not modify it.
 
@@ -97,7 +97,7 @@ Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
 		- Rarely happens but sometimes it glitches out and doesn't let you edit. When it does that, either restart the app or switch to [Source mode](https://help.obsidian.md/Editing+and+formatting/Edit+and+preview+Markdown#Source+mode).
 - Website specific
 	- **Spotify**: Only able to play 30 seconds of a song. Spotify only allows when the user is logged in to the browser, which isn't possible in Obsidian. 
-	- **Notion**: The notion needs to be a [published website](https://www.notion.so/help/public-pages-and-web-publishing). Also, the plugin isn't doing anything special for Notion. Unlike other websites, it's just using the raw link as an iframe.
+	- **Notion**: The notion note needs to be a [published website](https://www.notion.so/help/public-pages-and-web-publishing). Also, the plugin isn't doing anything special for Notion. Unlike other websites, it's just using the raw link as an iframe.
 	- **Twitter & YouTube**: Since [Obsidian supports it](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages), I won't interfere with it. However, it means [options](#custom-options) isn't supported. I might be able to replace Obsidian's embeds with mine, but [options](#custom-options) will only work in *Live Preview*, but not *Reading Mode*. This makes an inconsistent user experience but if you want this feature, contact me / create a pull request.
 	- **Twitter / X**: Obsidian supports https://twitter.com but not https://x.com. This plugin just helps to embed X. If you replace Twitter with x, or vice versa, it'll lead to the same tweet/post. Usually when copying from the mobile app, it's X. When copying from the web, it's Twitter.
 
