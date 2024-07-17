@@ -3,7 +3,6 @@ export const regexUrl = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a
 export function isURL(str: string) : boolean {
     // Returns false if it's an Obsidian internal link. 
     if (str.startsWith("app://")) {
-        console.log("False!")
         return false;
     }
 
