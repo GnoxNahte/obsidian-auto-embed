@@ -1,9 +1,18 @@
 /* If this doesn't work, try this. Found when selecting 
     .markdown-source-view.mod-cm6 .cm-content > [contenteditable=false]
 */
-/* Select the placeholder image and alt that appears when Obsidian doesn't render the link. */
-img[src^="https:"][contenteditable=false]:has(+ div iframe), 
-img[src^="http:"][contenteditable=false]:has(+ div iframe) {
+
+/* Select the placeholder image and alt that appears when Obsidian doesn't render the link. Has 2 duplicates to support "http" and "https"*/
+/* Normal / default when pasting without any other content */
+img[src^="https:"][contenteditable=false]:has(+ div iframe.auto-embed), 
+img[src^="http:"][contenteditable=false]:has(+ div iframe.auto-embed),
+/* When editing in a list */
+img[src^="https:"][contenteditable=false]:has(+ iframe.auto-embed),
+img[src^="http:"][contenteditable=false]:has(+ iframe.auto-embed),
+/* When in a list (not editing) */
+img[src^="https:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed),
+img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed) 
+{
     display: none !important;
 }
 
@@ -129,6 +138,8 @@ iframe.auto-embed {
 .auto-embed.tiktok-embed {
     max-width: 605px;
     min-width: 325px;
+    /* Default at 700px to prevent some Cumulative Layout Shift while waiting for tiktok to send the resize message */ 
+    height: 700px; 
     border-radius: 7px;
 }
 

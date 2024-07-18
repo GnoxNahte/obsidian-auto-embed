@@ -6,6 +6,9 @@ import { EmbedManager } from "./embeds/embedManager";
 import { editorLivePreviewField } from "obsidian";
 import { isLinkToImage, isURL } from "./utility";
 
+const formattingImageMarkerRegex = /formatting_formatting-image_image_image-marker(?:_list-\d*)?$/;
+const stringUrlRegex = /^(?:list-\d*_)?string_url$/;
+
 // For Live Preview
 export const embedField = StateField.define<DecorationSet>({
     create(state): DecorationSet {
@@ -22,10 +25,10 @@ export const embedField = StateField.define<DecorationSet>({
         syntaxTree(transaction.state).iterate({
             enter(node) {
                 // console.log("Type: " + node.type.name)
-                if (node.type.name === "formatting_formatting-image_image_image-marker") {
+                if (formattingImageMarkerRegex.test(node.type.name)) {
                     altTextStartPos = node.to + 1;
                 }
-                else if (node.type.name === "string_url") {
+                else if (stringUrlRegex.test(node.type.name)) {
                     // Don't render when the cursor is on the line.
                     // const overlaps = selections.filter(([from, to]) => (to >= node.from - 1 && from <= node.to + 1));
                     // if (overlaps.length > 0) {
