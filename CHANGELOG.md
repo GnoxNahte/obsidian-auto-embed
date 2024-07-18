@@ -1,6 +1,11 @@
 # Changelog
 
-## [1.1.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.2) (2024-07-13)
+## [1.1.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.3) (2024-07-18)
+
+**Bugs Fixed:**
+- Fix when it doesn't embed links when it's in a list. From [issue 6](https://github.com/GnoxNahte/obsidian-auto-embed/issues/6)
+
+## [1.1.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.2) (2024-07-17)
 
 **New Features & Improvements:**
 - Notion websites is supported! Though I just realised that it was supported all along. Notion doesn't have any special things to do when it's embedded so the notion website is just embedded by itself without any modifications. Never really used Notion so I didn't realise it. The website still needs to be public as you can't sign in Obsidian though.
