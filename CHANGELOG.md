@@ -3,7 +3,7 @@
 ## [1.1.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.3) (2024-07-18)
 
 **Bugs Fixed:**
-- Fix when it doesn't embed links when it's in a list. From [issue 6](https://github.com/GnoxNahte/obsidian-auto-embed/issues/6)
+- Fix note embedding when it's in a list. From [issue 6](https://github.com/GnoxNahte/obsidian-auto-embed/issues/6)
 
 ## [1.1.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.2) (2024-07-17)
 
