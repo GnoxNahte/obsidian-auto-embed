@@ -14,6 +14,13 @@ export enum GoogleDocsViewOptions {
     EditDefault,
 }
 
+export enum PreloadOptions {
+    None,
+    Placeholder,
+    Placeholder_ClickToLoad,
+    Thumbnail,
+    Thumbnail_ClickToLoad,
+}
 
 // export type SupportedWebsites = "CodePen" | "Google Docs" | "Imgur" | "Reddit" | "SoundCloud" | "Spotify" | "Steam" | "TikTok" | "Twitter/X" | "YouTube";
 
@@ -26,6 +33,7 @@ export type SupportedWebsitesMap = {
 export interface PluginSettings {
 	// General
 	darkMode: boolean;
+    preloadOption: PreloadOptions;
 
     enabledWebsites: SupportedWebsitesMap;
 	
@@ -152,6 +160,23 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
             );
+        
+        const preloadOptions = EnumToRecord(PreloadOptions);
+        Object.entries(preloadOptions).forEach(([key, value]) => {
+            preloadOptions[key] = value.replace("_", " + "); 
+        });
+
+        new Setting(containerEl)
+            .setName("Preload options")
+            .setDesc("Choose how the embed behaves before loading")
+            .addDropdown(dropdown => dropdown
+                .addOptions(preloadOptions)
+                .setValue(PreloadOptions[settings.preloadOption])
+                .onChange(async (value) => {
+                    settings.preloadOption = PreloadOptions[value as keyof typeof PreloadOptions];
+                    await this.plugin.saveSettings();
+                })
+            )
 
         new Setting(containerEl)
             .setName("Supported website")

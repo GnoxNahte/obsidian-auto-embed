@@ -82,6 +82,7 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 	- [ ] Google Maps
 	- [ ] Google Calendar
 	- [ ] Other websites. [Iframely](https://iframely.com/domains) has a list of websites that can be embedded.
+- [ ] Add preview websites when hovering a link and holding `Ctrl` for websites that aren't embedded using the syntax.
 - [ ] Add tests
 - [ ] Updated README.md
 	- [ ] Improve readability. Open to suggestions, especially if something isn't clear.
