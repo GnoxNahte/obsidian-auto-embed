@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class SoundCloudEmbed extends EmbedBase {
-    name = "SoundCloud";
+    name: SupportedWebsites = "SoundCloud";
     regex = new RegExp(/https:\/\/soundcloud\.com\/(.*)/);
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);

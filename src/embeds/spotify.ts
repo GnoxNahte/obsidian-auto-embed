@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class SpotifyEmbed extends EmbedBase {
-    name = "Spotify";
+    name: SupportedWebsites = "Spotify";
     regex = new RegExp(/https:\/\/(?:open|play|www)\.spotify\.com\/(\w+)\/(\w+)(?:\?highlight=spotify:track:(\w+))?/);
 
     createEmbed(url: string): HTMLElement {

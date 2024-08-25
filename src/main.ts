@@ -55,6 +55,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			// console.log("Registering markdown")
 
+
 			const images = el.querySelectorAll('img');
 			images.forEach((image) => {
 				if (image.referrerPolicy !== "no-referrer" || !isURL(image.src) || isLinkToImage(image.src))
@@ -62,6 +63,15 @@ export default class AutoEmbedPlugin extends Plugin {
 
 				this.handleImage(image);
 			})
+
+			// const youTube = el.querySelectorAll('iframe');
+			// youTube.forEach((image) => {
+			// 	if (!isURL(image.src) || isLinkToImage(image.src))
+			// 		return;
+				
+			// 	console.log("Found");
+			// 	this.handleImage(image);
+			// })
 		})
 
 		this.registerDomEvent(window, "message", (e: MessageEvent) => {
@@ -179,6 +189,13 @@ export default class AutoEmbedPlugin extends Plugin {
 		// Insert embed
 		const parent = img.parentElement;
 		parent?.replaceChild(embed, img);
+
+		// if (embedData.embedSource.afterInsertingToDOM)
+		// 	embedData.embedSource.afterInsertingToDOM(embed);
+
+		// embed.addEventListener("load", ev => {
+		// 	console.log("iframe loaded");
+		// });
 		
 		return embed;
 	}

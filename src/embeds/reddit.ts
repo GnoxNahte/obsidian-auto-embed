@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class RedditEmbed extends EmbedBase {
-    name = "Reddit";
+    name: SupportedWebsites = "Reddit";
     regex = new RegExp(/reddit.com/);
     embedOrigin = "https://embed.reddit.com";
 
@@ -11,11 +12,17 @@ export class RedditEmbed extends EmbedBase {
         if (regexMatch === null)
             return this.onErrorCreatingEmbed();
 
-        const postIdRegexResult = url.match(/(?:\/comments\/)(\w+)/) as RegExpMatchArray;
+        const postIdRegexResult = url.match(/\/(?:comments|s)\/(\w+)/) as RegExpMatchArray;
         if (!postIdRegexResult)
         {
             return this.onErrorCreatingEmbed();
         }
+
+        // TODO: If it is a share link ("/s/"), make a popup which tells them that share links aren't supported and
+        //       asks the user to load the link in a browser and copy it here
+
+
+        
         const postId = postIdRegexResult[1];
 
         // Creating the iframe

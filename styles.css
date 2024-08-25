@@ -4,16 +4,36 @@
 
 /* Select the placeholder image and alt that appears when Obsidian doesn't render the link. Has 2 duplicates to support "http" and "https"*/
 /* Normal / default when pasting without any other content */
-img[src^="https:"][contenteditable=false]:has(+ div iframe.auto-embed), 
-img[src^="http:"][contenteditable=false]:has(+ div iframe.auto-embed),
+img[src^="https:"][contenteditable=false]:has(+ div .auto-embed), 
+img[src^="http:"][contenteditable=false]:has(+ div .auto-embed),
 /* When editing in a list */
-img[src^="https:"][contenteditable=false]:has(+ iframe.auto-embed),
-img[src^="http:"][contenteditable=false]:has(+ iframe.auto-embed),
+img[src^="https:"][contenteditable=false]:has(+ .auto-embed),
+img[src^="http:"][contenteditable=false]:has(+ .auto-embed),
 /* When in a list (not editing) */
-img[src^="https:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed),
-img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed) 
+img[src^="https:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + .auto-embed),
+img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + .auto-embed) 
 {
     display: none !important;
+/* 
+    + img.cm-widgetBuffer {
+        display: none !important;
+
+        + img.cmd-widgetBuffer {
+            display: none !important;
+            
+            + iframe.auto-embed + .img.cmd-widgetBuffer {
+                display: none !important;
+            }
+        }
+    }
+
+    + img.cm-widgetBuffer + img.cm-widgetBuffer {
+        display: none !important;
+    }
+
+    + img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed + .img.cmd-widgetBuffer {
+        display: none !important;
+    } */
 }
 
 /* Removes obsidian's embeds */
@@ -27,7 +47,7 @@ iframe.auto-embed {
     max-width: 100%;
     /* min-height: 500px; */
 
-    display: inline-block;
+    display: inline;
 }
 
 /* Default fallback */

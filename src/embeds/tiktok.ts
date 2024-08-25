@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class TikTokEmbed extends EmbedBase {
-    name = "TikTok";
+    name: SupportedWebsites = "TikTok";
     embedOrigin = "https://www.tiktok.com"
     regex = new RegExp(/https:\/\/www\.tiktok\.com\/@([\w.]+)\/video\/(\d+)/);
 

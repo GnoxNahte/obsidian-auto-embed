@@ -1,4 +1,5 @@
 import AutoEmbedPlugin from "src/main";
+import { SupportedWebsites } from "src/settings-tab";
 import { Dictionary, Size } from "src/utility";
 
 export class BaseEmbedData {
@@ -19,7 +20,7 @@ export class BaseEmbedData {
 
 export abstract class EmbedBase {
     readonly autoEmbedCssClass: string = "auto-embed";
-    readonly name: string;
+    readonly name: SupportedWebsites | "Other";
     // To identify if the anchor link matches the embed type
     readonly regex: RegExp; 
     // Embed websites usually post a resize message.
@@ -91,6 +92,8 @@ export abstract class EmbedBase {
         if (data.height)
             el.style.height = data.height;
     }
+
+    // afterInsertingToDOM?(embed: HTMLElement): void;
     
     // To have a embed source respond to the resize event:
     // - Set EmbedBase.embedOrigin (e.g. embedOrigin = "https://platform.twitter.com")

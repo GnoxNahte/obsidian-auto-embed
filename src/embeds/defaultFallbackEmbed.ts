@@ -1,8 +1,8 @@
-import { FallbackOptions } from "src/settings-tab";
+import { FallbackOptions, SupportedWebsites } from "src/settings-tab";
 import { BaseEmbedData, EmbedBase } from "./embedBase";
 
 export class DefaultFallbackEmbed extends EmbedBase {
-    name = "Fallback Embed";
+    name: SupportedWebsites | "Other" = "Other";
     regex = new RegExp(/ /); // Not using regex for this
 
     createEmbed(url: string, embedOptions: BaseEmbedData): HTMLElement {

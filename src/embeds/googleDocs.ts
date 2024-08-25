@@ -1,8 +1,8 @@
-import { GoogleDocsViewOptions } from "src/settings-tab";
+import { GoogleDocsViewOptions, SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class GoogleDocsEmbed extends EmbedBase {
-    name = "Google Docs";
+    name: SupportedWebsites = "Google Docs";
     regex = new RegExp(/https:\/\/docs\.google\.com\/document\/d\/(\w+)/);
 
     createEmbed(url: string): HTMLElement {

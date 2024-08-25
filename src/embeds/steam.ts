@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class SteamEmbed extends EmbedBase {
-    name = "Steam";
+    name: SupportedWebsites = "Steam";
     regex = new RegExp(/https:\/\/store\.steampowered\.com\/app\/(\d+)/);
 
     createEmbed(url: string): HTMLElement {

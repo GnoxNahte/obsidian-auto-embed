@@ -1,8 +1,9 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 // NOTE: Not maintained since using Obsidian's embeds
 export class YouTubeEmbed extends EmbedBase {
-    name = "YouTube";
+    name: SupportedWebsites | "Other" = "Other";
     // Base from: https://stackoverflow.com/a/61033353/21099543
     // Added
     // - capture group for and support for video types (short, live, etc)
@@ -42,4 +43,10 @@ export class YouTubeEmbed extends EmbedBase {
 
         return iframe;
     }
+
+    // afterInsertingToDOM(embed: HTMLElement): void {
+    //     const obsidianNativeEmbed = embed.parentElement?.previousElementSibling;
+    //     if (obsidianNativeEmbed instanceof HTMLIFrameElement && obsidianNativeEmbed.src.contains("youtube.com/embed") && obsidianNativeEmbed.classList.contains("external-embed"))
+    //         obsidianNativeEmbed.remove();
+    // }
 } 

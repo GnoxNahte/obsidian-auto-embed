@@ -1,8 +1,9 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class ImgurEmbed extends EmbedBase {
-    name = "Imgur";
-    regex = new RegExp(/https:\/\/imgur\.com\/(?:(?:gallery|(?:t\/\w+))\/)?(\w+)/);
+    name: SupportedWebsites = "Imgur";
+    regex = new RegExp(/https:\/\/imgur\.com\/(?:(?:a|gallery|(?:t\/\w+))\/)?(\w+)/);
     embedOrigin = "https://imgur.com";
 
     createEmbed(url: string): HTMLElement {

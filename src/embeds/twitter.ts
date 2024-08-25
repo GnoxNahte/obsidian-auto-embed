@@ -1,7 +1,8 @@
+import { SupportedWebsites } from "src/settings-tab";
 import { EmbedBase } from "./embedBase";
 
 export class TwitterEmbed extends EmbedBase {
-    name = "Twitter";
+    name: SupportedWebsites = "Twitter/X";
     // Don't parse twitter since Obsidian already handles that.
     regex = new RegExp(/https:\/\/(?:x)\.com\/\w+\/status\/(\w+)/);
     embedOrigin = "https://platform.twitter.com";
