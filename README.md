@@ -1,4 +1,10 @@
 # obsidian-auto-embed
+[![GitHub manifest version](https://img.shields.io/github/manifest-json/v/gnoxnahte/obsidian-auto-embed)](../../releases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/gnoxnahte/obsidian-auto-embed)](../../commits/main/)
+[![GitHub Open Issues](https://img.shields.io/github/issues/gnoxnahte/obsidian-auto-embed)](../../issues)
+[![GitHub Closed Issues](https://img.shields.io/github/issues-closed/gnoxnahte/obsidian-auto-embed)](../../issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub License](https://img.shields.io/github/license/gnoxnahte/obsidian-auto-embed)](/LICENSE)
+
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
  
 ## Getting Started
