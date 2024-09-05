@@ -65,6 +65,8 @@ export class TikTokEmbed extends EmbedBase {
             {
                 iframe.style.height = data.height + "px";
 
+                this.resizeContainer(iframe, iframe.style.height);
+
                 const tiktokId = iframe.dataset.tiktokId;
                 if (tiktokId) 
                     this.sizeCache[tiktokId] = { width: 0, height: height};

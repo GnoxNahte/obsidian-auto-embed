@@ -183,13 +183,13 @@ export default class AutoEmbedPlugin extends Plugin {
 		if (embedData === null) {
 			return null;
 		}
-		const embed = embedData.embedSource.createEmbed(src, embedData);
-		embedData.embedSource.applyModifications(embed, embedData);
-		
+		const embedResult = embedData.embedSource.create(src, embedData);
+		embedData.embedSource.applyModifications(embedResult, embedData);
+		 
 		// Insert embed
 		const parent = img.parentElement;
-		parent?.replaceChild(embed, img);
-
+		parent?.replaceChild(embedResult.containerEl, img);
+		
 		// if (embedData.embedSource.afterInsertingToDOM)
 		// 	embedData.embedSource.afterInsertingToDOM(embed);
 
@@ -197,7 +197,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		// 	console.log("iframe loaded");
 		// });
 		
-		return embed;
+		return embedResult.containerEl;
 	}
 
 	// // Replaces Obsidian's iframes for YouTube and Twitter. Makes it so the user can apply the same options

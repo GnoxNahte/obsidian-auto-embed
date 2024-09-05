@@ -2,7 +2,7 @@ import { FallbackOptions, SupportedWebsites } from "src/settings-tab";
 import { BaseEmbedData, EmbedBase } from "./embedBase";
 
 export class DefaultFallbackEmbed extends EmbedBase {
-    name: SupportedWebsites | "Other" = "Other";
+    name: SupportedWebsites | "Fallback" = "Fallback";
     regex = new RegExp(/ /); // Not using regex for this
 
     createEmbed(url: string, embedOptions: BaseEmbedData): HTMLElement {
@@ -17,8 +17,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
             case FallbackOptions.EmbedLink:
             { 
                 const embedContainer = createSpan();
-                embedContainer.addClass(this.autoEmbedCssClass, "default-fallback-embed");
-                embedContainer.setCssStyles({display: "inline-block", width: "100%", textAlign: "center"});
+                embedContainer.addClass(this.autoEmbedCssClass, "default-fallback-embed-container");
 
                 // Creating the iframe
                 const iframe = createEl("iframe");

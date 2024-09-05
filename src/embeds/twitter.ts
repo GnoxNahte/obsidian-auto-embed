@@ -77,6 +77,8 @@ export class TwitterEmbed extends EmbedBase {
             // iframe.style.width = ((params["width"] as number) + 1) + "px";
             iframe.style.height = height + "px";
             
+            this.resizeContainer(iframe, iframe.style.height);
+            
             if (postId) 
                 this.sizeCache[postId] = { width: 0, height: height};
         }

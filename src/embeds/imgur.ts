@@ -42,6 +42,8 @@ export class ImgurEmbed extends EmbedBase {
         if (!regexMatch || regexMatch.length < 2)
             return;
         
+        // console.log("Imgur data: " + JSON.stringify(data));
+        
         const imgurId = regexMatch[1];
         // Why use querySelectorAll instead of querySelector for getting the reference:
         // There might be multiple iframes, some in Reading mode and Live preview.
@@ -53,10 +55,12 @@ export class ImgurEmbed extends EmbedBase {
 
         for (let i = 0; i < iframes.length; ++i) {
             const iframe = iframes[i] as HTMLIFrameElement;
-            
+                
             if (data.message === "resize_imgur") {
-                iframe.height = data.height + "px";
-                iframe.width = data.width + "px";
+                iframe.style.height = data.height + "px";
+                iframe.style.width = data.width + "px";
+
+                this.resizeContainer(iframe, iframe.style.height, iframe.style.width);
 
                 this.sizeCache[imgurId] = { width: data.width, height: data.height };
             } 

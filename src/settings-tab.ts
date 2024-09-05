@@ -18,8 +18,8 @@ export enum PreloadOptions {
     None,
     Placeholder,
     Placeholder_ClickToLoad,
-    Thumbnail,
-    Thumbnail_ClickToLoad,
+    // Thumbnail,
+    // Thumbnail_ClickToLoad,
 }
 
 // export type SupportedWebsites = "CodePen" | "Google Docs" | "Imgur" | "Reddit" | "SoundCloud" | "Spotify" | "Steam" | "TikTok" | "Twitter/X" | "YouTube";
@@ -91,13 +91,13 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         
         // Validate the user's current setting. 
         function ValidateSettings(setting: PluginSettings, plugin: AutoEmbedPlugin) {
-            console.log(JSON.stringify(setting.enabledWebsites));
+            // console.log(JSON.stringify(setting.enabledWebsites));
             if (setting.enabledWebsites && Object.keys(setting.enabledWebsites).length > 0) {
                 // Add any missing websites. Might happen if plugin updates with a new website
                 const newWebsites = supportedWebsites.filter(website => setting.enabledWebsites[website] === undefined);
                 
                 if (newWebsites.length > 0) {
-                    console.log(`Adding ${newWebsites.length} websites to 'enabled website' list: ${newWebsites.toString()}`);
+                    // console.log(`Adding ${newWebsites.length} websites to 'enabled website' list: ${newWebsites.toString()}`);
                     newWebsites.forEach(website => setting.enabledWebsites[website] = true);
                     
                     plugin.saveSettings();

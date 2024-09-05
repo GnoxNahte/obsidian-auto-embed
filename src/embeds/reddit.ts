@@ -49,7 +49,6 @@ export class RedditEmbed extends EmbedBase {
         }
 
         // iframe.style.height="unset";
-
         return iframe;
     }
 
@@ -65,7 +64,10 @@ export class RedditEmbed extends EmbedBase {
 
         // Only continue if the method is for resizing
         if (data.type !== "resize.embed")
+        {
+            console.log("Reddit unknown message: " + data.type);
             return;
+        }
 
         const iframes = document.getElementsByClassName("reddit-embed") as HTMLCollectionOf<HTMLIFrameElement>;
         for (let i = 0; i < iframes.length; i++) {
@@ -75,6 +77,8 @@ export class RedditEmbed extends EmbedBase {
             {
                 const height = data.data;
                 iframe.style.height = height + "px";
+
+                this.resizeContainer(iframe, iframe.style.height);
                 
                 const postId = iframe.dataset.redditPostId;
                 if (postId) 

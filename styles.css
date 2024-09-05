@@ -14,26 +14,11 @@ img[src^="https:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-wid
 img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + .auto-embed) 
 {
     display: none !important;
-/* 
-    + img.cm-widgetBuffer {
-        display: none !important;
+}
 
-        + img.cmd-widgetBuffer {
-            display: none !important;
-            
-            + iframe.auto-embed + .img.cmd-widgetBuffer {
-                display: none !important;
-            }
-        }
-    }
-
-    + img.cm-widgetBuffer + img.cm-widgetBuffer {
-        display: none !important;
-    }
-
-    + img.cm-widgetBuffer + img.cm-widgetBuffer + iframe.auto-embed + .img.cmd-widgetBuffer {
-        display: none !important;
-    } */
+.cm-line img.cm-widgetBuffer:has(+ .auto-embed-container),
+.cm-line .auto-embed-container + img.cm-widgetBuffer {
+    display: none !important;
 }
 
 /* Removes obsidian's embeds */
@@ -46,11 +31,207 @@ iframe[src^="https://www.youtube.com/embed"].external-embed
 iframe.auto-embed {
     max-width: 100%;
     /* min-height: 500px; */
-
-    display: inline;
 }
 
+/* NOTE: Using 'auto-embed' as a prefix for everything to prevent other plugin's CSS from affecting this plugin */
+.auto-embed {
+    transition: opacity var(--auto-embed-anim-duration) linear,
+                height var(--auto-embed-anim-duration) ease-in-out;
+    height: 100%;
+}
+
+.auto-embed-hide {
+    /* display: none; */
+    opacity: 0;
+    /* height: 0; */
+    padding: 0;
+    visibility: hidden;
+}
+
+.auto-embed-container {
+    /* Obsidian durations: 
+        --anim-duration-moderate
+        --anim-duration-slow 
+    */
+    --auto-embed-anim-duration: var(--anim-duration-slow);
+
+    display: inline-block;
+
+    height: fit-content;
+    position: relative;
+
+    margin: 2px 0;
+    text-overflow: ellipsis;
+
+    transition: opacity var(--auto-embed-anim-duration),
+                height var(--auto-embed-anim-duration) ease-in-out;
+}
+
+.auto-embed-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    padding: 0.9em 1.1em;
+    height: 100%;
+    width: 100%;
+    
+    border: var(--border-width) solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    
+    background-color: var(--background-secondary);
+    text-align: left;
+    overflow: auto;
+    
+    &.auto-embed-click-to-load {
+        cursor: pointer;
+    }
+
+    & p {
+        margin: 0;
+    }
+}
+
+/* Base snippet from: https://css-loaders.com/spinner/#20 */
+.auto-embed-loader {
+    display: inline-block;
+    height: 1em;
+    /* width: 50px; */
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid var(--interactive-accent);
+    animation:
+        l20-1 0.8s infinite linear alternate,
+        l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+    0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+    12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+    25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+    50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+    100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+    0%    {transform:scaleY(1)  rotate(0deg)}
+    49.99%{transform:scaleY(1)  rotate(135deg)}
+    50%   {transform:scaleY(-1) rotate(0deg)}
+    100%  {transform:scaleY(-1) rotate(-135deg)}
+}
+
+.auto-embed {
+    /* Times: 
+        --anim-duration-moderate 
+        --anim-duration-slow
+        */
+        
+        
+    transition: opacity var(--auto-embed-anim-duration) linear,
+                height var(--auto-embed-anim-duration) ease-in-out;
+    height: 100%;
+}
+
+/* NOTE: Using 'auto-embed' as a prefix for everything to prevent other plugin's CSS from affecting this plugin */
+
+.auto-embed-hide {
+    /* display: none; */
+    opacity: 0;
+    /* height: 0; */
+    padding: 0;
+    visibility: hidden;
+}
+
+.auto-embed-container {
+    height: fit-content;
+    position: relative;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    margin: 2px 0;
+    --auto-embed-anim-duration: var(--anim-duration-slow);
+
+    transition: opacity var(--auto-embed-anim-duration),
+                height var(--auto-embed-anim-duration) ease-in-out;
+}
+
+.auto-embed-placeholder {
+    background-color: var(--background-secondary);
+    padding: 0.9em 1.1em;
+    border: var(--border-width) solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    
+    &.auto-embed-click-to-load {
+        cursor: pointer;
+    }
+
+    & p {
+        margin: 0;
+    }
+}
+
+/* Base snippet from: https://css-loaders.com/spinner/#20 */
+.auto-embed-loader {
+    display: inline-block;
+    height: 1em;
+    /* width: 50px; */
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid var(--interactive-accent);
+    animation:
+        l20-1 0.8s infinite linear alternate,
+        l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+    0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+    12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+    25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+    50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+    100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+    0%    {transform:scaleY(1)  rotate(0deg)}
+    49.99%{transform:scaleY(1)  rotate(135deg)}
+    50%   {transform:scaleY(-1) rotate(0deg)}
+    100%  {transform:scaleY(-1) rotate(-135deg)}
+}
+/* .auto-embed-hide {
+    animation: .5s ease-out hideAnim forwards;
+
+    overflow: hidden;
+}
+
+@keyframes hideAnim {
+    0% {
+        display: initial;
+    }
+
+    99% {
+        height: 0;
+        padding: 0;
+    }
+
+    100% {
+        display: none;
+        height: 0;
+        padding: 0;
+    }
+} */
+
 /* Default fallback */
+.auto-embed.default-fallback-embed-container {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
 .auto-embed iframe.default-fallback-embed {
     width: 100%;
     height: 100%;
@@ -114,6 +295,10 @@ iframe.auto-embed {
     width: 100%;
     height: 80px;
     position: relative;
+
+    :has(> iframe) {
+        height: 100%;
+    }
 }
 
 .auto-embed.spotify-embed-container.spotify-song-large,
@@ -167,4 +352,10 @@ iframe.auto-embed {
 .auto-embed.soundcloud-embed {
     width: 100%;
     height: 166px;
+}
+
+/* Imgur */
+.imgur-embed {
+    width: 300px;
+    height: 300px;
 }
