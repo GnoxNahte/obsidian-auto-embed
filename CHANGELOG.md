@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.0) (2024-09-18)
+Incrementing minor version. Added and fixed most of the features and bugs to make a proper plugin. 
+
+Since there are a lot of changes, please report any bugs!
+
+**New Features & Improvements:**
+- Add placeholders for websites. It has a 'click to load' mode too. This should greatly improve [Content Layout Shifts](https://web.dev/articles/cls). <br />
+	Thanks to [@Rikiub](https://github.com/Rikiub) for suggesting it! - [Issue 7](https://github.com/GnoxNahte/obsidian-auto-embed/issues/7)
+- Add Imgur album support. (Album has `/a/` instead of `/gallery/` in the URL)
+- Add options to disable selected websites
+- Add option for suggesting to embed links
+
+**Bugs Fixed:**
+- Fix the cursor going to the side of the embed when navigating the cursor to the character immediately after the embed/markdown link. 
+
 ## [1.1.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.1.3) (2024-07-18)
 
 **Bugs Fixed:**

@@ -331,7 +331,7 @@ function ResetEnabledWebsites(): SupportedWebsitesMap {
         supportedWebsites.map((website) => [
             website, 
             // Exclude some websites by default. Set the rest to true
-            (website !== "Twitter/X"),
+            // (website !== "Twitter/X"),
         ])
     ) as SupportedWebsitesMap
 }
