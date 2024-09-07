@@ -53,20 +53,24 @@ export abstract class EmbedBase {
     abstract createEmbed(link: string, embedData?: BaseEmbedData): HTMLElement;
 
     create(link: string, embedData: BaseEmbedData): EmbedResult {
-        const container = createDiv({cls: "auto-embed-container"})
         
         const embed = this.createEmbed(link, embedData);
-        const iframe = embed instanceof HTMLIFrameElement ? embed : embed.querySelector(':scope > iframe') as HTMLIFrameElement;
+        let embedClass: string;
+        if (embedData.embedSource.name === "Fallback")
+            embedClass = "default-fallback-container";
+        else if (embed.dataset.containerClass)
+            embedClass = embed.dataset.containerClass;
+        else
+            embedClass = "auto-embed-unknown-class";
 
+        const container = createDiv({cls: ["auto-embed-container", embedClass]});
+        const iframe = embed instanceof HTMLIFrameElement ? embed : embed.querySelector(':scope > iframe') as HTMLIFrameElement;
+        
         // if (embedData?.embedSource.name === "Fallback") 
         //     return { embedData: embedData, containerEl: embed as HTMLDivElement };
-
+        
         // Add embed
         container.appendChild(embed);
-
-        // Copy any class and styles
-        embed.classList.forEach(c => container.classList.add(c));
-        container.style.cssText = embed.style.cssText;
 
         // Add placeholder
         let placeholder: HTMLDivElement | undefined;
@@ -74,11 +78,13 @@ export abstract class EmbedBase {
 
         // Called twice at different times. So put it out in a function
         function AddOnLoadEvent(iframe: HTMLIFrameElement) {
-            iframe?.addEventListener("load", () => {
-                // Hide placeholder, Show embed
+            function ShowEmbed_HidePlaceholder() {
                 embed.classList.remove(hideClass);
                 placeholder?.classList.add(hideClass);
-            });
+            }
+
+            iframe?.addEventListener("load", ShowEmbed_HidePlaceholder);
+            container.addEventListener("auto-embed-error", ShowEmbed_HidePlaceholder)
         }
 
         if (this.plugin.settings.preloadOption !== PreloadOptions.None)
@@ -180,8 +186,9 @@ export abstract class EmbedBase {
         if (data.width)
             embedResult.containerEl.style.width = data.width;
         
-        if (data.height)
+        if (data.height) {
             embedResult.containerEl.style.height = data.height;
+        }
     }
 
     // For when the iframe is still loading
@@ -229,10 +236,25 @@ export abstract class EmbedBase {
                 el.parentElement.style.width = width;
     }
 
-    onErrorCreatingEmbed(msg?: string): HTMLElement {
-        const errorMsg = msg ?? `Error with ${this.name} url`;
+    onErrorCreatingEmbed(url: string, msg?: string): HTMLElement {
+        const errorMsg = (msg ?? `Error with ${this.name} URL.`) + `\nURL: ${url}`;
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
         error.setText(errorMsg);
+
+        // Recursive function. Keep calling it until the embed is attached to a parent
+        function DispatchErrorEvent(attempts: number) {
+            if (attempts === 0)
+                return;
+
+            setTimeout(async () => {
+                if (error.parentElement)
+                    error.parentElement?.dispatchEvent(new Event("auto-embed-error"))
+                else
+                    DispatchErrorEvent(--attempts);
+            }, 200);
+        }
+
+        DispatchErrorEvent(20);
 
         console.log("auto-embed/error: " + errorMsg);
         return error;

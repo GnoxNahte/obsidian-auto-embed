@@ -24,16 +24,23 @@ export class DefaultFallbackEmbed extends EmbedBase {
                 
                 iframe.src = url;
                 
-                iframe.classList.add(this.autoEmbedCssClass, "default-fallback-embed");
-
-                const width = this.plugin.settings.fallbackWidth;
-                if (width) {
-                    embedContainer.style.width = width;
+                iframe.classList.add(this.autoEmbedCssClass);
+                iframe.dataset.containerClass = "default-fallback-embed";
+                
+                if (embedOptions.width)
+                    embedContainer.style.width = embedOptions.width;
+                else {
+                    const width = this.plugin.settings.fallbackWidth;
+                    if (width) 
+                        embedContainer.style.width = width;
                 }
                 
-                const height = this.plugin.settings.fallbackHeight;
-                if (height) {
-                    embedContainer.style.height = height;
+                if (embedOptions.height)
+                    embedContainer.style.height = embedOptions.height;
+                else {
+                    const height = this.plugin.settings.fallbackHeight;
+                    if (height) 
+                        embedContainer.style.height = height;
                 }
 
                 embedContainer.appendChild(iframe);

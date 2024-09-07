@@ -11,7 +11,7 @@ export class TwitterEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
         
         // Creating the iframe
         const iframe = createEl("iframe");
@@ -20,7 +20,8 @@ export class TwitterEmbed extends EmbedBase {
         url = `https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=${this.plugin.settings.darkMode ? "dark" : "light"}&id=${postId}`;
         iframe.src = url;
 
-        iframe.classList.add(this.autoEmbedCssClass, "twitter-embed");
+        iframe.classList.add(this.autoEmbedCssClass);
+        iframe.dataset.containerClass = "twitter-embed";
 
         iframe.sandbox.add("allow-forms", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-modals", "allow-popups");
         iframe.setAttribute("scrolling", "no");
@@ -65,7 +66,7 @@ export class TwitterEmbed extends EmbedBase {
         // Why use querySelectorAll instead of querySelector for getting the reference:
         // There might be multiple iframes, some in Reading mode and Live preview.
         // Some might even duplicates if they user has duplicates
-        const iframes = document.querySelectorAll(`.twitter-embed[data-twitter-post-id="${postId}"]`);
+        const iframes = document.querySelectorAll(`.twitter-embed iframe[data-twitter-post-id="${postId}"]`);
 
         if (iframes.length === 0)
             return;

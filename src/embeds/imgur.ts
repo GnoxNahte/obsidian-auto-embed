@@ -10,7 +10,7 @@ export class ImgurEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         const imgurId = regexMatch[1];
 
@@ -19,7 +19,9 @@ export class ImgurEmbed extends EmbedBase {
 
         iframe.src = `https://imgur.com/a/${imgurId}/embed?pub=true`;
 
-        iframe.classList.add(this.autoEmbedCssClass, "imgur-embed");
+        iframe.classList.add(this.autoEmbedCssClass);
+        iframe.dataset.containerClass = "imgur-embed";
+
         iframe.dataset.imgurId = imgurId;
         if (this.sizeCache[imgurId] && this.sizeCache[imgurId].height) {
             iframe.style.height = this.sizeCache[imgurId].height + "px";
@@ -48,7 +50,7 @@ export class ImgurEmbed extends EmbedBase {
         // Why use querySelectorAll instead of querySelector for getting the reference:
         // There might be multiple iframes, some in Reading mode and Live preview.
         // Some might even duplicates if they user has duplicates
-        const iframes = document.querySelectorAll(`.imgur-embed[data-imgur-id="${imgurId}"`);
+        const iframes = document.querySelectorAll(`.imgur-embed iframe[data-imgur-id="${imgurId}"`);
         
         if (iframes.length === 0)
             return;

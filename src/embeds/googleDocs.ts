@@ -9,7 +9,7 @@ export class GoogleDocsEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         // Creating the iframe
         const iframe = createEl("iframe");
@@ -19,16 +19,16 @@ export class GoogleDocsEmbed extends EmbedBase {
         switch (viewOption) {
             case GoogleDocsViewOptions.Preview: 
                 iframe.src += "/preview"; 
-                iframe.classList.add("google-docs-embed-preview");
+                iframe.dataset.containerClass = "google-docs-embed-preview";
                 break;
             case GoogleDocsViewOptions.EditMinimal:
                 iframe.src += "?rm=minimal"; 
-                iframe.classList.add("google-docs-embed-edit-minimal");
+                iframe.dataset.containerClass = "google-docs-embed-edit-minimal";
                 break;
             // If edit default or some other option, don't modify the src
             case GoogleDocsViewOptions.EditDefault: 
             default:
-                iframe.classList.add("google-docs-embed-edit-default");
+                iframe.dataset.containerClass = "google-docs-embed-edit-default";
                 break;
         }
 

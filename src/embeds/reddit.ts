@@ -10,12 +10,12 @@ export class RedditEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         const postIdRegexResult = url.match(/\/(?:comments|s)\/(\w+)/) as RegExpMatchArray;
         if (!postIdRegexResult)
         {
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url, "Cannot find post id.");
         }
 
         // TODO: If it is a share link ("/s/"), make a popup which tells them that share links aren't supported and
@@ -28,7 +28,8 @@ export class RedditEmbed extends EmbedBase {
         // Creating the iframe
         const iframe = createEl("iframe");
         
-        iframe.classList.add(this.autoEmbedCssClass, "reddit-embed", "reddit-" + postId[1]);
+        iframe.classList.add(this.autoEmbedCssClass, "reddit-" + postId[1]);
+        iframe.dataset.containerClass =  "reddit-embed";
         
         url = url.replace("www.reddit.com", "embed.reddit.com"); // Remove "www"
         
@@ -69,9 +70,10 @@ export class RedditEmbed extends EmbedBase {
             return;
         }
 
-        const iframes = document.getElementsByClassName("reddit-embed") as HTMLCollectionOf<HTMLIFrameElement>;
+        const iframes = document.querySelectorAll(".reddit-embed > iframe");
+        console.log("Size: " + iframes.length);
         for (let i = 0; i < iframes.length; i++) {
-            const iframe = iframes[i];
+            const iframe = iframes[i] as HTMLIFrameElement;
             // Check where the message came from
             if (iframe.contentWindow == e.source)
             {

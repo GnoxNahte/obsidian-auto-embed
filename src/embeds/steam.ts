@@ -9,14 +9,15 @@ export class SteamEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         // Creating the iframe
         const iframe = createEl("iframe");
 
         iframe.src = `https://store.steampowered.com/widget/${regexMatch[1]}/`;
 
-        iframe.classList.add(this.autoEmbedCssClass, "steam-embed");
+        iframe.classList.add(this.autoEmbedCssClass);
+        iframe.dataset.containerClass = "steam-embed";
 
         return iframe;
     }

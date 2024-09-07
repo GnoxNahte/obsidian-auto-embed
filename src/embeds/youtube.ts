@@ -16,7 +16,7 @@ export class YouTubeEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         // Creating the iframe
         const iframe = createEl("iframe");
@@ -26,7 +26,7 @@ export class YouTubeEmbed extends EmbedBase {
         // console.log(regexMatch);
         if (videoId === undefined)
         {
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed("Cannot find video id. URL: " + url);
         }
 
         url = "https://www.youtube.com/embed/" + videoId;

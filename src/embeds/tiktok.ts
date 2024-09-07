@@ -10,7 +10,7 @@ export class TikTokEmbed extends EmbedBase {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed();
+            return this.onErrorCreatingEmbed(url);
 
         // Creating the iframe
         const iframe = createEl("iframe");
@@ -19,7 +19,9 @@ export class TikTokEmbed extends EmbedBase {
 
         iframe.src = `https://www.tiktok.com/embed/v2/${tiktokId}/`;
 
-        iframe.classList.add(this.autoEmbedCssClass, "tiktok-embed");
+        iframe.classList.add(this.autoEmbedCssClass);        
+        iframe.dataset.containerClass = "tiktok-embed";
+
         iframe.setAttribute("allowfullscreen", "");
         
         // console.log("Cache: " + JSON.stringify(this.sizeCache))
@@ -57,9 +59,9 @@ export class TikTokEmbed extends EmbedBase {
         if (!height)
             return;
 
-        const iframes = document.getElementsByClassName("tiktok-embed") as HTMLCollectionOf<HTMLIFrameElement>;
+        const iframes = document.querySelectorAll(`.tiktok-embed iframe`);
         for (let i = 0; i < iframes.length; i++) {
-            const iframe = iframes[i];
+            const iframe = iframes[i] as HTMLIFrameElement;
             // Check where the message came from
             if (iframe.contentWindow == e.source)
             {
