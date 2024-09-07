@@ -16,8 +16,9 @@ img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widg
     display: none !important;
 }
 
-.cm-line img.cm-widgetBuffer:has(+ .auto-embed-container),
-.cm-line .auto-embed-container + img.cm-widgetBuffer {
+.cm-line img.cm-widgetBuffer:has(+ .auto-embed-container)
+/* .cm-line .auto-embed-container + img.cm-widgetBuffer  */
+{
     display: none !important;
 }
 
@@ -55,7 +56,7 @@ iframe.auto-embed {
     */
     --auto-embed-anim-duration: var(--anim-duration-slow);
 
-    display: inline-block;
+    display: block;
 
     height: fit-content;
     position: relative;
