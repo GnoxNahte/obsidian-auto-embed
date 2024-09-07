@@ -25,7 +25,7 @@ export default class SuggestEmbed extends EditorSuggest<Suggestion> {
 
     onTrigger(cursor: EditorPosition, editor: Editor, file: TFile | null): EditorSuggestTriggerInfo | null {
         // This function is called for every key stroke so if possible, quickly return if its not affecting this plugin.
-        if (!this.plugin.pasteInfo.trigger)
+        if (!this.plugin.pasteInfo.trigger || !this.plugin.settings.suggestEmbed)
             return null;
         
         this.editor = editor;

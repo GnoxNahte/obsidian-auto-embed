@@ -34,6 +34,7 @@ export interface PluginSettings {
 	// General
 	darkMode: boolean;
     preloadOption: PreloadOptions;
+    suggestEmbed: boolean;
 
     enabledWebsites: SupportedWebsitesMap;
 	
@@ -54,6 +55,7 @@ export interface PluginSettings {
 export const DEFAULT_SETTINGS: PluginSettings = {
 	darkMode: true,
     preloadOption: PreloadOptions.Placeholder,
+    suggestEmbed: true,
 
     enabledWebsites: ResetEnabledWebsites(),
     // enabledWebsites: new Map(Object.values(SupportedWebsites).map(website => [
@@ -168,7 +170,7 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName("Preload options")
-            .setDesc("Choose how the embed behaves before loading")
+            .setDesc("Choose how the embed behaves before loading.")
             .addDropdown(dropdown => dropdown
                 .addOptions(preloadOptions)
                 .setValue(PreloadOptions[settings.preloadOption])
@@ -176,7 +178,20 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     settings.preloadOption = PreloadOptions[value as keyof typeof PreloadOptions];
                     await this.plugin.saveSettings();
                 })
-            )
+            );
+            
+        new Setting(containerEl)
+            .setName("Suggest embed")
+            .setDesc("If you are pasting a link, suggest to embed it.")
+            .addToggle(toggle => toggle
+                .setValue(settings.suggestEmbed)
+                .onChange(async (value) => {
+                    settings.suggestEmbed = value;
+                    if (settings.suggestEmbed)
+                        plugin.registerSuggest();
+                    await this.plugin.saveSettings();
+                })
+            );
 
         new Setting(containerEl)
             .setName("Supported website")
@@ -201,7 +216,6 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             .setName("Google Docs")
             .setHeading()
             .setDesc("Note that when the view options is set to editable, the default page width is too small. Try to use \"Preview\" where possible");
-
         const googleDocsViewOptionDesc = new DocumentFragment();
         googleDocsViewOptionDesc.appendText("Preview - Uneditable, only embed the content");
         googleDocsViewOptionDesc.appendChild(createEl("br"))
@@ -291,6 +305,15 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
         additionalInfo.appendChild(createEl("a", {text: "CSS Units", href: "https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#numbers_lengths_and_percentages"}))
         additionalInfo.appendChild(createEl("br"))
         additionalInfo.appendText("Reload any opened note to apply changes");
+        
+        additionalInfo.appendChild(createEl("br"))
+        additionalInfo.appendChild(createEl("br"))
+        
+        additionalInfo.appendText("Found bugs, have a website to embed, or want a feature?");
+        additionalInfo.appendChild(createEl("br"))
+        additionalInfo.appendChild(createEl("a", {text: "Create a GitHub issue", href: "https://github.com/GnoxNahte/obsidian-auto-embed/issues/new"}))
+        additionalInfo.appendText(" or ");
+        additionalInfo.appendChild(createEl("a", {text: "submit a Google Form", href: "https://forms.gle/xtuv4FVCKZ2tg9zK9"}))
 
         new Setting(containerEl)
             .setDesc(additionalInfo)

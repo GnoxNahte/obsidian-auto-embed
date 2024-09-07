@@ -48,7 +48,8 @@ export default class AutoEmbedPlugin extends Plugin {
 				this.isShiftDown = false;
 		})
 		
-		this.registerEditorSuggest(new SuggestEmbed(this));
+		if (this.settings.suggestEmbed)
+			this.registerSuggest();
 		
 		this.registerEvent(this.app.workspace.on("editor-paste", this.onPaste.bind(this)));
 		
@@ -185,7 +186,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		}
 		const embedResult = embedData.embedSource.create(src, embedData);
 		embedData.embedSource.applyModifications(embedResult, embedData);
-		 
+		
 		// Insert embed
 		const parent = img.parentElement;
 		parent?.replaceChild(embedResult.containerEl, img);
@@ -268,5 +269,9 @@ export default class AutoEmbedPlugin extends Plugin {
 		editor.replaceRange(`![](${selection.text})`, selection.start, selection.end);
 		
 		// console.log(`Replacing to ![](${selection}), Start:${selection.start.ch}, End: ${selection.end.ch}`)
+	}
+
+	registerSuggest() {
+		this.registerEditorSuggest(new SuggestEmbed(this));
 	}
 }
