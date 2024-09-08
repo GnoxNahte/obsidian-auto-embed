@@ -128,83 +128,11 @@ iframe.auto-embed {
         --anim-duration-slow
         */
         
-        
     transition: opacity var(--auto-embed-anim-duration) linear,
                 height var(--auto-embed-anim-duration) ease-in-out;
     
     width: 100%;
     height: 100%;
-}
-
-/* NOTE: Using 'auto-embed' as a prefix for everything to prevent other plugin's CSS from affecting this plugin */
-
-.auto-embed-hide {
-    /* display: none; */
-    opacity: 0;
-    /* height: 0; */
-    padding: 0;
-    visibility: hidden;
-}
-
-.auto-embed-container {
-    height: fit-content;
-    position: relative;
-    /* overflow: hidden; */
-    text-overflow: ellipsis;
-    margin: 2px 0;
-    --auto-embed-anim-duration: var(--anim-duration-slow);
-
-    transition: opacity var(--auto-embed-anim-duration),
-                height var(--auto-embed-anim-duration) ease-in-out;
-}
-
-.auto-embed-placeholder {
-    background-color: var(--background-secondary);
-    padding: 0.9em 1.1em;
-    border: var(--border-width) solid var(--background-modifier-border);
-    border-radius: var(--radius-m);
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    text-align: left;
-    
-    &.auto-embed-click-to-load {
-        cursor: pointer;
-    }
-
-    & p {
-        margin: 0;
-    }
-}
-
-/* Base snippet from: https://css-loaders.com/spinner/#20 */
-.auto-embed-loader {
-    display: inline-block;
-    height: 1em;
-    /* width: 50px; */
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 3px solid var(--interactive-accent);
-    animation:
-        l20-1 0.8s infinite linear alternate,
-        l20-2 1.6s infinite linear;
-}
-@keyframes l20-1{
-    0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
-    12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
-    25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
-    50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-    62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-    75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
-    100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
-}
-@keyframes l20-2{ 
-    0%    {transform:scaleY(1)  rotate(0deg)}
-    49.99%{transform:scaleY(1)  rotate(135deg)}
-    50%   {transform:scaleY(-1) rotate(0deg)}
-    100%  {transform:scaleY(-1) rotate(-135deg)}
 }
 
 /* Default fallback */
@@ -213,6 +141,10 @@ iframe.auto-embed {
     height: 100%;
     width: 100%;
     text-align: center;
+
+    /* Padding for the link */
+    transition: padding-bottom var(--auto-embed-anim-duration);
+    padding-bottom: calc(1em + var(--line-height-normal) * 1em);
 }
 
 iframe.default-fallback-embed {
