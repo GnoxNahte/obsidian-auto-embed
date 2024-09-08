@@ -4,6 +4,8 @@
 [![GitHub Open Issues](https://img.shields.io/github/issues/gnoxnahte/obsidian-auto-embed)](../../issues)
 [![GitHub Closed Issues](https://img.shields.io/github/issues-closed/gnoxnahte/obsidian-auto-embed)](../../issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub License](https://img.shields.io/github/license/gnoxnahte/obsidian-auto-embed)](/LICENSE)
+[![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22auto-embed%22%5D.downloads&logo=obsidian&logoColor=a88bfa&label=downloads&color=a88bfa)](https://obsidian.md/plugins?id=auto-embed)
+
 
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
  
