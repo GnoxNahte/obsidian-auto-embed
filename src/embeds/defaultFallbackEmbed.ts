@@ -13,7 +13,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
 
         switch (this.plugin.settings.fallbackOptions) {
             case FallbackOptions.ShowErrorMessage:
-                return this.onErrorCreatingEmbed("Unable to embed: " + url);
+                return this.onErrorCreatingEmbed(url, "Website is not supported");
             case FallbackOptions.EmbedLink:
             { 
                 const embedContainer = createSpan();

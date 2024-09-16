@@ -122,6 +122,10 @@ iframe.auto-embed {
     100%  {transform:scaleY(-1) rotate(-135deg)}
 }
 
+.auto-embed-hide .auto-embed-loader {
+    display: none;
+}
+
 .auto-embed {
     /* Times: 
         --anim-duration-moderate 
@@ -143,7 +147,6 @@ iframe.auto-embed {
     text-align: center;
 
     /* Padding for the link */
-    transition: padding-bottom var(--auto-embed-anim-duration);
     padding-bottom: calc(1em + var(--line-height-normal) * 1em);
 }
 

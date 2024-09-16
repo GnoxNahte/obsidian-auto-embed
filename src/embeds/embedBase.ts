@@ -63,14 +63,20 @@ export abstract class EmbedBase {
         else
             embedClass = "auto-embed-unknown-class";
 
+        // Add create container, add embed
         const container = createDiv({cls: ["auto-embed-container", embedClass]});
-        const iframe = embed instanceof HTMLIFrameElement ? embed : embed.querySelector(':scope > iframe') as HTMLIFrameElement;
-        
-        // if (embedData?.embedSource.name === "Fallback") 
-        //     return { embedData: embedData, containerEl: embed as HTMLDivElement };
-        
-        // Add embed
         container.appendChild(embed);
+        
+        if (embed.classList.contains("error-embed")) {
+            console.log("Container: " + embedData.embedContainer)
+            return { 
+                embedData: embedData, 
+                containerEl: container,
+                embed: embed,
+            };
+        }
+        
+        const iframe = embed instanceof HTMLIFrameElement ? embed : embed.querySelector(':scope > iframe') as HTMLIFrameElement;
 
         // Add placeholder
         let placeholder: HTMLDivElement | undefined;
@@ -122,6 +128,10 @@ export abstract class EmbedBase {
                 })
             }
             else {
+                // Show loader
+                const loader = placeholder?.querySelector(".auto-embed-loader");
+                if (loader) 
+                    loader.classList.toggle("auto-embed-hide", false);
                 AddOnLoadEvent(iframe);
             }
         }
@@ -240,21 +250,6 @@ export abstract class EmbedBase {
         const errorMsg = (msg ?? `Error with ${this.name} URL.`) + `\nURL: ${url}`;
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
         error.setText(errorMsg);
-
-        // Recursive function. Keep calling it until the embed is attached to a parent
-        function DispatchErrorEvent(attempts: number) {
-            if (attempts === 0)
-                return;
-
-            setTimeout(async () => {
-                if (error.parentElement)
-                    error.parentElement?.dispatchEvent(new Event("auto-embed-error"))
-                else
-                    DispatchErrorEvent(--attempts);
-            }, 200);
-        }
-
-        DispatchErrorEvent(20);
 
         console.log("auto-embed/error: " + errorMsg);
         return error;
