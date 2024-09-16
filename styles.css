@@ -139,6 +139,11 @@ iframe.auto-embed {
     height: 100%;
 }
 
+/* Handle bullet list */
+.HyperMD-list-line > .is-collapsed ~ .auto-embed-container{
+    display: none;
+}
+
 /* Default fallback */
 .default-fallback-embed-container {
     display: inline-block;
