@@ -11,6 +11,7 @@ import { GoogleDocsEmbed } from "./googleDocs";
 import { TikTokEmbed } from "./tiktok";
 import { SoundCloudEmbed } from "./soundcloud";
 import { SupportedWebsites } from "src/settings-tab";
+import { apiVersion } from "obsidian";
 // import { YouTubeEmbed } from "./youtube";
 
 export class EmbedManager {
@@ -34,7 +35,6 @@ export class EmbedManager {
         // Add any new embeds here
         this.embedSources = [
             // new YouTubeEmbed(plugin),
-            new TwitterEmbed(plugin),
             new RedditEmbed(plugin),
             new SteamEmbed(plugin),
             new CodepenEmbed(plugin),
@@ -49,9 +49,30 @@ export class EmbedManager {
         // So remove YouTube and Twitter (Keep "TwitterEmbed" for x.com though, since Obsidian doesn't embed those)
         this.ignoredDomains = [
             // Ignore embeds for youtube and twtiter
-            new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/)/),
-            new RegExp(/https:\/\/(?:twitter)\.com/),
+            new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/)/)
         ];
+
+
+        // Obsidian starts supporting x.com embeds from version 1.7.0 onwards. 
+        // So, check which version the user is currently on, then 
+        // If user is on 1.7.0 and up, 
+        //      Don't embed Twitter & X
+        // Else
+        //      Don't embed Twitter only
+        const apiVersionSplit = apiVersion.split(".");
+        const majorVersion = parseInt(apiVersionSplit[0]);
+        const minorVersion = parseInt(apiVersionSplit[1]);
+
+        if (majorVersion > 1 || 
+            (majorVersion === 1 && minorVersion >= 7)) {
+                // Ignore twitter & X
+                this.ignoredDomains.push(new RegExp(/https:\/\/(?:twitter|x)\.com/))
+            }
+        else {
+            this.embedSources.push(new TwitterEmbed(plugin));
+            // Ignore twitter only
+            this.ignoredDomains.push(new RegExp(/https:\/\/(?:twitter)\.com/));
+        }
 
         this.defaultFallbackEmbed = new DefaultFallbackEmbed(plugin);
     }
