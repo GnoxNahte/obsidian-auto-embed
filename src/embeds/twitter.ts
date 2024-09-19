@@ -4,7 +4,7 @@ import { EmbedBase } from "./embedBase";
 export class TwitterEmbed extends EmbedBase {
     name: SupportedWebsites = "Twitter/X";
     // Don't parse twitter since Obsidian already handles that.
-    regex = new RegExp(/https:\/\/(?:x)\.com\/\w+\/status\/(\w+)/);
+    regex = new RegExp(/https:\/\/(?:x)\.com\/(\w+)(?:\/status\/(\w+))?/);
     embedOrigin = "https://platform.twitter.com";
 
     createEmbed(url: string): HTMLElement {
@@ -15,16 +15,23 @@ export class TwitterEmbed extends EmbedBase {
         
         // Creating the iframe
         const iframe = createEl("iframe");
-        const postId = regexMatch[1];
-
-        url = `https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=${this.plugin.settings.darkMode ? "dark" : "light"}&id=${postId}`;
+        const postId = regexMatch[2];
+        const isPost = postId !== undefined;
+        
+        // Embed post
+        if (isPost)
+            url = `https://platform.twitter.com/embed/Tweet.html?dnt=true&theme=${this.plugin.settings.darkMode ? "dark" : "light"}&id=${regexMatch[2]}`;
+        // Embed profile timeline
+        else
+            url = `https://syndication.twitter.com/srv/timeline-profile/screen-name/${regexMatch[1]}?dnt=true`
         iframe.src = url;
 
         iframe.classList.add(this.autoEmbedCssClass);
         iframe.dataset.containerClass = "twitter-embed";
 
         iframe.sandbox.add("allow-forms", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-modals", "allow-popups");
-        iframe.setAttribute("scrolling", "no");
+        if (isPost)
+            iframe.setAttribute("scrolling", "no");
         // iframe.setAttribute("allowfullscreen", "");
 
         iframe.dataset.twitterPostId = postId;
