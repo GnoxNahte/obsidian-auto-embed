@@ -4,14 +4,15 @@
 Since there are a lot of changes, please report any bugs!
 
 **New Features & Improvements:**
-- #15 Add support for twitter profile timelines.
+- [Feature request 15](https://github.com/GnoxNahte/obsidian-auto-embed/issues/15): Add support for twitter profile timelines.
 
 **Bugs Fixed:**
 - Add padding for fallback embed link (external link below embed)
-- Fix #8 where it crashes the note when `Preload options` is `Placeholder + Click to load` AND `Fallback options` is `Show Error Message`.
-- Fix #9 where embeds aren't collapsing when in a bullet list.
-- Fix #10 and #11. Slightly change where the embed is placed. Fixes issues like the embed breaking bullet points, or 'eating' the last character. However, this might cause more bugs, so create new issues whenever you find them!
-- Fix #14. Don't embed web images. It might show the placeholder for a split second but it should hide it quite quickly.
+- Fix [Issue 8](https://github.com/GnoxNahte/obsidian-auto-embed/issues/8) where it crashes the note when `Preload options` is `Placeholder + Click to load` AND `Fallback options` is `Show Error Message`.
+- Fix [Issue 9](https://github.com/GnoxNahte/obsidian-auto-embed/issues/9) where embeds aren't collapsing when in a bullet list.
+- Fix [Issue 10](https://github.com/GnoxNahte/obsidian-auto-embed/issues/10) and [Issue 11](https://github.com/GnoxNahte/obsidian-auto-embed/issues/11). Slightly change where the embed is placed. Fixes issues like the embed breaking bullet points, or 'eating' the last character. However, this might cause more bugs, so create new issues whenever you find them!
+- Fix [Issue 14](https://github.com/GnoxNahte/obsidian-auto-embed/issues/14). Don't embed web images. It might show the placeholder for a split second but it should hide it quite quickly.
+- Don't embed x.com on Obsidian versions 1.7.0 and above. [Obsidian changelog 1.7.0](https://obsidian.md/changelog/2024-08-08-desktop-v1.7.0/)
 
 ## [1.2.0](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.0) (2024-09-07)
 Incrementing minor version. Added and fixed most of the features and bugs to make a proper plugin. 
@@ -19,8 +20,8 @@ Incrementing minor version. Added and fixed most of the features and bugs to mak
 Since there are a lot of changes, please report any bugs!
 
 **New Features & Improvements:**
-- Add #7 placeholders for websites. It has a 'click to load' mode too. This should greatly improve [Content Layout Shifts](https://web.dev/articles/cls). <br />
-	Thanks to [@Rikiub](https://github.com/Rikiub) for suggesting it! - [Issue 7](https://github.com/GnoxNahte/obsidian-auto-embed/issues/7)
+- [Feature request 7](https://github.com/GnoxNahte/obsidian-auto-embed/issues/7) Add placeholders for websites. It has a 'click to load' mode too. This should greatly improve [Content Layout Shifts](https://web.dev/articles/cls). <br />
+	Thanks to [@Rikiub](https://github.com/Rikiub) for suggesting it!
 - Add Imgur album support. (Album has `/a/` instead of `/gallery/` in the URL)
 - Add options to disable selected websites
 - Add option for suggesting to embed links
