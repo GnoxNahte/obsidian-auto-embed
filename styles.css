@@ -52,12 +52,17 @@ iframe.auto-embed {
     height: 100%;
 }
 
-.auto-embed-hide {
+/* Hide visi */
+.auto-embed-hide-visibility {
     /* display: none; */
     opacity: 0;
     /* height: 0; */
     padding: 0;
     visibility: hidden;
+}
+
+.auto-embed-hide-display {
+    display: none !important;
 }
 
 .auto-embed-container {

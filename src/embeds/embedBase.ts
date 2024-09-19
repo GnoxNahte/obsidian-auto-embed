@@ -1,3 +1,4 @@
+import { requestUrl } from "obsidian";
 import AutoEmbedPlugin from "src/main";
 import { PreloadOptions, SupportedWebsites } from "src/settings-tab";
 import { Dictionary, Size } from "src/utility";
@@ -54,6 +55,7 @@ export abstract class EmbedBase {
 
     create(link: string, embedData: BaseEmbedData): EmbedResult {
         
+
         const embed = this.createEmbed(link, embedData);
         let embedClass: string;
         if (embedData.embedSource.name === "Fallback")
@@ -67,6 +69,16 @@ export abstract class EmbedBase {
         const container = createDiv({cls: ["auto-embed-container", embedClass]});
         container.appendChild(embed);
         
+        // Check if it links to an image:
+        requestUrl({url: link, method: "HEAD"}).then(res => {
+            // console.log("DATA: " + JSON.stringify(res.headers["content-type"]));
+            if (res.headers["content-type"].startsWith("image"))
+            {
+                container.classList.add("auto-embed-hide-display");
+                container.parentElement?.removeChild(container);
+            }
+        })
+
         if (embed.classList.contains("error-embed")) {
             console.log("Container: " + embedData.embedContainer)
             return { 
@@ -80,7 +92,7 @@ export abstract class EmbedBase {
 
         // Add placeholder
         let placeholder: HTMLDivElement | undefined;
-        const hideClass = "auto-embed-hide";
+        const hideClass = "auto-embed-hide-visibility";
 
         // Called twice at different times. So put it out in a function
         function AddOnLoadEvent(iframe: HTMLIFrameElement) {
@@ -111,7 +123,7 @@ export abstract class EmbedBase {
                     // Show loader
                     const loader = placeholder?.querySelector(".auto-embed-loader");
                     if (loader) 
-                        loader.classList.toggle("auto-embed-hide", false);
+                        loader.classList.toggle(hideClass, false);
 
                     const status = placeholder?.querySelector(".auto-embed-placeholder-status");
                     if (status) 
@@ -131,7 +143,7 @@ export abstract class EmbedBase {
                 // Show loader
                 const loader = placeholder?.querySelector(".auto-embed-loader");
                 if (loader) 
-                    loader.classList.toggle("auto-embed-hide", false);
+                    loader.classList.toggle(hideClass, false);
                 AddOnLoadEvent(iframe);
             }
         }
@@ -217,7 +229,7 @@ export abstract class EmbedBase {
                 cls: "auto-embed-placeholder-status"
             });
 
-        createSpan({cls: "auto-embed-loader auto-embed-hide", parent: container});
+        createSpan({cls: "auto-embed-loader auto-embed-hide-visibility", parent: container});
         
         createEl("p", 
             {

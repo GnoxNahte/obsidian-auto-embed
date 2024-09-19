@@ -189,7 +189,14 @@ export default class AutoEmbedPlugin extends Plugin {
 		
 		// Insert embed
 		const parent = img.parentElement;
-		parent?.replaceChild(embedResult.containerEl, img);
+		parent?.appendChild(embedResult.containerEl);
+		
+		img.classList.add("auto-embed-hide-display");
+		img.addEventListener("load", () => {
+			img.classList.remove("auto-embed-hide-display");
+			embedResult.containerEl.classList.add("auto-embed-hide-display");
+		})
+		// parent?.replaceChild(embedResult.containerEl, img);
 		
 		// if (embedData.embedSource.afterInsertingToDOM)
 		// 	embedData.embedSource.afterInsertingToDOM(embed);

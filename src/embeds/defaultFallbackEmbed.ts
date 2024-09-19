@@ -54,7 +54,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
                 return embedContainer;
             }
             case FallbackOptions.Hide:
-                return createEl("span", {cls: "auto-embed-hide"});
+                return createEl("span", {cls: "auto-embed-hide-visibility"});
         }
     }
 } 
