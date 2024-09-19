@@ -2,22 +2,33 @@
     .markdown-source-view.mod-cm6 .cm-content > [contenteditable=false]
 */
 
-/* Select the placeholder image and alt that appears when Obsidian doesn't render the link. Has 2 duplicates to support "http" and "https"*/
+/* ===== Remove the placeholder alt img  ===== */
+/*
+Select the placeholder alt image that appears when Obsidian doesn't render the link. 
+Notes:
+- Has 2 duplicates to support "http" and "https"
+- .auto-embed-hide-display is for when the url is a web image so the plugin shouldn't embed it and it'll show this image instead
+*/
 /* Normal / default when pasting without any other content */
-img[src^="https:"][contenteditable=false]:has(+ div .auto-embed-container), 
-img[src^="http:"][contenteditable=false]:has(+ div .auto-embed-container),
-/* When editing in a list */
-img[src^="https:"][contenteditable=false]:has(+ .auto-embed-container),
-img[src^="http:"][contenteditable=false]:has(+ .auto-embed-container),
-/* When in a list (not editing) */
-img[src^="https:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + .auto-embed-container),
-img[src^="http:"][contenteditable=false]:has(+ img.cm-widgetBuffer + img.cm-widgetBuffer + .auto-embed-container) 
+img[src^="https:"]:has(+ .auto-embed-container:not(.auto-embed-hide-display)), 
+img[src^="http:"]:has(+ .auto-embed-container:not(.auto-embed-hide-display)),
+/* When there is other content on the same line as the embed. Not intended to use the plugin this way but in case the user does it, */
+.cm-line:has(+ .auto-embed-container:not(.auto-embed-hide-display)) img[src^="https:"],
+.cm-line:has(+ .auto-embed-container:not(.auto-embed-hide-display)) img[src^="http:"]
 {
     display: none !important;
 }
 
-.cm-line img.cm-widgetBuffer:has(+ .auto-embed-container)
-/* .cm-line .auto-embed-container + img.cm-widgetBuffer  */
+/* When the cursor is on the line with the embed */
+.auto-embed-container + img[src^="https:"],
+.auto-embed-container + img[src^="http:"]
+{
+    display: none !important;
+}
+
+/* When it's in a list */
+.HyperMD-list-line:has(+ .auto-embed-container) img[src^="https:"], 
+.HyperMD-list-line:has(+ .auto-embed-container) img[src^="http:"] 
 {
     display: none !important;
 }
@@ -67,6 +78,16 @@ iframe.auto-embed {
 
     transition: opacity var(--auto-embed-anim-duration),
                 height var(--auto-embed-anim-duration) ease-in-out;
+}
+
+.HyperMD-list-line {
+    &.HyperMD-list-line-1 + div.auto-embed-container {
+        margin-left: 1.4em !important;
+    }
+
+    &.HyperMD-list-line-2 + div.auto-embed-container {
+        margin-left: 3.65em !important;
+    }
 }
 
 .auto-embed-placeholder {

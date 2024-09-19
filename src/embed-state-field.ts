@@ -46,7 +46,7 @@ export const embedField = StateField.define<DecorationSet>({
 
                     if (!isURL(url) || isLinkToImage(url))
                         return;
-
+                    
                     const embedData = EmbedManager.getEmbedData(url, alt);
 
                     if (embedData === null)
@@ -54,11 +54,12 @@ export const embedField = StateField.define<DecorationSet>({
 
                     const replaceFrom = node.to + 1;
                     
-                    builder.add(
+                    builder.add(    
                         replaceFrom,
-                        replaceFrom + 1,
+                        replaceFrom,
                         Decoration.replace({
                             widget: new EmbedWidget(embedData, url, alt),
+                            block: true
                         })
                     );
                 }
