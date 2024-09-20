@@ -20,15 +20,15 @@ img[src^="http:"]:has(+ .auto-embed-container:not(.auto-embed-hide-display)),
 }
 
 /* When the cursor is on the line with the embed */
-.auto-embed-container + img[src^="https:"],
-.auto-embed-container + img[src^="http:"]
+.auto-embed-container:not(.auto-embed-hide-display) + img[src^="https:"],
+.auto-embed-container:not(.auto-embed-hide-display) + img[src^="http:"]
 {
     display: none !important;
 }
 
 /* When it's in a list */
-.HyperMD-list-line:has(+ .auto-embed-container) img[src^="https:"], 
-.HyperMD-list-line:has(+ .auto-embed-container) img[src^="http:"] 
+.HyperMD-list-line:has(+ .auto-embed-container:not(.auto-embed-hide-display)) img[src^="https:"], 
+.HyperMD-list-line:has(+ .auto-embed-container:not(.auto-embed-hide-display)) img[src^="http:"] 
 {
     display: none !important;
 }
