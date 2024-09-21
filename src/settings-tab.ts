@@ -46,6 +46,7 @@ export interface PluginSettings {
     fallbackWidth: string;
     fallbackHeight: string;
     fallbackDefaultLink: string;
+    fallbackAutoTitle: boolean;
 
     // Advanced settings
     showAdvancedSettings: boolean;
@@ -70,6 +71,7 @@ export const DEFAULT_SETTINGS: PluginSettings = {
     fallbackWidth: "100%",
     fallbackHeight: "500px",
     fallbackDefaultLink: "Link",
+    fallbackAutoTitle: true,
 
     showAdvancedSettings: false,
     debug: false,
@@ -243,7 +245,13 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
             .setDesc("Choose what the plugin does when the link isn't supported");
         
         const fallbackSettings: Setting[] = [];
-        let fallbackAddLinkSetting: Setting | null = null;
+        const fallbackEmbedSettings: Setting[] = [];
+
+        function UpdateFallbackEmbedVisibility() {
+            fallbackEmbedSettings.forEach(setting => {
+                setting.settingEl.style.display = settings.fallbackOptions === FallbackOptions.EmbedLink ? "flex" : "none";
+            })
+        }
 
         fallbackSettings.push(new Setting(containerEl)
             .setName("Fallback options")
@@ -252,8 +260,8 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                 .setValue(FallbackOptions[settings.fallbackOptions])
                 .onChange(async (value) => {
                     settings.fallbackOptions = FallbackOptions[value as keyof typeof FallbackOptions];
-                    if (fallbackAddLinkSetting)
-                        fallbackAddLinkSetting.settingEl.style.display = settings.fallbackOptions === FallbackOptions.EmbedLink ? "flex" : "none";
+                    UpdateFallbackEmbedVisibility();
+                    
                     await this.plugin.saveSettings();
                 })))
 
@@ -280,10 +288,28 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
             ))
+
+        fallbackEmbedSettings.push(new Setting(containerEl)
+            .setName("Auto link title")
+            .setDesc("Automatically fetches and displays the title below the embed when a custom title isn’t set")
+            .addToggle(toggle => toggle
+                .setValue(settings.fallbackAutoTitle)
+                .onChange(async (value) => {
+                    settings.fallbackAutoTitle = value;
+                    await this.plugin.saveSettings();
+                })
+            )
+        )
+
         
-        fallbackAddLinkSetting = new Setting(containerEl)
-            .setName("Sets the default text for a link below the embed")
-            .setDesc("Add a link below the embed to easily open the link on a browser")
+        const defaultTitleDescription = new DocumentFragment();
+        defaultTitleDescription.appendText("Default text when 'Auto link title' is false OR no title is found.");
+        defaultTitleDescription.appendChild(createEl("br"))
+        defaultTitleDescription.appendText("Set 'Auto link title' to false and clear 'Default title' to remove the link.");
+
+        fallbackEmbedSettings.push(new Setting(containerEl)
+            .setName("Default title")
+            .setDesc(defaultTitleDescription)
             .addText(text => text
                 .setValue(settings.fallbackDefaultLink)
                 .setPlaceholder("Link")
@@ -292,10 +318,11 @@ export class AutoEmbedSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 })
             )
-        // Same as when changing embed options
-        fallbackAddLinkSetting.settingEl.style.display = settings.fallbackOptions === FallbackOptions.EmbedLink ? "flex" : "none";
-        fallbackSettings.push(fallbackAddLinkSetting);
+        )
 
+        UpdateFallbackEmbedVisibility();
+            
+        fallbackSettings.push(...fallbackEmbedSettings);
         fallbackSettings.forEach(setting => {
             AddPadding(setting);
         });

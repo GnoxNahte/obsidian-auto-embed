@@ -176,9 +176,11 @@ iframe.auto-embed {
     height: 100%;
     width: 100%;
     text-align: center;
-
-    /* Padding for the link */
-    padding-bottom: calc(1em + var(--line-height-normal) * 1em);
+    
+    &:has(>a) {
+        /* Padding for the link */
+        padding-bottom: calc(1em + var(--line-height-normal) * 1em);
+    }
 }
 
 iframe.default-fallback-embed {

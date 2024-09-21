@@ -1,5 +1,6 @@
 import { FallbackOptions, SupportedWebsites } from "src/settings-tab";
 import { BaseEmbedData, EmbedBase } from "./embedBase";
+import { requestUrl } from "obsidian";
 
 export class DefaultFallbackEmbed extends EmbedBase {
     name: SupportedWebsites | "Fallback" = "Fallback";
@@ -45,9 +46,15 @@ export class DefaultFallbackEmbed extends EmbedBase {
 
                 embedContainer.appendChild(iframe);
 
-                if (this.plugin.settings.fallbackDefaultLink || embedOptions.alt) {
+                if (embedOptions.alt || (this.plugin.settings.fallbackDefaultLink && !this.plugin.settings.fallbackAutoTitle)) {
                     const linkText = embedOptions.alt ? embedOptions.alt : this.plugin.settings.fallbackDefaultLink;
-                    const link = createEl("a", {href: iframe.src, text: linkText.trim()});
+                    const link = createEl("a", {href: url, text: linkText.trim()});
+                    embedContainer.appendChild(link);
+                }
+                else if (this.plugin.settings.fallbackAutoTitle) {
+                    // Scrape the title and add it.
+                    const link = createEl("a", {href: url, text: "Loading title..."});
+                    this.linkTitle(url).then(title => link.text = title);
                     embedContainer.appendChild(link);
                 }
 
@@ -55,6 +62,30 @@ export class DefaultFallbackEmbed extends EmbedBase {
             }
             case FallbackOptions.Hide:
                 return createEl("span", {cls: "auto-embed-hide-visibility"});
+        }
+    }
+
+    async linkTitle(url: string) {
+        try {
+            const response = await requestUrl({url: url, method: "GET"});
+            
+            console.log(response);
+
+            if (!response.headers["content-type"].includes("text/html"))
+                return "";
+
+            const html = response.text;
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const title = doc.querySelector('title');
+
+            if (title && title.text) {
+                return title.text;
+            }
+            else {
+                return this.plugin.settings.fallbackDefaultLink;
+            }
+        } catch (ex) {
+            return `Error: ${ex.message}`;
         }
     }
 } 

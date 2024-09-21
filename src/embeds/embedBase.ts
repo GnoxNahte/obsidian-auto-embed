@@ -71,7 +71,7 @@ export abstract class EmbedBase {
         
         // Check if it links to an image:
         requestUrl({url: link, method: "HEAD"}).then(res => {
-            // console.log("DATA: " + JSON.stringify(res.headers["content-type"]));
+            // console.log(res);
             if (res.headers["content-type"].startsWith("image"))
             {
                 container.classList.add("auto-embed-hide-display");
