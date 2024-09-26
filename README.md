@@ -1,4 +1,3 @@
-# obsidian-auto-embed
 [![GitHub manifest version](https://img.shields.io/github/manifest-json/v/gnoxnahte/obsidian-auto-embed)](../../releases)
 [![GitHub last commit](https://img.shields.io/github/last-commit/gnoxnahte/obsidian-auto-embed)](../../commits/main/)
 [![GitHub Open Issues](https://img.shields.io/github/issues/gnoxnahte/obsidian-auto-embed)](../../issues)
@@ -6,7 +5,7 @@
 [![GitHub License](https://img.shields.io/github/license/gnoxnahte/obsidian-auto-embed)](/LICENSE)
 [![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22auto-embed%22%5D.downloads&logo=obsidian&logoColor=a88bfa&label=downloads&color=a88bfa)](https://obsidian.md/plugins?id=auto-embed)
 
-
+# obsidian-auto-embed
 [Obsidian](https://obsidian.md/) plugin to help embed links automatically instead of using iframes
  
 ## Getting Started
@@ -19,7 +18,7 @@ Download the plugin: https://obsidian.md/plugins?id=auto-embed
 3. (Optional) Add [Options](#custom-options)
 4. Done! Wait for the embed to load
 
-<img src="readme-assets/Auto-Embed%20Getting%20Started.gif" height="750px" alt="GIF showing example on how to embed links"/>
+https://github.com/user-attachments/assets/def3599a-bac6-4517-83f3-96fc6ba5a815
 
 Uses the same syntax as Obsidian - [Embed Web pages](https://help.obsidian.md/Editing+and+formatting/Embed+web+pages). Syntax: `![options](link)`
 
