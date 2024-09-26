@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.2) (2024-09-26)
+
+**New Features & Improvements:**
+- Add a feature to fetch the link title automatically and set it for the title (Only for fallback embeds)
+- Add [issue templates](https://github.com/GnoxNahte/obsidian-auto-embed/issues/new/choose) to make it easier to fill in information for the feature/bug
+- Created [discussions](https://github.com/GnoxNahte/obsidian-auto-embed/discussions) to ask questions on how to use the plugin freely, without affecting the issues tab. (If you aren't sure if it is a bug, just ask in discussions. Can be shifted to an issue if needed)
+
+**Bugs Fixed:**
+- Fix bug when web images don't appear sometimes
+
 ## [1.2.1](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.1) (2024-09-19)
 Since there are a lot of changes, please report any bugs!
 
