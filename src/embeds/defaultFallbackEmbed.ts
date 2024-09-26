@@ -72,7 +72,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
             console.log(response);
 
             if (!response.headers["content-type"].includes("text/html"))
-                return "";
+                return this.plugin.settings.fallbackDefaultLink;
 
             const html = response.text;
             const doc = new DOMParser().parseFromString(html, 'text/html');
