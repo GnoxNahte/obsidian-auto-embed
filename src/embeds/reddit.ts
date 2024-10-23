@@ -59,19 +59,19 @@ export class RedditEmbed extends EmbedBase {
             data = JSON.parse(e.data);
             // console.log("data: " + e.data)
         } catch (e) {
-            console.log("Error parsing reddit message. Error: " + e);
+            console.error("Error parsing reddit message. Error: " + e);
             return;
         }
 
         // Only continue if the method is for resizing
         if (data.type !== "resize.embed")
         {
-            console.log("Reddit unknown message: " + data.type);
+            console.warn("Reddit unknown message: " + data.type);
             return;
         }
 
         const iframes = document.querySelectorAll(".reddit-embed > iframe");
-        console.log("Size: " + iframes.length);
+        // console.log("Size: " + iframes.length);
         for (let i = 0; i < iframes.length; i++) {
             const iframe = iframes[i] as HTMLIFrameElement;
             // Check where the message came from

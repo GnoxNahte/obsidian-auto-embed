@@ -69,7 +69,7 @@ export class DefaultFallbackEmbed extends EmbedBase {
         try {
             const response = await requestUrl({url: url, method: "GET"});
             
-            console.log(response);
+            // console.log(response);
 
             if (!response.headers["content-type"].includes("text/html"))
                 return this.plugin.settings.fallbackDefaultLink;

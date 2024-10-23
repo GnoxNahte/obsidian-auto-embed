@@ -85,9 +85,10 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 4. Some websites like Twitter, Reddit or Imgur, will send a resize message. The plugin uses the info to resize the embed.
 
 ## Roadmap
-- [ ] Add support for other websites (If you want other websites, [create an issue](https://github.com/GnoxNahte/obsidian-auto-embed/issues) or [submit a Google Form](https://forms.gle/xtuv4FVCKZ2tg9zK9) if u aren't comfortable with GitHub)
+- [ ] Add support for other websites
 	- [ ] Google Maps
 	- [ ] Google Calendar
+	- [ ] Mastodon. Since there isn't a good way to check if the url is from Mastodon, have a setting that lets users input their own servers to be embedded as Mastodon. 
 	- [ ] Other websites. [Iframely](https://iframely.com/domains) has a list of websites that can be embedded.
 - [ ] Add preview websites when hovering a link and holding `Ctrl` for websites that aren't embedded using the syntax.
 - [ ] Add tests
@@ -96,7 +97,9 @@ A brief overview with some steps on how the plugin works. *Not required to use t
 	- [ ]  Add images/gifs to show examples
  	- [ ]  Add installation instructions
 
-Submit any features you want here: https://forms.gle/xtuv4FVCKZ2tg9zK9
+> [!TIP]
+> Submit any features you want using [GitHub Issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues) or [Google Forms](https://forms.gle/xtuv4FVCKZ2tg9zK9) (if u aren't comfortable with GitHub)
+> Even if the feature is already listed, just submit it so I'll try to prioritise it.
 
 ### Current Limitations & Known Bugs 
 - General
@@ -117,7 +120,7 @@ Please [send any issues](https://github.com/GnoxNahte/obsidian-auto-embed/issues
 1. Have you [enabled the plugin](https://help.obsidian.md/Extending+Obsidian/Community+plugins#Enable+a+community+plugin)?
 2. Are you following this syntax? `![](link)`<br>
 	For example: `![](https://example.com)`
-3. If it still doesn't work, try contacting me or create an issue.
+3. If it still doesn't work, [create a post in Discussions](https://github.com/GnoxNahte/obsidian-auto-embed/discussions/categories/general) so I can help you
 
 ## Contact Me
 I've just started Obsidian and this is my first plugin.<br>

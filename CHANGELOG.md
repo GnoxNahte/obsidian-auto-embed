@@ -1,4 +1,28 @@
 # Changelog
+<!--
+Template
+
+## [1.2.x](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.x) (2025-01-21)
+
+**New Features & Improvements:**
+- [Feature request X](https://github.com/GnoxNahte/obsidian-auto-embed/issues/X): Add...
+- Add...
+
+**Bugs Fixed:**
+- Fix [Issue X](https://github.com/GnoxNahte/obsidian-auto-embed/issues/X): Fix...
+
+Things to remember:
+- Change version (On Markdown title and markdown link)
+- Change date
+- Add & remove all features, improvements, bugs
+- Try to check all the links link to a valid location
+-->
+
+## [1.2.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.3) (2024-10-23)
+
+**New Features & Improvements:**
+- [Feature request 17](https://github.com/GnoxNahte/obsidian-auto-embed/issues/17): Add support for Instagram.
+- Minor changes to README
 
 ## [1.2.2](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.2) (2024-09-26)
 
