@@ -4,7 +4,7 @@ import { Decoration, DecorationSet, EditorView } from "@codemirror/view"
 import { EmbedWidget } from "./embed-widget";
 import { EmbedManager } from "./embeds/embedManager";
 import { editorLivePreviewField } from "obsidian";
-import { isLinkToImage, isURL } from "./utility";
+import { isLinkToImage, getUrlHostname } from "./utility";
 
 const formattingImageMarkerRegex = /formatting_formatting-image_image_image-marker(?:_list-\d*)?$/;
 const stringUrlRegex = /^(?:list-\d*_)?string_url$/;
@@ -44,10 +44,12 @@ export const embedField = StateField.define<DecorationSet>({
                     
                     altTextStartPos = null; // Reset it
 
-                    if (!isURL(url) || isLinkToImage(url))
+                    const hostName = getUrlHostname(url);
+
+                    if (hostName === null || isLinkToImage(url))
                         return;
                     
-                    const embedData = EmbedManager.getEmbedData(url, alt);
+                    const embedData = EmbedManager.getEmbedData(hostName, url, alt);
 
                     if (embedData === null)
                         return;

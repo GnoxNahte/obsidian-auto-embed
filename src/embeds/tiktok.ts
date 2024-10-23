@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class TikTokEmbed extends EmbedBase {
     name: SupportedWebsites = "TikTok";
+    hostnames =  ["tiktok.com"];
     embedOrigin = "https://www.tiktok.com"
     regex = new RegExp(/https:\/\/www\.tiktok\.com\/@([\w.]+)\/video\/(\d+)/);
 

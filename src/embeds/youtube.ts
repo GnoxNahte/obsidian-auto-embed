@@ -4,6 +4,7 @@ import { EmbedBase } from "./embedBase";
 // NOTE: Not maintained since using Obsidian's embeds
 export class YouTubeEmbed extends EmbedBase {
     name: SupportedWebsites | "Other" = "Other";
+    hostnames =  ["youtube.com", "m.youtube.com", "youtu.be", "youtube-nocookie.com"];
     // Base from: https://stackoverflow.com/a/61033353/21099543
     // Added
     // - capture group for and support for video types (short, live, etc)

@@ -34,6 +34,8 @@ export interface EmbedResult {
 export abstract class EmbedBase {
     readonly autoEmbedCssClass: string = "auto-embed";
     readonly name: SupportedWebsites | "Other" | "Fallback";
+    // To quickly identify if the link is for this embed
+    readonly hostnames: string[];
     // To identify if the anchor link matches the embed type
     readonly regex: RegExp; 
     // Embed websites usually post a resize message.
@@ -263,7 +265,7 @@ export abstract class EmbedBase {
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
         error.setText(errorMsg);
 
-        console.log("auto-embed/error: " + errorMsg);
+        console.error("auto-embed/error: " + errorMsg);
         return error;
     }
 }

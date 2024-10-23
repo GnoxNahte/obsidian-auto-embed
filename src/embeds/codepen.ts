@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class CodepenEmbed extends EmbedBase {
     name: SupportedWebsites = "CodePen";
+    hostnames =  ["codepen.io", "codepen.com"];
     regex = new RegExp(/https:\/\/codepen\.io\/([\w-]+)\/pen\/(\w+)(\?.*)?/);
 
     createEmbed(url: string): HTMLElement {

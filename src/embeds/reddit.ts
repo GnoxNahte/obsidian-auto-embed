@@ -4,13 +4,14 @@ import { EmbedBase } from "./embedBase";
 export class RedditEmbed extends EmbedBase {
     name: SupportedWebsites = "Reddit";
     regex = new RegExp(/reddit.com/);
+    hostnames = ["reddit.com"];
     embedOrigin = "https://embed.reddit.com";
 
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
         // Shouldn't happen since got test before. But in case
         if (regexMatch === null)
-            return this.onErrorCreatingEmbed(url);
+            return this.onErrorCreatingEmbed(url); 
 
         const postIdRegexResult = url.match(/\/(?:comments|s)\/(\w+)/) as RegExpMatchArray;
         if (!postIdRegexResult)

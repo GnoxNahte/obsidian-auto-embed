@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class ImgurEmbed extends EmbedBase {
     name: SupportedWebsites = "Imgur";
+    hostnames =  ["imgur.com"];
     regex = new RegExp(/https:\/\/imgur\.com\/(?:(?:a|gallery|(?:t\/\w+))\/)?(\w+)/);
     embedOrigin = "https://imgur.com";
 

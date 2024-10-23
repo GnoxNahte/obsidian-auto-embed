@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class GoogleDocsEmbed extends EmbedBase {
     name: SupportedWebsites = "Google Docs";
+    hostnames =  ["docs.google.com"];
     regex = new RegExp(/https:\/\/docs\.google\.com\/document\/d\/(\w+)/);
 
     createEmbed(url: string): HTMLElement {

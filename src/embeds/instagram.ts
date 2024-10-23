@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class InstagramEmbed extends EmbedBase {
     name: SupportedWebsites = "Instagram";
+    hostnames =  ["instagram.com"];
     regex = new RegExp(/https:\/\/(?:www\.)?instagram\.com\/(?:(?:(?:[\w._(?:[\w._]+\/)?(?:p|reel)\/([\w\-_]+))|(?:[\w._(?:[\w._]+))/);
 
     createEmbed(url: string): HTMLElement {

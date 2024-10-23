@@ -1,7 +1,7 @@
 import { Editor, EditorPosition, MarkdownFileInfo, MarkdownView, Plugin } from 'obsidian';
 import { AutoEmbedSettingTab, DEFAULT_SETTINGS, PluginSettings } from 'src/settings-tab';
 import SuggestEmbed from 'src/suggestEmbed';
-import { isLinkToImage, isURL, regexUrl } from 'src/utility';
+import { isLinkToImage, getUrlHostname, regexUrl } from 'src/utility';
 import { embedField } from './embed-state-field';
 import { EmbedManager } from './embeds/embedManager';
 
@@ -59,10 +59,11 @@ export default class AutoEmbedPlugin extends Plugin {
 
 			const images = el.querySelectorAll('img');
 			images.forEach((image) => {
-				if (image.referrerPolicy !== "no-referrer" || !isURL(image.src) || isLinkToImage(image.src))
+				const hostname = getUrlHostname(image.src);
+				if (image.referrerPolicy !== "no-referrer" || hostname === null || isLinkToImage(image.src))
 					return;
 
-				this.handleImage(image);
+				this.handleImage(image, hostname);
 			})
 
 			// const youTube = el.querySelectorAll('iframe');
@@ -158,7 +159,7 @@ export default class AutoEmbedPlugin extends Plugin {
 		
 		// Check if valid url
 		const clipboardData = e.clipboardData?.getData("text/plain");
-		if (!clipboardData || clipboardData === "" || !isURL(clipboardData))
+		if (!clipboardData || clipboardData === "" || !getUrlHostname(clipboardData))
 			return;
 
 		this.pasteInfo.trigger = true;
@@ -167,7 +168,7 @@ export default class AutoEmbedPlugin extends Plugin {
 
 	// Creates the embed and replaces the Anchor element with it
 	// Returns null if it's unable to convert it to an embed
-	handleImage(img: HTMLImageElement): HTMLElement | null { 
+	handleImage(img: HTMLImageElement, hostname: string): HTMLElement | null { 
 		const alt = img.alt;
 	
 		const noEmbedRegex = /noembed/i;
@@ -178,7 +179,7 @@ export default class AutoEmbedPlugin extends Plugin {
 
 		const src = img.src;
 
-		const embedData = EmbedManager.getEmbedData(src, alt);
+		const embedData = EmbedManager.getEmbedData(hostname, src, alt);
 
 		// console.log(embedData);
 		if (embedData === null) {

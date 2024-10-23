@@ -28,8 +28,9 @@ export class EmbedManager {
 
     plugin: AutoEmbedPlugin;
     embedSources: EmbedBase[];
-    ignoredDomains: RegExp[];
+    ignoredDomains: string[];
     defaultFallbackEmbed: DefaultFallbackEmbed;
+    hostNameDictionary: Record<string, EmbedBase>;
 
     init(plugin: AutoEmbedPlugin) {
         this.plugin = plugin;
@@ -47,13 +48,27 @@ export class EmbedManager {
             new InstagramEmbed(plugin),
         ];
 
+        // Build the dictionary
+        this.hostNameDictionary = { };
+        this.embedSources.forEach((source) => {
+            source.hostnames.forEach((hostName) => {
+                this.hostNameDictionary[hostName] = source;
+            });
+        });
+
         // Having some trouble replacing the embedded web pages from Obsidian. 
         // So remove YouTube and Twitter (Keep "TwitterEmbed" for x.com though, since Obsidian doesn't embed those)
         this.ignoredDomains = [
-            // Ignore embeds for youtube and twtiter
-            new RegExp(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/)/)
-        ];
+            // Ignore embeds for youtube
+            "youtube.com", 
+            "m.youtube.com", 
+            "youtu.be", 
+            "youtube-nocookie.com",
 
+            // Ignore embeds for twitter.com
+            // In the next step, check the Obsidian version and decide if ignore x.com too
+            ""
+        ];
 
         // Obsidian starts supporting x.com embeds from version 1.7.0 onwards. 
         // So, check which version the user is currently on, then 
@@ -67,13 +82,11 @@ export class EmbedManager {
 
         if (majorVersion > 1 || 
             (majorVersion === 1 && minorVersion >= 7)) {
-                // Ignore twitter & X
-                this.ignoredDomains.push(new RegExp(/https:\/\/(?:twitter|x)\.com/))
-            }
+            // Ignore twitter & X
+            this.ignoredDomains.push("x.com");
+        }
         else {
             this.embedSources.push(new TwitterEmbed(plugin));
-            // Ignore twitter only
-            this.ignoredDomains.push(new RegExp(/https:\/\/(?:twitter)\.com/));
         }
 
         this.defaultFallbackEmbed = new DefaultFallbackEmbed(plugin);
@@ -81,18 +94,33 @@ export class EmbedManager {
 
     // Gets the embed source for the url
     // Returns null if it can't / shouldn't be embedded.
-    static getEmbedData(url: string, alt: string): BaseEmbedData | null{
-        const domain = this._instance.ignoredDomains.find(domain => {
-            return domain.test(url);
-        });
+    static getEmbedData(hostname: string, url: string, alt: string): BaseEmbedData | null{
+        performance.mark("get-embed-start");
         // If found a domain in the ignored domains, return
-        if (domain) {
+        if (this._instance.ignoredDomains.contains(hostname))
             return null;
+
+        let embedSource: EmbedBase | null = null;
+
+        // First try of finding embedSource
+        embedSource = this._instance.hostNameDictionary[hostname];
+
+        // Second try of finding embedSource,
+        // Reduce the subdomains one level at a time.
+        if (!embedSource) {
+            const domainParts = hostname.split(".")
+            for (let i = 1; i < domainParts.length - 1; i++) {
+                const domain = domainParts.slice(i).join('.');
+                const source = this._instance.hostNameDictionary[domain];
+                if (source) {
+                    embedSource = source;
+                    break;
+                }
+            }
         }
 
-        const embedSource = this._instance.embedSources.find((source) => {
-            return source.regex.test(url);
-        }) ?? this._instance.defaultFallbackEmbed;
+        if (!embedSource || !embedSource.regex.test(url))
+            embedSource = this._instance.defaultFallbackEmbed;
 
         // TODO: Consider moving this up. If it's at the start, need to get the top level domain then filter the websites. 
         //       Skips any regex and other checks too
@@ -100,6 +128,13 @@ export class EmbedManager {
         if (embedSource !== this._instance.defaultFallbackEmbed && isWebsiteEnabled) {
             return null;
         }
+        performance.mark("get-embed-end");
+
+        const measure = performance.measure("get-embed-measure", "get-embed-start", "get-embed-end");
+        console.log(embedSource.name + " : " + measure.duration);
+        performance.clearMarks();
+        performance.clearMeasures();
+        performance.clearResourceTimings();
 
         const options = embedSource.getOptions(alt);
 

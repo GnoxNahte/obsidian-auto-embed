@@ -1,5 +1,6 @@
 import AutoEmbedPlugin from "src/main";
 import { Modal, Setting } from "obsidian";
+import { getUrlHostname } from "./utility";
 
 export class PreviewEmbedModal extends Modal {
     plugin: AutoEmbedPlugin;
@@ -14,12 +15,17 @@ export class PreviewEmbedModal extends Modal {
     }
 
     createEmbed (contentEl: HTMLElement) {
+        const hostname = getUrlHostname(this.url);
+        if (hostname === null)
+            return null;
+
         // Imitate when it's in Reading Mode, replacing the img tag with the embed
         const readingViewImg = createEl("img");
         readingViewImg.src = this.url;
         readingViewImg.alt = this.options;
         contentEl.appendChild(readingViewImg);
-        return this.plugin.handleImage(readingViewImg);
+
+        return this.plugin.handleImage(readingViewImg, hostname);
     }
 
     onOpen(): void {

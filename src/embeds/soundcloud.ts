@@ -3,6 +3,7 @@ import { EmbedBase } from "./embedBase";
 
 export class SoundCloudEmbed extends EmbedBase {
     name: SupportedWebsites = "SoundCloud";
+    hostnames =  ["soundcloud.com"];
     regex = new RegExp(/https:\/\/soundcloud\.com\/(.*)/);
     createEmbed(url: string): HTMLElement {
         const regexMatch = url.match(this.regex);
