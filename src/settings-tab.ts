@@ -24,7 +24,7 @@ export enum PreloadOptions {
 
 // export type SupportedWebsites = "CodePen" | "Google Docs" | "Imgur" | "Reddit" | "SoundCloud" | "Spotify" | "Steam" | "TikTok" | "Twitter/X" | "YouTube";
 
-const supportedWebsites = [ "Twitter/X", "Imgur", "Reddit", "CodePen", "Google Docs", "SoundCloud", "Spotify", "Steam", "TikTok" ] as const;
+const supportedWebsites = [ "Twitter/X", "Imgur", "Reddit", "CodePen", "Google Docs", "SoundCloud", "Spotify", "Steam", "TikTok", "Instagram" ] as const;
 export type SupportedWebsites = (typeof supportedWebsites)[number];
 export type SupportedWebsitesMap = {
     [key in SupportedWebsites]: boolean

@@ -311,3 +311,18 @@ iframe.default-fallback-embed {
     width: 300px;
     height: 300px;
 }
+
+.instagram-embed {
+    /* max-width: 500px; */
+
+    /* From Instagram's embed */
+    max-width: 658px;
+    min-width: 330px;
+    
+    .auto-embed {
+        transition-duration: 0.25s;
+        /* transition: none; */
+    }
+    /* height: calc(210px + 80vw); */
+    /* aspect-ratio: 1; */
+}

@@ -12,6 +12,7 @@ import { TikTokEmbed } from "./tiktok";
 import { SoundCloudEmbed } from "./soundcloud";
 import { SupportedWebsites } from "src/settings-tab";
 import { apiVersion } from "obsidian";
+import { InstagramEmbed } from "./instagram";
 // import { YouTubeEmbed } from "./youtube";
 
 export class EmbedManager {
@@ -43,6 +44,7 @@ export class EmbedManager {
             new GoogleDocsEmbed(plugin),
             new TikTokEmbed(plugin),
             new SoundCloudEmbed(plugin),
+            new InstagramEmbed(plugin),
         ];
 
         // Having some trouble replacing the embedded web pages from Obsidian. 
