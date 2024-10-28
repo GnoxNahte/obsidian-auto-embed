@@ -18,6 +18,12 @@ Things to remember:
 - Try to check all the links link to a valid location
 -->
 
+## [1.2.4](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.4) (2024-10-28)
+
+**Bugs Fixed:**
+- Fix [Issue 19](https://github.com/GnoxNahte/obsidian-auto-embed/issues/19): Add better support for detecting urls
+- Fix [Issue 20](https://github.com/GnoxNahte/obsidian-auto-embed/issues/20): Add better support for detecting images that the plugin shouldn't embed.
+
 ## [1.2.3](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.3) (2024-10-23)
 
 **New Features & Improvements:**

@@ -20,7 +20,13 @@ body:
       label: Sample Markdown
       description: If applicable, please provide the markdown used where the bug occurred
       placeholder: |
-        ![options](url)
+        ```markdown
+          ![options](url)
+        ```
+      value: |
+        ```markdown
+          // Put your markdown sample here
+        ```
   - type: textarea
     id: console-error
     attributes:
@@ -30,14 +36,12 @@ body:
         To open the console:
         - Windows: Ctrl + Shift + I
         - Mac: Cmd + Option + I
-      placeholder: |
-        ![options](url)
   - type: input 
     id: obsidian-version
     attributes:
       label: Obsidian Version
       description: What Obsidian version are you using?
-      placeholder: 1.6.7
+      placeholder: 1.7.4
     validations:
       required: true
   - type: input 
@@ -45,7 +49,7 @@ body:
     attributes:
       label: Plugin Version
       description: What Auto Embed version are you using?
-      placeholder: 1.2.2
+      placeholder: 1.2.4
     validations:
       required: true
   - type: dropdown
