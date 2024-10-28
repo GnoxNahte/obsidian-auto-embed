@@ -12,8 +12,9 @@ export function isURL(str: string) : boolean {
     return url.protocol === "http:" || url.protocol === "https:";
 }
 
-export function isLinkToImage(url: string) : boolean {
-    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
+export function isLinkToImage(str: string) : boolean {
+    const url = new URL(str);
+    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url.pathname);
 }
 
 export interface Dictionary<T> {
