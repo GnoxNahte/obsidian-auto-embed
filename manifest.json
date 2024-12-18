@@ -1,11 +1,11 @@
 {
 	"id": "auto-embed",
 	"name": "Auto Embed",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"minAppVersion": "1.5.11",
-	"description": "Helps to embed links using markdown instead of iframe",
+	"description": "Helps to embed links using markdown instead of iframe.",
 	"author": "GnoxNahte",
-	"authorUrl": "https://gnoxnahte.com",
+	"authorUrl": "https://gnoxnahte.dev",
 	"fundingUrl": "https://ko-fi.com/gnoxnahtedev",
 	"isDesktopOnly": false
 }

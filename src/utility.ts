@@ -14,7 +14,7 @@ export function isURL(str: string) : boolean {
 
 export function isLinkToImage(str: string) : boolean {
     const url = new URL(str);
-    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url.pathname);
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.pathname);
 }
 
 export interface Dictionary<T> {

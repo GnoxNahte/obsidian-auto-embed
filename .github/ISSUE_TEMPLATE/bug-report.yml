@@ -51,7 +51,7 @@ body:
       description:  |  
         What Auto Embed version are you using?
         If left blank, I will assume you're on the latest version
-      placeholder: 1.2.4
+      placeholder: 1.2.5
   - type: dropdown
     id: os
     attributes:
