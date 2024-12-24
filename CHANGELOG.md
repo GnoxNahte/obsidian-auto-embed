@@ -18,7 +18,12 @@ Things to remember:
 - Try to check all the links link to a valid location
 -->
 
-## [1.2.4](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.4) (2024-10-28)
+## [1.2.6](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.6) (2024-12-24)
+
+**New Features & Improvements:**
+- Add [Issue 21](https://github.com/GnoxNahte/obsidian-auto-embed/issues/21): Add fallback when there is no internet connection
+
+## [1.2.5](https://github.com/GnoxNahte/obsidian-auto-embed/tree/1.2.5) (2024-12-18)
 **Bugs Fixed:**
 - Fix [Issue 20](https://github.com/GnoxNahte/obsidian-auto-embed/issues/20#issuecomment-2551178504): Ignore embedding svg.
 
