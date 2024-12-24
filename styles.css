@@ -212,12 +212,17 @@ iframe.default-fallback-embed {
 }
 
 /* Error */
-.error-embed {
+.error-embed, 
+.embed-no-connection {
     border: 3px solid #555;
     border-radius: 15px;
     padding: 10px;
     color: var(--text-error);
     margin: 0;
+}
+/* Error parent */
+.auto-embed-container:has(.embed-no-connection,.error-embed) {
+    height: fit-content;
 }
 
 /* Steam */

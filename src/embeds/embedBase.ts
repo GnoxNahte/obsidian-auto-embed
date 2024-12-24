@@ -54,7 +54,15 @@ export abstract class EmbedBase {
     abstract createEmbed(link: string, embedData?: BaseEmbedData): HTMLElement;
 
     create(link: string, embedData: BaseEmbedData): EmbedResult {
-        
+        if (!window.navigator.onLine) {
+            const container = createDiv({cls: ["auto-embed-container", this.autoEmbedCssClass]});
+            const embed = container.appendChild(this.onNoInternetConnection());
+            return {
+                embedData: embedData,
+                containerEl: container,
+                embed: embed
+            }
+        }
 
         const embed = this.createEmbed(link, embedData);
         let embedClass: string;
@@ -258,6 +266,7 @@ export abstract class EmbedBase {
                 el.parentElement.style.width = width;
     }
 
+    // ===== ERRORS =====
     onErrorCreatingEmbed(url: string, msg?: string): HTMLElement {
         const errorMsg = (msg ?? `Error with ${this.name} URL.`) + `\nURL: ${url}`;
         const error = createEl("p", {cls: `${this.autoEmbedCssClass} error-embed`});
@@ -265,5 +274,11 @@ export abstract class EmbedBase {
 
         console.log("auto-embed/error: " + errorMsg);
         return error;
+    }
+
+    onNoInternetConnection(): HTMLElement {
+        console.log("auto-embed/error: no internet connection");
+
+        return createEl("p", {cls: `${this.autoEmbedCssClass} embed-no-connection`, text: "No Internet Connection"});
     }
 }
